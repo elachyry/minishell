@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaddouri <kaddouri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/29 01:49:28 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/03/29 16:00:24 by kaddouri         ###   ########.fr       */
+/*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
+/*   Updated: 2024/03/29 04:29:42 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,14 @@
 
 # include <stdio.h>
 # include <stdlib.h>
-# include <readline/history.h>
+# include <unistd.h>
+# include <string.h>
+# include <signal.h>
+# include <dirent.h>
+# include <errno.h>
+# include <termios.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 
-
-
-#endif
+# endif

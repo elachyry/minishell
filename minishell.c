@@ -6,11 +6,11 @@
 /*   By: kaddouri <kaddouri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/03/29 21:34:18 by kaddouri         ###   ########.fr       */
+/*   Updated: 2024/03/29 23:00:40 by kaddouri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "includes/minishell.h"
 
 void display_prompt(char **line)
 {
