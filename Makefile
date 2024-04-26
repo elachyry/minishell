@@ -4,17 +4,20 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = srcs/minishell.c
+LIBFT_SRCS = srcs/libft/ft_strlen.c srcs/libft/ft_strjoin.c srcs/libft/ft_strtrim.c srcs/libft/ft_strchr.c\
+			 srcs/libft/ft_strlcpy.c srcs/libft/ft_strrchr.c
+SRCS = srcs/minishell.c srcs/parsing/syntax_checker.c
 
 OBJS = $(SRCS:.c=.o)
+LIBFT_OBJS = $(LIBFT_SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lreadline
+$(NAME): $(OBJS) $(LIBFT_OBJS)
+	$(CC) $(CFLAGS) $(LIBFT_OBJS) $(OBJS) -o $(NAME) -lreadline
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(LIBFT_OBJS)
 
 fclean: clean
 	rm -f $(NAME)

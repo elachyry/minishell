@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/04/23 16:56:29 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:16:11 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int main(int ac, char **av, char **envp) {
     line = NULL;
     while (1) {
         display_prompt(&line);
-        printf("%s\n", line);
+        // printf("%s\n", line);
+		syntax_checker(line);
         free(line);
     }
 }
