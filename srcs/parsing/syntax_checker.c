@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 14:50:49 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/26 15:02:29 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/26 22:46:48 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,41 @@ t_bool	has_invalid_redirections(char *cmd)
 }
 t_bool	has_misplaced_operators(char *cmd)
 {
+	char	*cmdtrm;
+	t_bool	check;
+	int		i;
+
+	cmdtrm = ft_strtrim(cmd, " \t\n");
+	i = -1;
+	while (cmdtrm[++i])
+	{
+		check = false;
+		if (cmdtrm[i] == '|' && i == 0)
+		{
+			// printf("1\n");
+			return (false);
+		}
+		
+		if (cmdtrm[i] == '|')
+		{
+			while (cmdtrm[i + 1] == ' ' || cmdtrm[i + 1] == '\t')
+			{
+				check = true;
+				i++;
+			}
+			// printf("test %s\n", cmdtrm + i);
+			if (cmdtrm[i + 1] == '|' && check == true)
+			{
+				// printf("3\n");
+				return (false);
+			}
+		}
+		if (cmdtrm[i] == '|' && cmdtrm[i + 1] == '\0')
+		{
+			// printf("2\n");
+			return (false);
+		}
+	}
 	return (true);
 }
 
@@ -119,5 +154,7 @@ t_bool	syntax_checker(char	*cmd)
 {
 	printf("quotes : %d\n", has_unclosed_quotes(cmd));
 	printf("redirections : %d\n", has_invalid_redirections(cmd));
+	printf("pipes : %d\n", has_misplaced_operators(cmd));
+	printf("result : %d\n", has_misplaced_operators(cmd) && has_invalid_redirections(cmd) && has_unclosed_quotes(cmd));
 	return (0);
 }
