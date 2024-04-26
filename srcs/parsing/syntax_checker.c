@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 14:50:49 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/26 10:12:19 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/26 15:02:29 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,56 @@ t_bool	has_unclosed_quotes(char *cmd)
 	return (true);
 }
 
-// t_bool	has_invalid_redirections(char *cmd)
-// {
+
+t_bool	has_invalid_redirections(char *cmd)
+{
+	t_bool	check;
+	char	*cmdtrm;
 	
-// 	return (true);
-// }
+	cmdtrm = ft_strtrim(cmd, " \t\n");
+	while (*cmdtrm)
+	{
+		check = false;
+		if (*cmdtrm == '<')
+		{
+			cmdtrm++;
+			while (*cmdtrm == ' ' || *cmdtrm == '\t')
+			{
+				check = true;
+				cmdtrm++;
+			}
+			if (*cmdtrm == '<' && check == true)
+				return (false);
+			if (*cmdtrm == '\0' || (*cmdtrm == '<' && *(cmdtrm + 1) == '\0'))
+				return (false);
+
+		}
+		check = false;
+		if (*cmdtrm == '>')
+		{
+			cmdtrm++;
+			while (*cmdtrm == ' ' || *cmdtrm == '\t')
+			{
+				check = true;
+				cmdtrm++;
+			}
+			if (*cmdtrm == '>' && check == true)
+				return (false);
+			if (*cmdtrm == '\0' || (*cmdtrm == '>' && *(cmdtrm + 1) == '\0'))
+				return (false);
+		}
+		cmdtrm++;
+	}
+	return (true);
+}
+t_bool	has_misplaced_operators(char *cmd)
+{
+	return (true);
+}
 
 t_bool	syntax_checker(char	*cmd)
 {
-	printf("result : %d\n", has_unclosed_quotes(cmd));
+	printf("quotes : %d\n", has_unclosed_quotes(cmd));
+	printf("redirections : %d\n", has_invalid_redirections(cmd));
 	return (0);
 }

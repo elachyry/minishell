@@ -4,7 +4,8 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-LIBFT_SRCS = srcs/libft/ft_strlen.c srcs/libft/ft_strjoin.c
+LIBFT_SRCS = srcs/libft/ft_strlen.c srcs/libft/ft_strjoin.c srcs/libft/ft_strtrim.c srcs/libft/ft_strchr.c\
+			 srcs/libft/ft_strlcpy.c srcs/libft/ft_strrchr.c
 SRCS = srcs/minishell.c srcs/parsing/syntax_checker.c
 
 OBJS = $(SRCS:.c=.o)
