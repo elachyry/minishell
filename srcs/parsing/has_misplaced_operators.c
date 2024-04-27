@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_checker.c                                   :+:      :+:    :+:   */
+/*   has_misplaced_operators.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/25 14:50:49 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/27 17:03:41 by melachyr         ###   ########.fr       */
+/*   Created: 2024/04/27 16:41:36 by melachyr          #+#    #+#             */
+/*   Updated: 2024/04/27 16:54:41 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_bool	syntax_error_checker(char	*input)
+t_bool	has_misplaced_operators(char *input)
 {
-	char	*trimed;
+	t_bool	check;
+	int		i;
 
-	trimed = ft_strtrim(input, " \n\t");
-	printf("quotes : %d\n", has_unclosed_quotes(trimed));
-	printf("redirections : %d\n", has_invalid_redirections(trimed));
-	printf("pipes : %d\n", has_misplaced_operators(trimed));
-	printf("result : %d\n", has_misplaced_operators(trimed)
-		&& has_invalid_redirections(trimed)
-		&& has_unclosed_quotes(trimed));
+	i = -1;
+	while (input[++i])
+	{
+		check = false;
+		if (input[i] == '|' && i == 0)
+			return (false);
+		if (input[i] == '|')
+		{
+			while (input[i + 1] == ' ' || input[i + 1] == '\t')
+			{
+				check = true;
+				i++;
+			}
+			if (input[i + 1] == '|' && check == true)
+				return (false);
+		}
+		if (input[i] == '|' && input[i + 1] == '\0')
+			return (false);
+	}
 	return (true);
 }
