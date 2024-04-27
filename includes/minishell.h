@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/26 14:43:44 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/27 17:17:59 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef enum	e_bool
+typedef enum e_bool
 {
 	true = 1,
 	false = 0,
-} t_bool;
+}	t_bool;
 
 //libft
 char	*ft_strjoin(char *s1, char *s2);
@@ -40,6 +40,9 @@ char	*ft_strchr(const char *str, int c);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 
 //syntax_checker
-t_bool	syntax_checker(char	*cmd);
+t_bool	has_unclosed_quotes(char *input);
+t_bool	has_invalid_redirections(char *input);
+t_bool	has_misplaced_operators(char *input);
+t_bool	syntax_checker(char	*input);
 
-# endif
+#endif
