@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/04/28 21:48:39 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/28 22:29:53 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	main(int ac, char **av, char **envp)
 	t_ast_node	*ast;
 
 	(void)av;
-	(void)envp;
+	// (void)envp;
 	(void)ac;
 	if (ac != 1)
 	{
@@ -75,6 +75,11 @@ int	main(int ac, char **av, char **envp)
 		exit(0);
 	}
 	line = NULL;
+	while (*envp)
+	{
+		printf("%s\n", *envp);
+		envp++;
+	}
 	while (1)
 	{
 		display_prompt(&line);

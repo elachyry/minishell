@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:37:53 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/28 21:53:20 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/28 22:24:00 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,23 +73,29 @@ t_ast_node	*parse_tokens(t_token *tokens)
 				&& token_ptr->type != DoubleLessThanOperator
 				&& token_ptr->type != PipeSymbol
 				&& token_ptr->type != LogicalAnd
-				&& token_ptr->type != LogicalOr && token_ptr)
+				&& token_ptr->type != LogicalOr && token_ptr->next)
 			{
 				count++;
 				token_ptr = token_ptr->next;
 			}
+			// printf("test %s\n", token_ptr->value);
 			char	**cmd = (char **)malloc(sizeof(char *) * (count + 1));
 			if (!cmd)
 				return (NULL);
+			// printf("count = %d\n", count);
 			int	i = -1;
 			token_ptr = token;
 			while (++i < count)
 			{
-				cmd[i] = token->value;
+				cmd[i] = token_ptr->value;
 				token_ptr = token_ptr->next;
 			}
 			cmd[i] = NULL;
-			parse_command(cmd);
+			// for(int i = 0; i < count; i++)
+			// {
+			// 	printf("%i ===> %s\n", i, cmd[i]);
+			// }
+			current = parse_command(cmd);
 			token = token_ptr;
 		}
 		if (!left)
@@ -103,6 +109,7 @@ t_ast_node	*parse_tokens(t_token *tokens)
 		}
 		token = token->next;
 	}
+	printf("left %p | right %p | current %p\n", left, right, current);
 	if (left && !right)
 		return (left);
 	else if (left && right)
