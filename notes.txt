@@ -1,0 +1,17 @@
+// fisrt => when you run the programme enter a bash command like this one bellow
+	echo "hello  $USER " > file | grep h | cat << eof | cat >> file | echo 'done'
+	ls -l | grep ".txt" > files.txt && cat files.txt | wc -l && (echo "File count:"; cat files.txt | wc -l) || echo "No .txt files found"
+	cat file1.txt && cat file2.txt > merged_file.txt || echo "Error: Couldn't merge files"
+	grep "error" < logfile.txt >> errors.txt || echo "No errors found"
+	ls -l | grep ".jpg" > image_files.txt && wc -l < image_files.txt || echo "No image files found"
+	echo "Hello, World!" > greeting.txt | cat greeting.txt | wc -w && rm greeting.txt
+	(echo "Start" || echo "Failed") && (echo "Continuing..." && echo "Done") || echo "Error"
+	ls -l | grep ".pdf" > pdf_files.txt && (wc -l < pdf_files.txt && cat pdf_files.txt) || echo "No PDF files found"
+	(echo "First line" && echo "Second line") > lines.txt && cat lines.txt || echo "Error creating lines.txt"
+	cat file1.txt | grep "pattern" && cat file2.txt | grep "pattern" > matched_lines.txt || echo "No matches found"
+	echo "Testing" > test_file.txt && cat test_file.txt | grep "Test" | wc -l || echo "Test not found"
+
+// second => compare the code i created whith the code you gonna find in my github profile the name of the reposetrie is tokenizer and compare the output 
+	by running the same commands above and don't mind the (null) that's gonna get printed in this repostrie 
+
+// you object of to day is to test the lexer and improve something you find not logical 

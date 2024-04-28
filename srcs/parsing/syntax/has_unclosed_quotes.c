@@ -6,11 +6,11 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 15:02:59 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/27 17:01:04 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/28 13:40:08 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 void	handle_quotes(char **input_ptr, int *counter, char type)
 {

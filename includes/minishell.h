@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/27 17:17:59 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/28 21:03:56 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "tokenizing.h"
 
 typedef enum e_bool
 {
@@ -44,5 +45,6 @@ t_bool	has_unclosed_quotes(char *input);
 t_bool	has_invalid_redirections(char *input);
 t_bool	has_misplaced_operators(char *input);
 t_bool	syntax_checker(char	*input);
+t_bool	syntax_error_checker(char	*input);
 
 #endif
