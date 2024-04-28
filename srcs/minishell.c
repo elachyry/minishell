@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/04/28 06:49:27 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/04/28 21:48:39 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ void	display_prompt(char **line)
 int	main(int ac, char **av, char **envp)
 {
 	char	*line;
-	t_token	*token;
+	t_token	*tokens;
+	t_ast_node	*ast;
 
 	(void)av;
 	(void)envp;
@@ -78,9 +79,11 @@ int	main(int ac, char **av, char **envp)
 	{
 		display_prompt(&line);
 		syntax_error_checker(line);
-		token = ft_tokenize(line);
+		tokens = ft_tokenize(line);
 		free(line);
-		display_tokens(token);
+		display_tokens(tokens);
+		ast = parse_tokens(tokens);
+		generate_ast_diagram(ast);
 	}
 	return (0);
 }
