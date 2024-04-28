@@ -6,13 +6,14 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:20:08 by akaddour          #+#    #+#             */
-/*   Updated: 2024/04/28 04:58:36 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/04/28 06:48:36 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENIZING_H
 # define TOKENIZING_H
 
+// tokes types
 typedef enum e_token_type
 {
 	IDENTIFIER,
@@ -27,6 +28,7 @@ typedef enum e_token_type
 	LogicalOr,
 }	t_token_type;
 
+// double linked list
 typedef struct s_token
 {
 	t_token_type	type;

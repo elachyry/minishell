@@ -6,12 +6,13 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/04/28 04:59:30 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/04/28 06:49:27 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+// get the name of the token type
 const char	*get_token_type_name(t_token_type type)
 {
 	const char	*token_type_names[11];
@@ -31,7 +32,7 @@ const char	*get_token_type_name(t_token_type type)
 		return (token_type_names[type]);
 	return ("UNKNOWN");
 }
-
+// just a test function to see if the tokens are correctly generated
 void	display_tokens(t_token *tokens)
 {
 	t_token	*token;

@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:25:38 by akaddour          #+#    #+#             */
-/*   Updated: 2024/04/28 05:45:43 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/04/28 06:49:44 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ t_token	*handle_special_chars(char **input, t_token *token_list)
 	return (token_list);
 }
 
+// main tokenizing function
 t_token	*ft_tokenize(char *input)
 {
 	t_token	*token_list;
