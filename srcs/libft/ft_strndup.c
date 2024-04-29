@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 17:32:11 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/29 06:50:41 by akaddour         ###   ########.fr       */
+/*   Created: 2024/04/29 01:17:00 by akaddour          #+#    #+#             */
+/*   Updated: 2024/04/29 06:50:53 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strndup(const char *s1, size_t n)
 {
-	size_t	i;
-	size_t	j;
 	char	*result;
+	size_t	i;
 
-	if (s1 == NULL || set == NULL)
-		return (NULL);
-	i = 0;
-	j = ft_strlen(s1);
-	while (s1[i] != '\0' && ft_strchr(set, s1[i]))
-		i++;
-	while (j > 0 && ft_strchr(set, s1[j - 1]) && i < j)
-		j--;
-	result = (char *)malloc(sizeof(char) * ((j - i) + 1));
+	result = (char *)malloc(sizeof(char) * (n + 1));
 	if (result == NULL)
 		return (NULL);
-	ft_strlcpy(result, s1 + i, (j - i) + 1);
+	i = 0;
+	while (s1[i] && i < n)
+	{
+		result[i] = s1[i];
+		i++;
+	}
+	result[i] = '\0';
 	return (result);
 }

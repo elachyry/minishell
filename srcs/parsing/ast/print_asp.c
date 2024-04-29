@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_asp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 21:32:40 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/28 21:42:04 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/29 04:17:18 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void print_ast_dot(t_ast_node *node, FILE *stream)
 
 void generate_ast_diagram(t_ast_node *root)
 {
-	puts("hii");
-	printf("test %p\n", root);
+	// puts("hii");
+	// printf("test %p\n", root);
     FILE *stream = fopen("ast.dot", "w");
     if (stream == NULL)
 	{

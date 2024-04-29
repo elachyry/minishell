@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenize.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:25:38 by akaddour          #+#    #+#             */
-/*   Updated: 2024/04/28 13:40:08 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/29 07:00:24 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,31 +31,17 @@ t_token	*handle_other_chars(char **input, t_token *token_list)
 	{
 		while (**input && **input != ' ' && **input != '<' && **input != '>'
 			&& **input != '|' && **input != '(' && **input != ')'
-			&& **input != '&' && **input != '|' && **input != '\'' && **input != '\"')
+			&& **input != '&' && **input != '|' && **input != '\''
+			&& **input != '\"')
 			(*input)++;
 	}
-	identifier = strndup(start, *input - start);
+	identifier = ft_strndup(start, *input - start);
 	if (identifier == NULL)
 	{
 		printf("Error: malloc failed\n");
 		exit(1);
 	}
 	token_list = add_token(token_list, IDENTIFIER, identifier);
-	return (token_list);
-}
-
-t_token	*handle_pipe(char **input, t_token *token_list)
-{
-	if (*(*input + 1) == '|')
-	{
-		token_list = add_token(token_list, LogicalOr, "||");
-		*input += 2;
-	}
-	else
-	{
-		token_list = add_token(token_list, PipeSymbol, "|");
-		(*input)++;
-	}
 	return (token_list);
 }
 

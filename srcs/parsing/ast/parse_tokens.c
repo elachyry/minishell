@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:37:53 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/28 22:24:00 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/29 05:25:52 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ t_ast_node	*parse_tokens(t_token *tokens)
 			while (token_ptr->type != LessThanOperator
 				&& token_ptr->type != GreaterThanOperator
 				&& token_ptr->type != DoubleLessThanOperator
+				&& token_ptr->type != DoubleGreaterThanOperator
 				&& token_ptr->type != PipeSymbol
 				&& token_ptr->type != LogicalAnd
 				&& token_ptr->type != LogicalOr && token_ptr->next)
@@ -109,7 +110,7 @@ t_ast_node	*parse_tokens(t_token *tokens)
 		}
 		token = token->next;
 	}
-	printf("left %p | right %p | current %p\n", left, right, current);
+	// printf("left %p | right %p | current %p\n", left, right, current);
 	if (left && !right)
 		return (left);
 	else if (left && right)

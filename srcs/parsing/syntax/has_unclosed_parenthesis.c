@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_checker.c                                   :+:      :+:    :+:   */
+/*   has_unclosed_parenthesis.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/25 14:50:49 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/29 04:21:40 by akaddour         ###   ########.fr       */
+/*   Created: 2024/04/29 01:07:45 by akaddour          #+#    #+#             */
+/*   Updated: 2024/04/29 06:45:43 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-t_bool	syntax_error_checker(char	*input)
+t_bool	has_unclosed_parenthesis(char *input)
 {
-	char	*trimed;
+	int		open;
+	int		close;
 
-	trimed = ft_strtrim(input, " \t\n\v\f\r");
-	if (ft_strncmp(trimed, "", 1) == 0)
-		return (false);
-	if (!has_misplaced_operators(trimed)
-		|| !has_invalid_redirections(trimed)
-		|| !has_unclosed_quotes(trimed)
-		|| !has_unclosed_parenthesis(trimed))
+	open = 0;
+	close = 0;
+	while (*input)
 	{
-		free(trimed);
-		printf("syntax error\n");
-		return (false);
+		if (*input == '(')
+			open++;
+		if (*input == ')')
+			close++;
+		input++;
 	}
+	if (open != close)
+		return (false);
 	return (true);
 }
