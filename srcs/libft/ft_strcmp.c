@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/30 02:10:12 by akaddour          #+#    #+#             */
-/*   Updated: 2024/04/30 02:10:45 by akaddour         ###   ########.fr       */
+/*   Created: 2024/04/30 01:54:24 by akaddour          #+#    #+#             */
+/*   Updated: 2024/04/30 01:54:45 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int ft_pwd(void)
+int	ft_strcmp(char *s1, char *s2)
 {
-	char *cwd;
+	int i;
 
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-	{
-		perror("pwd");
-		return (1);
-	}
-	printf("%s\n", cwd);
-	free(cwd);
-	return (0);
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
+		i++;
+	return (s1[i] - s2[i]);
 }

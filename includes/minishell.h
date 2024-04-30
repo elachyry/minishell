@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/29 06:26:05 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/04/30 03:48:26 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strdup(const char *s1);
 int		ft_strncmp(const char *str1, const char *str2, size_t n);
 char	*ft_strndup(const char *s1, size_t n);
+int		ft_strcmp(char *s1, char *s2);
 
 //syntax_checker
 t_bool	has_unclosed_parenthesis(char *input);
