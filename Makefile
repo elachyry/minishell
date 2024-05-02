@@ -7,9 +7,9 @@ CFLAGS =  -Wall -Wextra -Werror -fsanitize=address -g3
 LIBFT_SRCS = srcs/libft/ft_strlen.c srcs/libft/ft_strjoin.c srcs/libft/ft_strtrim.c srcs/libft/ft_strchr.c\
 			 srcs/libft/ft_strlcpy.c srcs/libft/ft_strrchr.c srcs/libft/ft_strncmp.c srcs/libft/ft_split.c \
 			 srcs/libft/ft_substr.c srcs/libft/ft_strdup.c srcs/libft/ft_strndup.c srcs/libft/ft_strcmp.c
-SRCS =  srcs/minishell.c srcs/signal.c srcs/parsing/syntax/syntax_checker.c srcs/parsing/syntax/has_invalid_redirections.c srcs/parsing/syntax/has_unclosed_quotes.c\
+SRCS =  srcs/minishell.c srcs/initialize_environment_list.c srcs/parsing/syntax/syntax_checker.c srcs/parsing/syntax/has_invalid_redirections.c srcs/parsing/syntax/has_unclosed_quotes.c\
 		srcs/parsing/syntax/has_misplaced_operators.c srcs/parsing/syntax/has_unclosed_parenthesis.c srcs/parsing/tokenization/ft_tokenize.c srcs/parsing/tokenization/ft_tokenize_handler.c\
-		srcs/parsing/tokenization/ft_tokenize_utils.c srcs/parsing/ast/print_asp.c srcs/parsing/ast/parse_tokens.c
+		srcs/parsing/tokenization/ft_tokenize_utils.c srcs/parsing/ast/print_asp.c srcs/parsing/ast/parse_tokens.c srcs/cmd/env.c
 
 OBJS = $(SRCS:.c=.o)
 LIBFT_OBJS = $(LIBFT_SRCS:.c=.o)

@@ -3,29 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 04:02:38 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/27 17:16:47 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/02 00:34:00 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	env(char **envp)
+int ft_env(void)
 {
-	int	i;
+    t_env *current;
+	
+	current = g_shell_data.environment_list; // Start from the head of the environment list
+    while (current)  // Traverse the environment list and print each environment variable
+    {
+		if (current->value != NULL)
+        	printf("%s%s\n", current->key, current->value);
+        current = current->next;
+    }
 
-	i = 0;
-	while (envp[i] != NULL)
-	{
-		printf("%s\n", envp[i]);
-		i++;
-	}
+    return 0; // Return 0 to indicate successful execution
 }
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	env(envp);
-// 	return (0);
-// }

@@ -6,11 +6,13 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/04/29 06:54:28 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/02 00:33:31 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+t_shell_data g_shell_data;
 
 // get the name of the token type
 const char	*get_token_type_name(t_token_type type)
@@ -61,31 +63,38 @@ void	display_prompt(char **line)
 		add_history(*line);
 }
 
-char	**get_path(char **envp)
-{
-	char	**path;
-	char	*path_str;
-	int		i;
+// char	**get_path(char **envp)
+// {
+// 	char	**path;
+// 	char	*path_str;
+// 	int		i;
 
-	i = 0;
-	path_str = NULL;
-	while (envp[i])
-	{
-		if (strncmp(envp[i], "PATH=", 5) == 0)
-		{
-			path_str = ft_strdup(envp[i] + 5);
-			break ;
-		}
-		i++;
-	}
-	if (path_str == NULL)
-	{
-		printf("Error: PATH not found in environment variables\n");
-		exit(1);
-	}
-	path = ft_split(path_str, ':');
-	free(path_str);
-	return (path);
+// 	i = 0;
+// 	path_str = NULL;
+// 	while (envp[i])
+// 	{
+// 		if (strncmp(envp[i], "PATH=", 5) == 0)
+// 		{
+// 			path_str = ft_strdup(envp[i] + 5);
+// 			break ;
+// 		}
+// 		i++;
+// 	}
+// 	if (path_str == NULL)
+// 	{
+// 		printf("Error: PATH not found in environment variables\n");
+// 		exit(1);
+// 	}
+// 	path = ft_split(path_str, ':');
+// 	free(path_str);
+// 	return (path);
+// }
+
+static void initialize_shell(char **env)
+{
+	memset(&g_shell_data, 0, sizeof(t_shell_data));
+	g_shell_data.environment = env;
+	initialize_environment_list();
 }
 
 int	main(int ac, char **av, char **envp)
@@ -93,7 +102,7 @@ int	main(int ac, char **av, char **envp)
 	char		*line;
 	t_token		*tokens;
 	t_ast_node	*ast;
-	t_minishell	minishell;
+	// t_shell_data	minishell;
 
 	(void)av;
 	(void)ac;
@@ -103,12 +112,11 @@ int	main(int ac, char **av, char **envp)
 		exit(0);
 	}
 	line = NULL;
-	minishell.env = get_path(envp);
-	for (int i = 0; minishell.env[i]; i++)
-		printf("%s\n", minishell.env[i]);
+	initialize_shell(envp);
+	ft_env();
 	while (1)
 	{
-		handle_signals();
+		// handle_signals();
 		display_prompt(&line);
 		syntax_error_checker(line);
 		tokens = ft_tokenize(line);

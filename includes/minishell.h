@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/30 03:48:26 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/02 00:31:35 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@
 # include <sys/wait.h>
 # include "tokenizing.h"
 # include <sys/ioctl.h>
-# define READLINE_LIBRARY
-# include "/Users/akaddour/readline/include/readline/readline.h"
-# include "/Users/akaddour/readline/include/readline/history.h"
+// # define READLINE_LIBRARY
+// # include "/Users/akaddour/readline/include/readline/readline.h"
+// # include "/Users/akaddour/readline/include/readline/history.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 
 typedef enum e_bool
 {
@@ -34,12 +36,22 @@ typedef enum e_bool
 	false = 0,
 }	t_bool;
 
-typedef struct s_minishell
+typedef struct s_env
 {
-	char	**env;
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
+typedef struct s_shell_data
+{
+	char	**environment;
 	t_token	*tokens;
 	t_ast_node	*ast;
-}	t_minishell;
+	t_env *environment_list;
+}	t_shell_data;
+
+extern t_shell_data g_shell_data;
 
 
 //libft
@@ -56,6 +68,9 @@ int		ft_strncmp(const char *str1, const char *str2, size_t n);
 char	*ft_strndup(const char *s1, size_t n);
 int		ft_strcmp(char *s1, char *s2);
 
+void initialize_environment_list(void);
+int ft_env(void);
+
 //syntax_checker
 t_bool	has_unclosed_parenthesis(char *input);
 t_bool	has_unclosed_quotes(char *input);
@@ -64,6 +79,6 @@ t_bool	has_misplaced_operators(char *input);
 t_bool	syntax_checker(char	*input);
 t_bool	syntax_error_checker(char	*input);
 
-void	handle_signals(void);
+// void	handle_signals(void);
 
 #endif
