@@ -1,27 +1,31 @@
 NAME = minishell
 
+LIBFT		:= libft.a
+LIBFT_PATH	:= "libraries/libft"
+
 CC = cc
 
-CFLAGS =  -fsanitize=address -g3 #-Wall -Wextra -Werror
+CFLAGS =  -Wall -Wextra -Werror -fsanitize=address -g3 
 
-LIBFT_SRCS = srcs/libft/ft_strlen.c srcs/libft/ft_strjoin.c srcs/libft/ft_strtrim.c srcs/libft/ft_strchr.c\
-			 srcs/libft/ft_strlcpy.c srcs/libft/ft_strrchr.c
-SRCS =  srcs/minishell.c srcs/parsing/syntax/syntax_checker.c srcs/parsing/syntax/has_invalid_redirections.c srcs/parsing/syntax/has_unclosed_quotes.c\
-		srcs/parsing/syntax/has_misplaced_operators.c srcs/parsing/tokenization/ft_tokenize.c srcs/parsing/tokenization/ft_tokenize_handler.c\
-		srcs/parsing/tokenization/ft_tokenize_utils.c srcs/parsing/ast/print_asp.c srcs/parsing/ast/parse_tokens.c
+SRCS = $(wildcard srcs/*.c) $(wildcard srcs/builtins/*.c) $(wildcard srcs/input_validation/*.c) $(wildcard srcs/tokenization/*.c) $(wildcard srcs/parsing/*.c)
 
 OBJS = $(SRCS:.c=.o)
-LIBFT_OBJS = $(LIBFT_SRCS:.c=.o)
+LIBFT_OBJS = $(.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT_OBJS)
-	$(CC) $(CFLAGS) $(LIBFT_OBJS) $(OBJS) -o $(NAME) -lreadline
+$(LIBFT):
+	@make -C $(LIBFT_PATH)
+
+$(NAME): $(LIBFT) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -L /Users/akaddour/readline/lib -lreadline -lncurses
 
 clean:
+	@make -C $(LIBFT_PATH) clean
 	rm -f $(OBJS) $(LIBFT_OBJS)
 
 fclean: clean
+	@make -C $(LIBFT_PATH) fclean
 	rm -f $(NAME)
 
 re : fclean all
