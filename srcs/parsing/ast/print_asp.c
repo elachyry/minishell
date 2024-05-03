@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 21:32:40 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/28 21:42:04 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/02 20:59:20 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void print_ast_dot(t_ast_node *node, FILE *stream)
         for (int i = 0; node->args[i] != NULL; i++)
 		{
             if (i > 0) fprintf(stream, " "); // Add space between arguments
+			// dprintf(2, "arg %s\n", node->args[i]);
             print_escaped(stream, node->args[i]);
         }
     }
@@ -69,8 +70,8 @@ void print_ast_dot(t_ast_node *node, FILE *stream)
 
 void generate_ast_diagram(t_ast_node *root)
 {
-	puts("hii");
-	printf("test %p\n", root);
+	// puts("hii");
+	// printf("test %p\n", root);
     FILE *stream = fopen("ast.dot", "w");
     if (stream == NULL)
 	{

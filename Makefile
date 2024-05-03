@@ -2,7 +2,7 @@ NAME = minishell
 
 CC = cc
 
-CFLAGS =  -fsanitize=address -g3 #-Wall -Wextra -Werror
+CFLAGS =  -fsanitize=address -g3 -Wall -Wextra -Werror 
 
 LIBFT_SRCS = srcs/libft/ft_strlen.c srcs/libft/ft_strjoin.c srcs/libft/ft_strtrim.c srcs/libft/ft_strchr.c\
 			 srcs/libft/ft_strlcpy.c srcs/libft/ft_strrchr.c

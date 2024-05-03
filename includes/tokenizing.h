@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:20:08 by akaddour          #+#    #+#             */
-/*   Updated: 2024/04/28 21:35:19 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:27:45 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_ast_node
 {
     t_token_type		type;
     char 				**args;
-    char 				*filename;
     struct s_ast_node	*left;
     struct s_ast_node	*right;
 }   t_ast_node;
@@ -54,6 +53,7 @@ t_token	*handle_less_than(char **input, t_token *token_list);
 t_token	*handle_greater_than(char **input, t_token *token_list);
 t_token	*handle_parenthesis(char **input, t_token *token_list);
 
-t_ast_node	*parse_tokens(t_token *tokens);
+t_ast_node	*parse_tokens(t_token **tokens);
+t_ast_node	*parse_redirection(t_token **tokens);
 void generate_ast_diagram(t_ast_node *root);
 #endif
