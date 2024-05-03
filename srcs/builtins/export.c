@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:38:47 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/03 00:00:20 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/03 06:02:45 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,7 @@ static void	ft_declare_env(void)
     }
 }
 
-int	is_valid_key(char *key)
-{
-    if (!isalpha(*key) && *key != '_')
-        return (0);
-    while (*key)
-    {
-        if (!isalnum(*key) && *key != '_')
-            return (0);
-        key++;
-    }
-    return (1);
-}
-
-void	print_invalid_key_error(char *key)
+void	display_export_error(char *key)
 {
     ft_putstr_fd("export: `", 2);
     ft_putstr_fd(key, 2);
@@ -64,7 +51,7 @@ int	ft_export(char **args)
         key = extract_key(args[i]);
         if (!key || !is_valid_key(key))
         {
-            print_invalid_key_error(args[i]);
+            display_export_error(args[i]);
             free(key);
             return (1);
         }

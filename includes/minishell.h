@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/03 04:59:00 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/03 06:15:31 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,26 @@ typedef struct s_shell_data
 
 extern t_shell_data g_shell_data;
 
+//initialization
+t_env	*initialize_environment_list(char **env);
+char    *extract_key(char *env);
+char    *extract_value(char *env);
 
-// //libft
-// char	*ft_strjoin(char *s1, char *s2);
-// size_t	ft_strlen(const char *str);
-// char	*ft_strtrim(char const *s1, char const *set);
-// char	*ft_strrchr(const char *str, int c);
-// char	*ft_strchr(const char *str, int c);
-// size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-// char	**ft_split(char const *s, char sep);
-// char	*ft_substr(char const *s, unsigned int start, size_t len);
-// char	*ft_strdup(const char *s1);
-// int		ft_strncmp(const char *str1, const char *str2, size_t n);
-// char	*ft_strndup(const char *s1, size_t n);
-// int		ft_strcmp(char *s1, char *s2);
+//builtins
+int		ft_cd(char *path);
+int 	ft_echo(char **args);
+int		ft_env(void);
+void	ft_exit(char **args);
+int		ft_export(char **args);
+int 	ft_pwd(void);
+int		ft_unset(char **args);
 
-//syntax_checker
+//builtins_utils
+void	update_env_value(char *key, char *value);
+char    *get_env_value(char *key);
+int		is_valid_key(char *key);
+
+//input_validation
 t_bool	has_unclosed_parenthesis(char *input);
 t_bool	has_unclosed_quotes(char *input);
 t_bool	has_invalid_redirections(char *input);
@@ -76,15 +80,7 @@ t_bool	has_misplaced_operators(char *input);
 t_bool	syntax_checker(char	*input);
 t_bool	syntax_error_checker(char	*input);
 
+//signals
 void	handle_signals(void);
-t_env	*initialize_environment_list(char **env);
-char    *extract_key(char *env);
-char    *extract_value(char *env);
-void	update_env_value(char *key, char *value);
-int		is_valid_key(char *key);
-void	print_invalid_key_error(char *key);
-
-
-int	ft_env(void);
 
 #endif

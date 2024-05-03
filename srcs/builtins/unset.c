@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 00:39:02 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/03 01:51:53 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/03 06:03:13 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void    delete_env_value(char *key)
     }
 }
 
-static void    unset_invalid_key_error(char *key)
+static void    display_unset_error(char *key)
 {
     ft_putstr_fd("unset: `", 2);
     ft_putstr_fd(key, 2);
@@ -53,7 +53,7 @@ int    ft_unset(char **args)
     {
         if (!is_valid_key(args[i]))
         {
-            unset_invalid_key_error(args[i]);
+            display_unset_error(args[i]);
             return (1);
         }
         delete_env_value(args[i]);
