@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 01:36:59 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/03 01:22:13 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/04 04:17:39 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,14 @@ static int check_option(char *s)
     int i = 1;
 
     if (s[0] != '-')
-        return 0;
-
+        return (0);
     while (s[i])
     {
         if (s[i] != 'n')
-            return 0;
+            return (0);
         i++;
     }
-    return 1;
+    return (1);
 }
 
 int ft_echo(char **args)
@@ -51,9 +50,3 @@ int ft_echo(char **args)
 		printf("\n");
 	return (0);
 }
-
-// int main(int argc, char *argv[]) {
-//     // Testing with various arguments
-//     ft_echo(argv);
-//     return 0;
-// }

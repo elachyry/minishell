@@ -6,13 +6,13 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:38:47 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/03 06:02:45 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/04 06:18:30 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	ft_declare_env(void)
+static void	ft_export_print(void)
 {
     t_env	*env;
 
@@ -42,7 +42,7 @@ int	ft_export(char **args)
 
     if (!args[1])
     {
-        ft_declare_env();
+        ft_export_print();
         return (0);
     }
     i = 1;

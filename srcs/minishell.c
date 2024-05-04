@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/05/03 05:19:06 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/04 03:31:15 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int	main(int ac, char **av, char **envp)
 		exit(0);
 	}
 	initialize_shell(envp);
-	ft_env();
 	while (1)
 	{
 		handle_signals();

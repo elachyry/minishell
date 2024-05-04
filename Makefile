@@ -21,13 +21,19 @@ SRCS = srcs/initialize_environment_list.c srcs/minishell.c srcs/signal.c $(BUILT
 
 OBJS = $(SRCS:.c=.o)
 
+# %.o: %.c
+# 	$(CC) $(CFLAGS) -c $< -o $@
 all: $(NAME)
 
-$(LIBFT):
-	@make -C $(LIBFT_PATH)
+# $(LIBFT):
+#@make -C $(LIBFT_PATH)
+# %.o: %.c
+# 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(LIBFT) $(OBJS)
+$(NAME):  $(OBJS)
+	@make -C $(LIBFT_PATH)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -L /Users/akaddour/readline/lib -lreadline -lncurses
+
 
 clean:
 	@make -C $(LIBFT_PATH) clean

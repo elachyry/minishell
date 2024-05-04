@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:30:23 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/03 06:00:50 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/04 06:18:05 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	back_to_home(void)
     home = get_env_value("HOME");
     if (!home)
     {
-        printf("cd: HOME not set\n");
+        ft_putstr_fd("minishell: cd: HOME not set\n", 2);
         return (1);
     }
     if (chdir(home) == 1)
@@ -40,6 +40,7 @@ static void display_cd_error(char *path)
 
 int	ft_cd(char *path)
 {
+    char    *cwd;
     if (!path)
         return (back_to_home());
     if (chdir(path) != 0)
@@ -48,6 +49,26 @@ int	ft_cd(char *path)
         return (1);
     }
     update_env_value("OLDPWD", get_env_value("PWD"));
-    update_env_value("PWD", getcwd(NULL, 0));
+    cwd = getcwd(NULL, 0);
+    if (!cwd)
+    {
+        ft_putstr_fd("minishell: cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
+        return (1);
+    }
+    update_env_value("PWD", cwd);
     return (0);
 }
+
+// int main(int argc, char **argv)
+// {
+//     if (argc == 1)
+//         ft_cd(NULL);
+//     else if (argc == 2)
+//         ft_cd(argv[1]);
+//     else
+//     {
+//         ft_putstr_fd("minishell: cd: too many arguments\n", 2);
+//         return (1);
+//     }
+//     return (0);
+// }
