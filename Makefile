@@ -1,27 +1,39 @@
 NAME = minishell
 
+LIBFT		:= libft.a
+LIBFT_PATH	:= "libraries/libft"
+
 CC = cc
 
-CFLAGS =  -fsanitize=address -g3 -Wall -Wextra -Werror 
+CFLAGS =  -Wall -Wextra -Werror -fsanitize=address -g3 
 
-LIBFT_SRCS = srcs/libft/ft_strlen.c srcs/libft/ft_strjoin.c srcs/libft/ft_strtrim.c srcs/libft/ft_strchr.c\
-			 srcs/libft/ft_strlcpy.c srcs/libft/ft_strrchr.c
-SRCS =  srcs/minishell.c srcs/parsing/syntax/syntax_checker.c srcs/parsing/syntax/has_invalid_redirections.c srcs/parsing/syntax/has_unclosed_quotes.c\
-		srcs/parsing/syntax/has_misplaced_operators.c srcs/parsing/tokenization/ft_tokenize.c srcs/parsing/tokenization/ft_tokenize_handler.c\
-		srcs/parsing/tokenization/ft_tokenize_utils.c srcs/parsing/ast/print_asp.c srcs/parsing/ast/parse_tokens.c
+BUILTINS = srcs/builtins/builtins_utils.c srcs/builtins/cd.c srcs/builtins/echo.c srcs/builtins/env.c srcs/builtins/exit.c srcs/builtins/export.c srcs/builtins/pwd.c srcs/builtins/unset.c
+
+INPUT_VALIDATION = srcs/input_validation/has_invalid_redirections.c srcs/input_validation/has_misplaced_operators.c srcs/input_validation/has_unclosed_parenthesis.c srcs/input_validation/has_unclosed_quotes.c srcs/input_validation/syntax_checker.c
+
+PARSING = srcs/parsing/parse_tokens.c srcs/parsing/print_asp.c
+
+TOKENIZATION = srcs/tokenization/ft_tokenize_handler.c srcs/tokenization/ft_tokenize_utils.c srcs/tokenization/ft_tokenize.c
+
+SRCS = srcs/initialize_environment_list.c srcs/minishell.c srcs/signal.c $(BUILTINS) $(INPUT_VALIDATION) $(PARSING) $(TOKENIZATION)
+
+# SRCS = $(wildcard srcs/*.c) $(wildcard srcs/builtins/*.c) $(wildcard srcs/input_validation/*.c) $(wildcard srcs/tokenization/*.c) $(wildcard srcs/parsing/*.c)
 
 OBJS = $(SRCS:.c=.o)
-LIBFT_OBJS = $(LIBFT_SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT_OBJS)
-	$(CC) $(CFLAGS) $(LIBFT_OBJS) $(OBJS) -o $(NAME) -lreadline
+$(NAME):  $(OBJS)
+	@make -C $(LIBFT_PATH)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -L /Users/akaddour/readline/lib -lreadline -lncurses
+
 
 clean:
-	rm -f $(OBJS) $(LIBFT_OBJS)
+	@make -C $(LIBFT_PATH) clean
+	rm -f $(OBJS)
 
 fclean: clean
+	@make -C $(LIBFT_PATH) fclean
 	rm -f $(NAME)
 
 re : fclean all

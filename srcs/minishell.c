@@ -6,11 +6,13 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/05/02 20:57:51 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/04 10:41:25 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+t_shell_data g_shell_data;
 
 // get the name of the token type
 const char	*get_token_type_name(t_token_type type)
@@ -32,6 +34,7 @@ const char	*get_token_type_name(t_token_type type)
 		return (token_type_names[type]);
 	return ("UNKNOWN");
 }
+
 // just a test function to see if the tokens are correctly generated
 void	display_tokens(t_token *tokens)
 {
@@ -60,28 +63,39 @@ void	display_prompt(char **line)
 		add_history(*line);
 }
 
+void	initialize_shell(char **envp)
+{
+	g_shell_data.line = NULL;
+	g_shell_data.environment = envp;
+	g_shell_data.tokens = NULL;
+	g_shell_data.ast = NULL;
+	g_shell_data.environment_list = initialize_environment_list(envp);
+}
+
+
 int	main(int ac, char **av, char **envp)
 {
-	char	*line;
-	t_token	*tokens;
+	t_token		*tokens;
 	t_ast_node	*ast;
+	
 
 	(void)av;
-	(void)envp;
 	(void)ac;
 	if (ac != 1)
 	{
 		printf("This program does not accept arguments\n");
 		exit(0);
 	}
-	line = NULL;
+	initialize_shell(envp);
 	while (1)
 	{
-		display_prompt(&line);
-		syntax_error_checker(line);
-		tokens = ft_tokenize(line);
-		free(line);
-		// display_tokens(tokens);
+		handle_signals();
+		display_prompt(&g_shell_data.line);
+		if (!syntax_error_checker(g_shell_data.line))
+			continue ;
+		tokens = ft_tokenize(g_shell_data.line);
+		free(g_shell_data.line);
+		display_tokens(tokens);
 		ast = parse_tokens(&tokens);
 		generate_ast_diagram(ast);
 	}
