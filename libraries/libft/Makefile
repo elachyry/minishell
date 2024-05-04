@@ -6,7 +6,7 @@
 #    By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/12 18:15:22 by akaddour          #+#    #+#              #
-#    Updated: 2024/05/03 06:05:57 by akaddour         ###   ########.fr        #
+#    Updated: 2024/05/04 06:43:44 by akaddour         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,14 +25,14 @@ all: $(NAME)
 $(NAME): $(OBJS)
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-	ar rcs $(NAME) $@
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@ar rcs $(NAME) $@
 
 clean:
-	rm -f $(OBJS)
+	@rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 

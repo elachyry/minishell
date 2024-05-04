@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 21:32:40 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/03 04:08:55 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/04 06:53:13 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ void print_ast_dot(t_ast_node *node, FILE *stream)
         case DoubleGreaterThanOperator:
         case DoubleLessThanOperator: fprintf(stream, "REDIR: "); break;
         case PipeSymbol: fprintf(stream, "|"); break;
+        case LogicalAnd: fprintf(stream, "&&"); break;
+        case LogicalOr: fprintf(stream, "||"); break;
+        case OpeningParenthesis: fprintf(stream, "("); break;
+        case ClosingParenthesis: fprintf(stream, ")"); break;
         default: fprintf(stream, "UNKNOWN"); break;
     }
     // Print all arguments for the node
@@ -51,6 +55,7 @@ void print_ast_dot(t_ast_node *node, FILE *stream)
         for (int i = 0; node->args[i] != NULL; i++)
 		{
             if (i > 0) fprintf(stream, " "); // Add space between arguments
+			// dprintf(2, "arg %s\n", node->args[i]);
             print_escaped(stream, node->args[i]);
         }
     }

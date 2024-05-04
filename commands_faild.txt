@@ -1,0 +1,7 @@
+ls | >> || && ls  :===> SGV
+ls || && ls       :===> syntax error near unexpected token `&&'
+ls || ls ||||||||||||||||||| ls || ls   :======> syntax error near unexpected token `||'
+ls &&& ls         :===> syntax error near unexpected token `&'
+(&&)              :===>  syntax error near unexpected token `&&' 
+()                :===>  syntax error near unexpected token `)'
+)(                :===>  syntax error near unexpected token `)'

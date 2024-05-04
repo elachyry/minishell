@@ -21,14 +21,7 @@ SRCS = srcs/initialize_environment_list.c srcs/minishell.c srcs/signal.c $(BUILT
 
 OBJS = $(SRCS:.c=.o)
 
-# %.o: %.c
-# 	$(CC) $(CFLAGS) -c $< -o $@
 all: $(NAME)
-
-# $(LIBFT):
-#@make -C $(LIBFT_PATH)
-# %.o: %.c
-# 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME):  $(OBJS)
 	@make -C $(LIBFT_PATH)
