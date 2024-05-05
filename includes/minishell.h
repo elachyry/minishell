@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/03 06:15:31 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/04 12:06:07 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # include "tokenizing.h"
 # include <sys/ioctl.h>
 # define READLINE_LIBRARY
-# include "/Users/akaddour/readline/include/readline/readline.h"
-# include "/Users/akaddour/readline/include/readline/history.h"
+# include "/Users/melachyr/readline/readline.h"
+# include "/Users/melachyr/readline/history.h"
 #include  "../libraries/libft/libft.h"
 
 typedef enum e_bool

@@ -6,11 +6,11 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 21:32:40 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/04 10:40:52 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/04 20:12:40 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void print_escaped(FILE *stream, const char *str)
 {
@@ -43,6 +43,8 @@ void print_ast_dot(t_ast_node *node, FILE *stream)
         case DoubleGreaterThanOperator:
         case DoubleLessThanOperator: fprintf(stream, "REDIR: "); break;
         case PipeSymbol: fprintf(stream, "|"); break;
+        case LogicalAnd: fprintf(stream, "&&"); break;
+        case LogicalOr: fprintf(stream, "||"); break;
         default: fprintf(stream, "UNKNOWN"); break;
     }
     // Print all arguments for the node
@@ -69,8 +71,8 @@ void print_ast_dot(t_ast_node *node, FILE *stream)
 
 void generate_ast_diagram(t_ast_node *root)
 {
-	puts("hii");
-	printf("test %p\n", root);
+	// puts("hii");
+	// printf("test %p\n", root);
     FILE *stream = fopen("ast.dot", "w");
     if (stream == NULL)
 	{
