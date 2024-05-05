@@ -24,7 +24,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME):  $(OBJS)
-	@make -C $(LIBFT_PATH)
+#@make -C $(LIBFT_PATH)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -L /Users/melachyr/readline/lib -lreadline -lncurses
 
 
@@ -33,7 +33,7 @@ clean:
 	rm -f $(OBJS)
 
 fclean: clean
-	@make -C $(LIBFT_PATH) fclean
+#@make -C $(LIBFT_PATH) fclean
 	rm -f $(NAME)
 
 re : fclean all

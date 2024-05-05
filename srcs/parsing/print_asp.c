@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 21:32:40 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/04 20:12:40 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/05 19:54:14 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void print_ast_dot(t_ast_node *node, FILE *stream)
         case PipeSymbol: fprintf(stream, "|"); break;
         case LogicalAnd: fprintf(stream, "&&"); break;
         case LogicalOr: fprintf(stream, "||"); break;
+        case OpeningParenthesis: fprintf(stream, "(): "); break;
         default: fprintf(stream, "UNKNOWN"); break;
     }
     // Print all arguments for the node

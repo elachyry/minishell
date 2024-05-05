@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:41:36 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/04 20:02:53 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/05 21:27:00 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ t_bool	handle_logical_or(char *input)
 			return (false);
 		if (input[i] == '|')
 		{
+			if (input[i - 1] == '&' || input[i - 1] == '(' || input[i - 1] == ')')
+				return (false);
 			while (input[i] == '|')
 			{
 				count++;
@@ -34,15 +36,16 @@ t_bool	handle_logical_or(char *input)
 			}
 			if (count > 2)
 				return (false);
-			while (input[i + 1] == ' ' || input[i + 1] == '\t')
+			if (input[i] == '\0')
+				return (false);
+			while (input[i] == ' ' || input[i] == '\t')
 			{
 				check = true;
 				i++;
 			}
-			// printf("input[i] = %c\n", input[i]);
-			if (input[i + 1] == '&')
+			if (input[i] == '&')
 				return (false);
-			if (input[i + 1] == '|' && check == true)
+			if (input[i] == '|' && check == true)
 				return (false);
 		}
 		if (input[i] == '|' && input[i + 1] == '\0')
@@ -66,23 +69,25 @@ t_bool	handle_logical_and(char *input)
 			return (false);
 		if (input[i] == '&')
 		{
+			if (input[i - 1] == '|' || input[i - 1] == '(' || input[i - 1] == ')')
+				return (false);
 			while (input[i] == '&')
 			{
 				count++;
 				i++;
 			}
-			printf("count = %d\n", count);
 			if (count > 2)
 				return (false);
-			while (input[i + 1] == ' ' || input[i + 1] == '\t')
+			if (input[i] == '\0')
+				return (false);
+			while (input[i] == ' ' || input[i] == '\t')
 			{
 				check = true;
 				i++;
 			}
-			// printf("input[i] = %c\n", input[i]);
-			if (input[i + 1] == '|')
+			if (input[i] == '|')
 				return (false);
-			if (input[i + 1] == '&' && check == true)
+			if (input[i] == '&' && check == true)
 				return (false);
 		}
 		if (input[i] == '&' && input[i + 1] == '\0')
