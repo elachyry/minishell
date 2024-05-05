@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:20:08 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/04 06:47:01 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/05 07:11:38 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ typedef struct s_ast_node
 }   t_ast_node;
 
 t_token	*ft_tokenize(char *input);
-int		ft_isspace(char c);
 void	ft_skip_spaces(char **line);
 t_token	*add_token(t_token *token_list, t_token_type type, char *value);
 t_token	*handle_less_than(char **input, t_token *token_list);

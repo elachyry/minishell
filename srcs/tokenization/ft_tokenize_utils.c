@@ -6,19 +6,11 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 04:27:20 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/03 04:08:31 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/05 07:08:20 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	ft_isspace(char c)
-{
-	if (c == '\t' || c == '\n' || c == '\v'
-		|| c == '\f' || c == '\r' || c == ' ')
-		return (1);
-	return (0);
-}
 
 void	ft_skip_spaces(char **line)
 {
