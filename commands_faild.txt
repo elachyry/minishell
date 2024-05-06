@@ -7,3 +7,7 @@ ls &&& ls         :===> syntax error near unexpected token `&' √
 )(                :===>  syntax error near unexpected token `)'
 
 ls | cat || || ls && ls √
+
+
+
+<<|ls

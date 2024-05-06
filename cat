@@ -1,9 +1,0 @@
-Makefile
-ast.dot
-cat
-commands_faild.txt
-includes
-init.sh
-libraries
-minishell
-srcs

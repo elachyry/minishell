@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:37:53 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/05 19:55:29 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/06 10:48:31 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,6 @@ t_ast_node	*parse_command(t_token	**tokens)
 	}
 	cmd[i] = NULL;
 	*tokens = ptr;
-	// for(int i = 0; i < count; i++)
-	// {
-	// 	dprintf(2, "%i ===> %s\n", i, cmd[i]);
-	// }
 	node = malloc(sizeof(t_ast_node));
 	node->args = cmd;
 	node->type = IDENTIFIER;
@@ -175,6 +171,8 @@ t_ast_node	*parse_parenthese(t_token **tokens)
 			t_ast_node	*node;
 
 			tmp = (*tokens)->next;
+			while (tmp && tmp->type == OpeningParenthesis)
+				tmp = tmp->next;
 			count = 0;
 			while (tmp && tmp->type != ClosingParenthesis)
 			{
@@ -185,6 +183,8 @@ t_ast_node	*parse_parenthese(t_token **tokens)
 			if (!cmd)
 				return (NULL);
 			tmp = (*tokens)->next;
+			while (tmp && tmp->type == OpeningParenthesis)
+				tmp = tmp->next;
 			i = -1;
 			while (++i < count)
 			{
@@ -229,9 +229,9 @@ t_ast_node	*parse_logical_operator(t_token **tokens)
 	return (parse_parenthese(&ptr));
 }
 
-
 t_ast_node	*parse_tokens(t_token **tokens)
 {
+	if (!tokens && !*tokens)
+		return (NULL);
 	return (parse_logical_operator(tokens));
 }
-

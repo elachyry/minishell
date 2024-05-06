@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:41:36 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/05 21:27:00 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/06 10:48:20 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ t_bool	handle_logical_or(char *input)
 				return (false);
 			if (input[i] == '\0')
 				return (false);
-			while (input[i] == ' ' || input[i] == '\t')
+			while (input[i + 1] == ' ' || input[i + 1] == '\t')
 			{
 				check = true;
 				i++;
 			}
 			if (input[i] == '&')
 				return (false);
-			if (input[i] == '|' && check == true)
+			if (input[i + 1] == '|' && check == true)
 				return (false);
 		}
 		if (input[i] == '|' && input[i + 1] == '\0')
