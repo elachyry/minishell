@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/06 15:29:36 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/06 20:26:31 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	get_cmd_path(void)
 	char			*path;
 	
 	cmd = ft_strrchr(g_shell_data.ast->args[0], '/');
-	// printf("strcher %s\n", cmd);
+	printf("cmd %s\n", g_shell_data.ast->args[0]);
 	if (cmd)
 	{
 		if (access(g_shell_data.ast->args[0], X_OK) != -1)
