@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:37:53 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/06 15:46:07 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/06 22:46:35 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ t_ast_node	*parse_command(t_token	**tokens)
 	node->type = IDENTIFIER;
 	node->left = NULL;
 	node->right = NULL;
+	g_shell_data.nbr_cmd++;
 	return (node);
 }
 
@@ -233,5 +234,6 @@ t_ast_node	*parse_tokens(t_token **tokens)
 {
 	if (!tokens && !*tokens)
 		return (NULL);
+	g_shell_data.nbr_cmd = 0;
 	return (parse_logical_operator(tokens));
 }

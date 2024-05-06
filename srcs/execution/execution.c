@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/06 20:26:31 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/06 22:47:35 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ int	get_cmd_path(void)
 	return (0);
 }
 
-
-void	execution(void)
+void	execute_single_cmd(void)
 {
 	int	status;
 
@@ -74,8 +73,15 @@ void	execution(void)
 	{
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
-		{
-			
-		}
+			g_shell_data.status = WEXITSTATUS(status);
 	}
+}
+
+
+void	execution(void)
+{
+	// printf("nbr cmd = %d\n", g_shell_data.nbr_cmd);
+	if (g_shell_data.nbr_cmd == 1)
+		execute_single_cmd();
+	
 }

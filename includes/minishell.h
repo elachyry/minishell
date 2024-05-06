@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/06 12:31:33 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/06 22:42:29 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct s_shell_data
 	char			*line;
 	char			**environment;
 	char			**path;
+	int				status;
+	int				nbr_cmd;
 	t_token			*tokens;
 	t_ast_node		*ast;
 	t_simple_cmd	*simple_cmd;

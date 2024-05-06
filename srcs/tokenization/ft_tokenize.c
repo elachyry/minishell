@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:25:38 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/06 20:40:19 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/06 22:33:22 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ t_token	*ft_tokenize(char *input)
 	token_list = NULL;
 	while (*input)
 	{
-		printf("char = %c | value = %d | is_space = %d\n", *input, *input, ft_isspace(*input));
 		if (ft_isspace(*input))
 			ft_skip_spaces(&input);
 		else if (*input == '<' || *input == '>' || *input == '('
@@ -87,7 +86,6 @@ t_token	*ft_tokenize(char *input)
 			token_list = handle_special_chars(&input, token_list);
 		else
 		{
-			printf("test \n");
 			token_list = handle_other_chars(&input, token_list);
 		}
 	}
