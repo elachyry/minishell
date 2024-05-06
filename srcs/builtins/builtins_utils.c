@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 06:00:18 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/03 06:01:35 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:39:36 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	update_env_value(char *key, char *value)
     new = malloc(sizeof(t_env));
     if (!new)
         return ;
-    new->key = strdup(key);
+    new->key = ft_strdup(key);
     new->value = strdup(value);
     new->next = g_shell_data.environment_list;
     g_shell_data.environment_list = new;

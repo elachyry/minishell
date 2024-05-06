@@ -15,7 +15,9 @@ PARSING = srcs/parsing/parse_tokens.c srcs/parsing/print_asp.c
 
 TOKENIZATION = srcs/tokenization/ft_tokenize_handler.c srcs/tokenization/ft_tokenize_utils.c srcs/tokenization/ft_tokenize.c
 
-SRCS = srcs/initialize_environment_list.c srcs/minishell.c srcs/signal.c $(BUILTINS) $(INPUT_VALIDATION) $(PARSING) $(TOKENIZATION)
+EXECUTION = srcs/execution/execution.c
+
+SRCS = srcs/initialize_environment_list.c srcs/minishell.c srcs/signal.c $(BUILTINS) $(INPUT_VALIDATION) $(PARSING) $(TOKENIZATION) $(EXECUTION)
 
 # SRCS = $(wildcard srcs/*.c) $(wildcard srcs/builtins/*.c) $(wildcard srcs/input_validation/*.c) $(wildcard srcs/tokenization/*.c) $(wildcard srcs/parsing/*.c)
 
@@ -23,7 +25,7 @@ OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME):  $(OBJS)
+$(NAME):  $(OBJS) 
 #@make -C $(LIBFT_PATH)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -L /Users/melachyr/readline/lib -lreadline -lncurses
 
@@ -36,6 +38,6 @@ fclean: clean
 #@make -C $(LIBFT_PATH) fclean
 	rm -f $(NAME)
 
-re : fclean all
+re : fclean all 
 
 .PHONY: all clean fclean re

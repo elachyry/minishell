@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:20:08 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/06 10:54:58 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/06 11:01:47 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ typedef struct s_token
 
 typedef struct s_ast_node
 {
-    t_token_type		type;
-    char 				**args;
-    struct s_ast_node	*left;
-    struct s_ast_node	*right;
-}   t_ast_node;
+	t_token_type		type;
+	char 				**args;
+	struct s_ast_node	*left;
+	struct s_ast_node	*right;
+}	t_ast_node;
 
 t_token	*ft_tokenize(char *input);
 void	ft_skip_spaces(char **line);

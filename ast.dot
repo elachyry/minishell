@@ -1,0 +1,3 @@
+digraph AST {
+"0x603000003ac0" [label="CMD: ls	-all"];
+}

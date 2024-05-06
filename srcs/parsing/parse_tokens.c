@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:37:53 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/06 10:48:31 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:46:07 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,30 +129,6 @@ t_ast_node	*parse_redirection(t_token **tokens)
 }
 
 
-t_ast_node	*parse_pipeline(t_token **tokens)
-{
-	t_token		*next;
-	t_token		*ptr;
-	t_ast_node	*pipe_node;
-	
-	ptr = *tokens;
-	pipe_node = NULL;
-	while (*tokens && (*tokens)->next)
-	{
-		next = (*tokens)->next;
-		if (next->type == PipeSymbol)
-		{
-			(*tokens)->next = NULL;
-			pipe_node = new_ast_node(next->type);
-			pipe_node->left = parse_redirection(&ptr);
-			pipe_node->right = parse_pipeline(&(next->next));
-			return (pipe_node);
-		}
-		*tokens = next;
-	}
-	return (parse_redirection(&ptr));
-}
-
 t_ast_node	*parse_parenthese(t_token **tokens)
 {
 	t_token		*next;
@@ -202,8 +178,32 @@ t_ast_node	*parse_parenthese(t_token **tokens)
 		}
 		*tokens = (*tokens)->next;
 	}
-	return (parse_pipeline(&ptr));
+	return (parse_redirection(&ptr));
 }
+t_ast_node	*parse_pipeline(t_token **tokens)
+{
+	t_token		*next;
+	t_token		*ptr;
+	t_ast_node	*pipe_node;
+	
+	ptr = *tokens;
+	pipe_node = NULL;
+	while (*tokens && (*tokens)->next)
+	{
+		next = (*tokens)->next;
+		if (next->type == PipeSymbol)
+		{
+			(*tokens)->next = NULL;
+			pipe_node = new_ast_node(next->type);
+			pipe_node->left = parse_parenthese(&ptr);
+			pipe_node->right = parse_pipeline(&(next->next));
+			return (pipe_node);
+		}
+		*tokens = next;
+	}
+	return (parse_parenthese(&ptr));
+}
+
 
 t_ast_node	*parse_logical_operator(t_token **tokens)
 {
@@ -220,13 +220,13 @@ t_ast_node	*parse_logical_operator(t_token **tokens)
 		{
 			(*tokens)->next = NULL;
 			logical_node = new_ast_node(next->type);
-			logical_node->left = parse_parenthese(&ptr);
+			logical_node->left = parse_pipeline(&ptr);
 			logical_node->right = parse_logical_operator(&(next->next));
 			return (logical_node);
 		}
 		*tokens = next;
 	}
-	return (parse_parenthese(&ptr));
+	return (parse_pipeline(&ptr));
 }
 
 t_ast_node	*parse_tokens(t_token **tokens)

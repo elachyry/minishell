@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/04 12:06:07 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:31:33 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,23 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct	s_simple_cmd
+{
+	char	**cmd;
+	char	*cmd_path;
+}	t_simple_cmd;
+
 typedef struct s_shell_data
 {
-	char 	*line;
-	char	**environment;
-	t_token	*tokens;
-	t_ast_node	*ast;
-	t_env *environment_list;
+	char			*line;
+	char			**environment;
+	char			**path;
+	t_token			*tokens;
+	t_ast_node		*ast;
+	t_simple_cmd	*simple_cmd;
+	t_env			*environment_list;
 }	t_shell_data;
+
 
 extern t_shell_data g_shell_data;
 
@@ -57,6 +66,7 @@ extern t_shell_data g_shell_data;
 t_env	*initialize_environment_list(char **env);
 char    *extract_key(char *env);
 char    *extract_value(char *env);
+void	extract_path(void);
 
 //builtins
 int		ft_cd(char *path);
@@ -79,6 +89,9 @@ t_bool	has_invalid_redirections(char *input);
 t_bool	has_misplaced_operators(char *input);
 t_bool	syntax_checker(char	*input);
 t_bool	syntax_error_checker(char	*input);
+
+//execution
+void	execution(void);
 
 //signals
 void	handle_signals(void);

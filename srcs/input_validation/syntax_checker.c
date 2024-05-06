@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 14:50:49 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/03 05:18:33 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:44:47 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_bool	syntax_error_checker(char	*input)
 {
 	// char	*trimed;
 
-	g_shell_data.line = ft_strtrim(input, " \t\n\v\f\ra");
+	g_shell_data.line = ft_strtrim(input, " \t\n\v\f\r");
 	if (ft_strncmp(g_shell_data.line, "", 1) == 0)
 		return (false);
 	if (!has_misplaced_operators(g_shell_data.line)
