@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 18:12:35 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/03 06:10:36 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/05 07:08:45 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	*ft_strndup(const char *s1, size_t n);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_isnumber(char *str);
+int		ft_isspace(char c);
 
 #endif
