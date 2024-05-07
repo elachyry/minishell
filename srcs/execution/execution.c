@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/06 22:47:35 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/07 04:08:13 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	get_cmd_path(void)
 	char			*path;
 	
 	cmd = ft_strrchr(g_shell_data.ast->args[0], '/');
-	printf("cmd %s\n", g_shell_data.ast->args[0]);
+	// printf("cmd %s\n", g_shell_data.ast->args[0]);
 	if (cmd)
 	{
 		if (access(g_shell_data.ast->args[0], X_OK) != -1)
@@ -83,5 +83,4 @@ void	execution(void)
 	// printf("nbr cmd = %d\n", g_shell_data.nbr_cmd);
 	if (g_shell_data.nbr_cmd == 1)
 		execute_single_cmd();
-	
 }

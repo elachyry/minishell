@@ -3,11 +3,76 @@ ls || && ls       :===> syntax error near unexpected token `&&' √
 ls || ls ||||||||||||||||||| ls || ls   :======> syntax error near unexpected token `||' √
 ls &&& ls         :===> syntax error near unexpected token `&' √
 (&&)              :===>  syntax error near unexpected token `&&' √
-()                :===>  syntax error near unexpected token `)'
-)(                :===>  syntax error near unexpected token `)'
+()                :===>  syntax error near unexpected token `)' √
+)(                :===>  syntax error near unexpected token `)' √
 
 ls | cat || || ls && ls √
 
 
 
 <<|ls
+
+Minishell:~$ < | ls
+syntax error
+Minishell:~$ < || ls
+syntax error
+Minishell:~$ < & ls
+syntax error
+Minishell:~$ < && ls
+syntax error
+Minishell:~$ > | ls
+syntax error
+Minishell:~$ > || ls
+syntax error
+Minishell:~$ > & ls
+syntax error
+Minishell:~$ > && ls
+syntax error
+Minishell:~$ >> | ls
+syntax error
+Minishell:~$ >> || ls
+syntax error
+Minishell:~$ >> && ls
+syntax error
+Minishell:~$ >> & ls
+syntax error
+Minishell:~$ << | ls
+syntax error
+Minishell:~$ << || ls
+syntax error
+Minishell:~$ << || ls
+syntax error
+Minishell:~$ << & ls
+syntax error
+Minishell:~$ << && ls
+
+
+>|ls weird case here it's not syntax error but here > | ls is considered as syntax error
+ls >> << ls
+ls << >> ls
+ls > < ls
+ls < > ls
+ls > << ls
+
+ls > > ls
+ls < < ls
+ls >> >> ls
+ls > >> ls
+ls << << ls
+ls < << ls
+ls >> > ls
+ls << < ls
+
+ls | > ls
+ls || < ls
+ls && >> ls
+ls | < ls
+ls && << ls
+ls || > ls
+ls && << ls
+ls | >> ls
+ls || << ls
+ls && > ls
+ls | << ls
+ls || > ls
+ls && < ls

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/06 22:42:29 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/07 06:56:43 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@
 # include <sys/wait.h>
 # include "tokenizing.h"
 # include <sys/ioctl.h>
-# define READLINE_LIBRARY
-# include "/Users/melachyr/readline/readline.h"
-# include "/Users/melachyr/readline/history.h"
 #include  "../libraries/libft/libft.h"
+# define READLINE_LIBRARY
+# include "/Users/akaddour/readline/include/readline/readline.h"
+# include "/Users/akaddour/readline/include/readline/history.h"
 
 typedef enum e_bool
 {
@@ -64,6 +64,7 @@ typedef struct s_shell_data
 
 extern t_shell_data g_shell_data;
 
+
 //initialization
 t_env	*initialize_environment_list(char **env);
 char    *extract_key(char *env);
@@ -87,10 +88,14 @@ int		is_valid_key(char *key);
 //input_validation
 t_bool	has_unclosed_parenthesis(char *input);
 t_bool	has_unclosed_quotes(char *input);
-t_bool	has_invalid_redirections(char *input);
-t_bool	has_misplaced_operators(char *input);
+t_bool	has_invalid_redirections(const char *input);
+t_bool	has_misplaced_operators(const char *input);
 t_bool	syntax_checker(char	*input);
 t_bool	syntax_error_checker(char	*input);
+
+int	is_invalid_operator(const char **input);
+const char	*skip_spaces(const char *input);
+void	update_quote_counts(char c, int *s_q_count, int *d_q_count);
 
 //execution
 void	execution(void);
