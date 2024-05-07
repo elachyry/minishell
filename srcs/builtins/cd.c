@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:30:23 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/04 06:18:05 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:45:48 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,27 +48,15 @@ int	ft_cd(char *path)
         display_cd_error(path);
         return (1);
     }
-    update_env_value("OLDPWD", get_env_value("PWD"));
+    if (get_env_value("PWD"))
+        update_env_value("OLDPWD", get_env_value("PWD"));
     cwd = getcwd(NULL, 0);
     if (!cwd)
     {
         ft_putstr_fd("minishell: cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
         return (1);
     }
-    update_env_value("PWD", cwd);
+    if (get_env_value("PWD"))
+        update_env_value("PWD", cwd);
     return (0);
 }
-
-// int main(int argc, char **argv)
-// {
-//     if (argc == 1)
-//         ft_cd(NULL);
-//     else if (argc == 2)
-//         ft_cd(argv[1]);
-//     else
-//     {
-//         ft_putstr_fd("minishell: cd: too many arguments\n", 2);
-//         return (1);
-//     }
-//     return (0);
-// }

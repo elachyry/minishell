@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:11:04 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/07 03:53:45 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/07 11:11:08 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	extract_path(void)
 	// {
 	// 	printf("%s\n", g_shell_data.path[i]);
 	// }
-	free(path);
+	// free(path);
 }
 
 char    *extract_key(char *env)
@@ -64,7 +64,7 @@ char    *extract_value(char *env)
     while (env[i] && env[i] != '=')
         i++;
     if (!env[i])
-        return (NULL);
+        return (ft_strdup(""));
     i++;
     j = i;
     while (env[j])

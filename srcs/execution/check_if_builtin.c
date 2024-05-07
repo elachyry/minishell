@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_if_builtin.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:13:08 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/07 10:11:56 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/07 10:42:12 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int execute_builtin(char **args)
     if (!ft_strcmp(args[0], "echo"))
         return (ft_echo(args));
     if (!ft_strcmp(args[0], "cd"))
-        return (ft_cd(args));
+        return (ft_cd(args[1]));
     if (!ft_strcmp(args[0], "pwd"))
         return (ft_pwd());
     if (!ft_strcmp(args[0], "export"))

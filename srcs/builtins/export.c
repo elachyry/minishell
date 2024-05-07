@@ -6,28 +6,86 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:38:47 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/04 06:18:30 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:12:59 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	ft_export_print(void)
+static void sort_env_array(t_env **env_array, int count)
 {
-    t_env	*env;
+    t_env *temp;
+    int sorted;
+    int j;
 
-    env = g_shell_data.environment_list;
-    while (env)
+    sorted = 0;
+    while (!sorted)
     {
-        if (env->value)
-            printf("declare -x %s=\"%s\"\n", env->key, env->value);
-        else
-            printf("declare -x %s\n", env->key);
-        env = env->next;
+        sorted = 1;
+        j = 0;
+        while (j < count - 1)
+        {
+            if (ft_strcmp(env_array[j]->key, env_array[j + 1]->key) > 0)
+            {
+                temp = env_array[j];
+                env_array[j] = env_array[j + 1];
+                env_array[j + 1] = temp;
+                sorted = 0;
+            }
+            j++;
+        }
     }
 }
 
-void	display_export_error(char *key)
+static void print_env_array(t_env **env_array, int count)
+{
+    int j;
+
+    j = 0;
+    while (j < count)
+    {
+        if (env_array[j]->value)
+            printf("declare -x %s=\"%s\"\n", env_array[j]->key, env_array[j]->value);
+        else
+            printf("declare -x %s\n", env_array[j]->key);
+        j++;
+    }
+}
+
+static void ft_export_print(void)
+{
+    t_env *env;
+    t_env **env_array;
+    int count;
+    int i;
+
+    env = g_shell_data.environment_list;
+    env_array = NULL;
+    count = 0;
+    // Count the number of environment variables
+    while (env) {
+        count++;
+        env = env->next;
+    }
+    // Allocate memory for environment variable pointers
+    env_array = (t_env **)malloc(count * sizeof(t_env *));
+    if (!env_array) {
+        perror("Memory allocation failed");
+        exit(1);
+    }
+    // Fill the array with environment variable pointers
+    env = g_shell_data.environment_list;
+    i = 0;
+    while (env) {
+        env_array[i++] = env;
+        env = env->next;
+    }
+    sort_env_array(env_array, count);
+    print_env_array(env_array, count);
+    free(env_array); // Free the array of pointers
+}
+
+static void	display_export_error(char *key)
 {
     ft_putstr_fd("export: `", 2);
     ft_putstr_fd(key, 2);
@@ -41,10 +99,7 @@ int	ft_export(char **args)
     char	*value;
 
     if (!args[1])
-    {
-        ft_export_print();
-        return (0);
-    }
+        return (ft_export_print() ,0);
     i = 1;
     while (args[i])
     {
