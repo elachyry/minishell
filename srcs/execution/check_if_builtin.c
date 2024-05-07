@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_if_builtin.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:13:08 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/07 08:17:24 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/07 10:11:56 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ int execute_builtin(char **args)
         return (ft_unset(args));
     if (!ft_strcmp(args[0], "env"))
         return (ft_env());
-    if (!ft_strcmp(args[0], "exit"))
-        return (ft_exit(args));
+	ft_exit(args);
     return (0);
 }
 

@@ -15,7 +15,7 @@ PARSING = srcs/parsing/parse_tokens.c srcs/parsing/print_asp.c
 
 TOKENIZATION = srcs/tokenization/ft_tokenize_handler.c srcs/tokenization/ft_tokenize_utils.c srcs/tokenization/ft_tokenize.c
 
-EXECUTION = srcs/execution/execution.c
+EXECUTION = srcs/execution/execution.c srcs/execution/check_if_builtin.c 
 
 SRCS = srcs/initialize_environment_list.c srcs/minishell.c srcs/signal.c $(BUILTINS) $(INPUT_VALIDATION) $(PARSING) $(TOKENIZATION) $(EXECUTION)
 
@@ -27,7 +27,8 @@ all: $(NAME)
 
 $(NAME):  $(OBJS) 
 #@make -C $(LIBFT_PATH)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -L /Users/akaddour/readline/lib -lreadline -lncurses
+#$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -L /Users/akaddour/readline/lib -lreadline -lncurses
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -L /Users/melachyr/readline/lib -lreadline -lncurses
 
 
 clean:

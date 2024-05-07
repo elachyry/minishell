@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/07 08:41:10 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/07 10:02:28 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@
 # include <sys/ioctl.h>
 #include  "../libraries/libft/libft.h"
 # define READLINE_LIBRARY
-# include "/Users/akaddour/readline/include/readline/readline.h"
-# include "/Users/akaddour/readline/include/readline/history.h"
+// # include "/Users/akaddour/readline/include/readline/readline.h"
+// # include "/Users/akaddour/readline/include/readline/history.h"
+# include "/Users/melachyr/readline/readline.h"
+# include "/Users/melachyr/readline/history.h"
 
 typedef enum e_bool
 {
@@ -95,6 +97,8 @@ t_bool	syntax_error_checker(char	*input);
 
 //execution
 void	execution(void);
+t_bool	check_if_builtin(char *arg);
+int 	execute_builtin(char **args);
 
 //signals
 void	handle_signals(void);

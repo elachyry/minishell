@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/07 04:08:13 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/07 10:03:54 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,10 @@ void	execution(void)
 {
 	// printf("nbr cmd = %d\n", g_shell_data.nbr_cmd);
 	if (g_shell_data.nbr_cmd == 1)
-		execute_single_cmd();
+	{
+		if (check_if_builtin(g_shell_data.ast->args[0]))
+			execute_builtin(g_shell_data.ast->args);
+		else
+			execute_single_cmd();
+	}
 }
