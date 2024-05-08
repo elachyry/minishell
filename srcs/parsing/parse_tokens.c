@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:37:53 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/06 22:46:35 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/07 21:21:40 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ t_ast_node	*parse_command(t_token	**tokens)
 	{
 		count++;
 		ptr = ptr->next;
-	}	
+	}
+	// dprintf(2, "count %d\n", count);
 	cmd = malloc(sizeof(char *) * (count + 1));
 	if (!cmd)
 		return (NULL);
@@ -87,6 +88,30 @@ t_ast_node	*parse_command(t_token	**tokens)
 	node = malloc(sizeof(t_ast_node));
 	node->args = cmd;
 	node->type = IDENTIFIER;
+	node->left = NULL;
+	node->right = NULL;
+	// for (int i = 0; cmd[i] != NULL; i++)
+	// 	dprintf(2, "%s\n", cmd[i]);
+	g_shell_data.nbr_cmd++;
+	
+	return (node);
+}
+
+t_ast_node	*parse_custom_command(t_token	*token)
+{
+	t_ast_node	*node;
+
+	if (token == NULL)
+		return (NULL);
+	node = malloc(sizeof(t_ast_node));
+	if (!node)
+		return (NULL);
+	node->type = token->type;
+	node->args = malloc(sizeof(char *) * 2);
+	if (!node->args)
+		return (NULL);
+	node->args[0] = token->value;
+	node->args[1] = NULL;
 	node->left = NULL;
 	node->right = NULL;
 	g_shell_data.nbr_cmd++;
@@ -105,10 +130,11 @@ t_ast_node	*parse_redirection(t_token **tokens)
 	if ((*tokens)->type == LessThanOperator || (*tokens)->type == DoubleLessThanOperator
 		|| (*tokens)->type == GreaterThanOperator || (*tokens)->type == DoubleGreaterThanOperator)
 	{
-
 		redirection_node = new_ast_node((*tokens)->type);
 		*tokens = NULL;
 		redirection_node->left = parse_redirection(tokens);
+		if (redirection_node->left == NULL)
+			redirection_node->left = parse_custom_command(ptr->next->next);
 		redirection_node->right = new_ast_file_node(ptr->next);
 		return (redirection_node);
 	}

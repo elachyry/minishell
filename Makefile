@@ -35,10 +35,10 @@ clean:
 	@make -C $(LIBFT_PATH) clean
 	rm -f $(OBJS)
 
-fclean: clean
+fclean: 
 #@make -C $(LIBFT_PATH) fclean
-	rm -f $(NAME)
+	rm -f $(NAME) $(OBJS)
 
-re : fclean all 
+re : fclean all clean
 
 .PHONY: all clean fclean re

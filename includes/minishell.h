@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/07 10:02:28 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:10:04 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/wait.h>
 # include "tokenizing.h"
 # include <sys/ioctl.h>
+# include <fcntl.h>
 #include  "../libraries/libft/libft.h"
 # define READLINE_LIBRARY
 // # include "/Users/akaddour/readline/include/readline/readline.h"
@@ -66,6 +67,7 @@ typedef struct s_shell_data
 
 extern t_shell_data g_shell_data;
 
+const char	*get_token_type_name(t_token_type type);
 
 //initialization
 t_env	*initialize_environment_list(char **env);
