@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/05/07 21:21:16 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:30:49 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	display_prompt(char **line)
 
 void	initialize_shell(char **envp)
 {
+	// printf("envp = %s\n", envp[0]);
 	g_shell_data.line = NULL;
 	g_shell_data.environment = envp;
 	g_shell_data.path = NULL;

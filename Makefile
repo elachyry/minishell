@@ -27,15 +27,15 @@ all: $(NAME)
 
 $(NAME):  $(OBJS) 
 #@make -C $(LIBFT_PATH)
-#$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -L /Users/akaddour/readline/lib -lreadline -lncurses
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -L /Users/melachyr/readline/lib -lreadline -lncurses
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -L /Users/akaddour/readline/lib -lreadline -lncurses
+#$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -L /Users/melachyr/readline/lib -lreadline -lncurses
 
 
 clean:
 	@make -C $(LIBFT_PATH) clean
 	rm -f $(OBJS)
 
-fclean: 
+fclean:
 #@make -C $(LIBFT_PATH) fclean
 	rm -f $(NAME) $(OBJS)
 

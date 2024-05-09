@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:37:53 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/07 21:21:40 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:06:11 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,6 @@ t_ast_node	*new_ast_file_node(t_token *token)
 	return (node);
 }
 
-t_ast_node	*link_redirections(t_token **tokens, t_token *ptr)
-{
-	t_ast_node	*node;
-	
-	node = new_ast_node((*tokens)->type);
-	*tokens = NULL;
-	node->left = parse_redirection(tokens);
-	node->right = new_ast_file_node(ptr->next);
-	return (node);
-}
-
 t_ast_node	*parse_command(t_token	**tokens)
 {
 	int			count;
@@ -65,6 +54,9 @@ t_ast_node	*parse_command(t_token	**tokens)
 	t_token		*ptr;
 	t_ast_node	*node;
 
+	if (tokens == NULL || *tokens == NULL)
+		return (NULL);
+	// printf("parse_command token = %s\n", (*tokens)->value);
 	ptr = *tokens;
 	count = 0;
 	while (ptr && ptr->type == IDENTIFIER)
@@ -89,7 +81,8 @@ t_ast_node	*parse_command(t_token	**tokens)
 	node->args = cmd;
 	node->type = IDENTIFIER;
 	node->left = NULL;
-	node->right = NULL;
+	// printf("parse_command2 token = %s\n", *tokens == NULL ? "NULL" : (*tokens)->value);
+	node->right = parse_redirection(tokens);
 	// for (int i = 0; cmd[i] != NULL; i++)
 	// 	dprintf(2, "%s\n", cmd[i]);
 	g_shell_data.nbr_cmd++;
@@ -97,12 +90,13 @@ t_ast_node	*parse_command(t_token	**tokens)
 	return (node);
 }
 
-t_ast_node	*parse_custom_command(t_token	*token)
+t_ast_node	*parse_custom_command(t_token *token)
 {
 	t_ast_node	*node;
 
 	if (token == NULL)
 		return (NULL);
+	// printf("parse_custom_command\n");
 	node = malloc(sizeof(t_ast_node));
 	if (!node)
 		return (NULL);
@@ -117,6 +111,7 @@ t_ast_node	*parse_custom_command(t_token	*token)
 	g_shell_data.nbr_cmd++;
 	return (node);
 }
+
 
 t_ast_node	*parse_redirection(t_token **tokens)
 {
@@ -133,9 +128,9 @@ t_ast_node	*parse_redirection(t_token **tokens)
 		redirection_node = new_ast_node((*tokens)->type);
 		*tokens = NULL;
 		redirection_node->left = parse_redirection(tokens);
-		if (redirection_node->left == NULL)
-			redirection_node->left = parse_custom_command(ptr->next->next);
-		redirection_node->right = new_ast_file_node(ptr->next);
+		// if (redirection_node->left == NULL)
+		// 	redirection_node->left = parse_custom_command(ptr->next->next);
+		redirection_node->right = parse_command(&ptr->next);
 		return (redirection_node);
 	}
 	while (*tokens && (*tokens)->next)
@@ -144,15 +139,16 @@ t_ast_node	*parse_redirection(t_token **tokens)
 		if (next->type == LessThanOperator || next->type == DoubleLessThanOperator
 			|| next->type == GreaterThanOperator || next->type == DoubleGreaterThanOperator)
 		{
+			// printf("red = %s\n", next->value);
 			redirection_node = new_ast_node(next->type); 
 			(*tokens)->next = NULL;
-			redirection_node->right = new_ast_file_node(next->next);
 			redirection_node->left = parse_redirection(&ptr);
+			redirection_node->right = parse_command(&next->next);
 			return (redirection_node);
 		}
 		*tokens = next;
 	}
-	return (parse_command(&ptr));
+    return (parse_command(&ptr));
 }
 
 

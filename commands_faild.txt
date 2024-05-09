@@ -76,3 +76,12 @@ ls && > ls
 ls | << ls
 ls || > ls
 ls && < ls
+
+
+
+
+//////
+wc -l < Makefile > o
+Ls < ls > > > ls
+
+wc -l < Makefile > o < cat > o
