@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/09 13:51:00 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/10 09:41:31 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 # include <errno.h>
 # include <termios.h>
 # include <sys/wait.h>
-# include "tokenizing.h"
 # include <sys/ioctl.h>
 # include <fcntl.h>
+# include "tokenizing.h"
 #include  "../libraries/libft/libft.h"
 # define READLINE_LIBRARY
 // # include "/Users/akaddour/readline/include/readline/readline.h"
@@ -45,12 +45,22 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_files
+{
+	t_token_type	type;
+	char			*filename;
+	struct s_files	*next;
+}	t_files;
+
 typedef struct	s_simple_cmd
 {
 	char	**cmd;
 	char	*cmd_path;
+	char	*in_file;
+	char	*out_file;
 	int		in_fd;
 	int		out_fd;
+	t_files	*files;
 }	t_simple_cmd;
 
 typedef struct s_shell_data

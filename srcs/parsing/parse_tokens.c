@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:37:53 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/09 12:06:11 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/09 21:39:00 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,17 +119,20 @@ t_ast_node	*parse_redirection(t_token **tokens)
 	t_token		*ptr;
 	t_token		*next;
 
-	if (!*tokens)
+	if (!tokens || !*tokens)
 		return (NULL);
 	ptr = *tokens;
 	if ((*tokens)->type == LessThanOperator || (*tokens)->type == DoubleLessThanOperator
 		|| (*tokens)->type == GreaterThanOperator || (*tokens)->type == DoubleGreaterThanOperator)
 	{
+		// dprintf(2, "1 %s\n", (*tokens)->value);
 		redirection_node = new_ast_node((*tokens)->type);
 		*tokens = NULL;
 		redirection_node->left = parse_redirection(tokens);
-		// if (redirection_node->left == NULL)
-		// 	redirection_node->left = parse_custom_command(ptr->next->next);
+		// dprintf(2, "2 %s\n", ptr->next->next == NULL ? "NULL" :  ptr->next->next->value);
+		if (redirection_node->left == NULL && ptr->next->next && ptr->next->next->type == IDENTIFIER)
+			redirection_node->left = parse_custom_command(ptr->next->next);
+		// dprintf(2, "3 %s\n", ptr->next->value);
 		redirection_node->right = parse_command(&ptr->next);
 		return (redirection_node);
 	}
