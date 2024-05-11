@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/11 10:16:03 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/11 15:43:30 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ t_files	*new_file_node(char *filename, t_token_type type)
 	node->filename = filename;
 	node->type = type;
 	node->next = NULL;
+	node->is_opened = false;
 	return (node);
 }
 
@@ -96,7 +97,7 @@ void	add_lst_file(t_files **head, t_files *node)
 
 int execute_command(char **args)
 {
-	dprintf(2, "execute_command %s\n", args[0]);
+	// dprintf(2, "execute_command %s\n", args[0]);
 	// dprintf(2, "pre files %p\n", g_shell_data.simple_cmd->files);
     pid_t pid = fork();
     int status = 0;
@@ -116,7 +117,8 @@ int execute_command(char **args)
 				// dprintf(2, "file in = %s\n", file->filename);
 				int in_fd = open(file->filename, O_RDONLY);
 				if (in_fd == -1) {
-					perror(file->filename);
+					if (!file->is_opened)
+						perror(file->filename);
 					close(in_fd);
 					exit(EXIT_FAILURE);
 				}
@@ -181,7 +183,7 @@ int execute_command(char **args)
         // // Restore stdout to original
         // dup2(g_shell_data.saved_stdout, STDOUT_FILENO);
     }
-    return status;
+    return (WEXITSTATUS(status));
 }
 
 
@@ -214,7 +216,7 @@ void execute_ast(t_ast_node *node)
 			dup2(pipefd[1], STDOUT_FILENO);
 			close(pipefd[1]);
 			//dprintf(2, "left node pipe %s\n", get_token_type_name(node->left->type));
-			dprintf(2, "left %s\n", node->left->args[0]);
+			// dprintf(2, "left %s\n", node->left->args[0]);
 			execute_ast(node->left);
 			exit(EXIT_SUCCESS);
 		}
@@ -246,27 +248,30 @@ void execute_ast(t_ast_node *node)
 		}
 
 	} else if (node->type == LogicalAnd) {
-		//dprintf(2, "LogicalAnd\n");
+		// dprintf(2, "LogicalAnd\n");
 		execute_ast(node->left);
 		
-		int left_status = WEXITSTATUS(g_shell_data.status);
+		g_shell_data.simple_cmd->files = NULL;
+		int left_status = g_shell_data.status;
 		// dprintf(2, "status %d\n", left_status);
 		if (left_status == 0) {
 			execute_ast(node->right);
 		}
 	} else if (node->type == LogicalOr) {
-		//dprintf(2, "LogicalOr\n");
+		// dprintf(2, "LogicalOr\n");
 
 		execute_ast(node->left);
-		
+		g_shell_data.simple_cmd->files = NULL;
 		int left_status = g_shell_data.status;
+		// dprintf(2, "status %d\n", left_status);
 		if (left_status != 0) {
+			// dprintf(2, "hiii\n");
 			execute_ast(node->right);
 		}
 	} else if (node->type == LessThanOperator) {
 		// int saved_stdin = dup(STDIN_FILENO);
     	// int saved_stdout = dup(STDOUT_FILENO);
-		dprintf(2, "LessThanOperator\n");
+		// dprintf(2, "LessThanOperator\n");
 		// int fd = open(node->right->args[0], O_RDONLY);
 		// dprintf(2, "fd = %d\n", fd);
 		// g_shell_data.simple_cmd->in_file = node->right->args[0];
@@ -274,11 +279,20 @@ void execute_ast(t_ast_node *node)
 		// printf("file2 = %p\n", file);
 		add_lst_file(&g_shell_data.simple_cmd->files, file);
 		g_shell_data.simple_cmd->is_first++;
-		if (!node->right->right && !node->left && g_shell_data.simple_cmd->is_first == 1)
-		{
+		// if (!node->right->right && !node->left && g_shell_data.simple_cmd->is_first == 1)
+		// {
 			int fd = open(node->right->args[0], O_RDONLY);
+			if (fd == -1)
+			{
+				t_files	*last = lst_file_last(g_shell_data.simple_cmd->files);
+				last->is_opened = true;
+				perror(node->right->args[0]);
+				close(fd);
+				g_shell_data.status = 1;
+				return ;
+			}
 			close(fd);
-		}
+		// }
 		// g_shell_data.simple_cmd->in_fd = fd;
 		// if (fd == -1) {
 		// 	perror(node->right->args[0]);
@@ -294,7 +308,7 @@ void execute_ast(t_ast_node *node)
         // Restore stdout to original
         // dup2(saved_stdout, STDOUT_FILENO);
 	} else if (node->type == GreaterThanOperator) {
-		dprintf(2, "GreaterThanOperator \n" );
+		// dprintf(2, "GreaterThanOperator \n" );
 		// int saved_stdin = dup(STDIN_FILENO);
     	// int saved_stdout = dup(STDOUT_FILENO);
 		// int fd = open(node->right->args[0], O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -303,12 +317,12 @@ void execute_ast(t_ast_node *node)
 		// printf("file = %p\n", file);
 		add_lst_file(&g_shell_data.simple_cmd->files, file);
 		g_shell_data.simple_cmd->is_first++;
-		if (!node->right->right && !node->left && g_shell_data.simple_cmd->is_first == 1)
-		{
-			printf("inside if\n");
+		// if (!node->right->right && !node->left && g_shell_data.simple_cmd->is_first == 1)
+		// {
+			// printf("inside if\n");
 			int fd = open(node->right->args[0], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			close(fd);
-		}
+		// }
 		// g_shell_data.simple_cmd->out_fd = fd;
 		// if (fd == -1) {
 		// 	perror(node->right->args[0]);
@@ -345,11 +359,11 @@ void execute_ast(t_ast_node *node)
 		t_files	*file = new_file_node(node->right->args[0], DoubleGreaterThanOperator);
 		add_lst_file(&g_shell_data.simple_cmd->files, file);
 		g_shell_data.simple_cmd->is_first++;
-		if (!node->right->right && !node->left && g_shell_data.simple_cmd->is_first == 1)
-		{
+		// if (!node->right->right && !node->left && g_shell_data.simple_cmd->is_first == 1)
+		// {
 			int fd = open(node->right->args[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
 			close(fd);
-		}
+		// }
 		// int fd = open(node->right->args[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
 		// if (fd == -1) {
 		// 	perror("open");

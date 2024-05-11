@@ -84,4 +84,4 @@ ls && < ls
 ls < a || ls
 ls | > A < A
 >> l
-ls <a>ls1s | <a>ls3s
+ls < a > ls1s | < a > ls3s

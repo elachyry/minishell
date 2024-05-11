@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/11 10:15:55 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/11 14:37:50 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_files
 {
 	t_token_type	type;
 	char			*filename;
+	t_bool			is_opened;
 	struct s_files	*next;
 }	t_files;
 
