@@ -81,7 +81,7 @@ ls && < ls
 
 
 //////
-wc -l < Makefile > o
-Ls < ls > > > ls
-
-wc -l < Makefile > o < cat > o
+ls < a || ls
+ls | > A < A
+>> l
+ls <a>ls1s | <a>ls3s

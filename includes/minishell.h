@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/10 09:41:31 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/11 10:15:55 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,8 @@ typedef struct	s_simple_cmd
 {
 	char	**cmd;
 	char	*cmd_path;
-	char	*in_file;
-	char	*out_file;
-	int		in_fd;
-	int		out_fd;
 	t_files	*files;
+	int		is_first;
 }	t_simple_cmd;
 
 typedef struct s_shell_data
@@ -70,8 +67,6 @@ typedef struct s_shell_data
 	char			**path;
 	int				status;
 	int				nbr_cmd;
-	int				saved_stdin;
-	int				saved_stdout;
 	t_token			*tokens;
 	t_ast_node		*ast;
 	t_simple_cmd	*simple_cmd;
