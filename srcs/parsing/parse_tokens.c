@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:37:53 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/09 21:39:00 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/12 21:38:18 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,67 @@ t_ast_node	*parse_command(t_token	**tokens)
 	node->right = parse_redirection(tokens);
 	// for (int i = 0; cmd[i] != NULL; i++)
 	// 	dprintf(2, "%s\n", cmd[i]);
-	g_shell_data.nbr_cmd++;
+	// g_shell_data.nbr_cmd++;
+	
+	return (node);
+}
+t_ast_node	*parse_command_with_sepa_arg(t_token *tokens, t_token *args)
+{
+	int			count;
+	int			count2;
+	int			i;
+	char		**cmd;
+	t_token		*ptr;
+	t_token		*ptr2;
+	t_ast_node	*node;
+
+	if (tokens == NULL || tokens == NULL)
+		return (NULL);
+	// printf("parse_command token = %s\n", (*tokens)->value);
+	ptr = tokens;
+	count = 0;
+	while (ptr && ptr->type == IDENTIFIER)
+	{
+		count++;
+		ptr = ptr->next;
+	}
+	ptr2 = args;
+	count2 = 0;
+	while (ptr2 && ptr2->type == IDENTIFIER)
+	{
+		count2++;
+		ptr2 = ptr2->next;
+	}
+	// dprintf(2, "count %d count2 %d\n", count, count2);
+	cmd = malloc(sizeof(char *) * (count + count2 + 1));
+	if (!cmd)
+		return (NULL);
+	ptr = tokens;
+	i = -1;
+	while (++i < count)
+	{
+		cmd[i] = ptr->value;
+		ptr = ptr->next;
+	}
+	ptr2 = args;
+	int	j = -1;
+	while (++j < count2)
+	{
+		printf("t\n");
+		cmd[i] = ptr2->value;
+		ptr2 = ptr2->next;
+		i++;
+	}
+	cmd[i] = NULL;
+	tokens = ptr;
+	node = malloc(sizeof(t_ast_node));
+	node->args = cmd;
+	node->type = IDENTIFIER;
+	node->left = NULL;
+	node->right = NULL;
+	// for (int i = 0; cmd[i] != NULL; i++)
+	// 	dprintf(2, "%s\n", cmd[i]);
+	// g_shell_data.nbr_cmd++;
 	
 	return (node);
 }
@@ -145,7 +205,13 @@ t_ast_node	*parse_redirection(t_token **tokens)
 			// printf("red = %s\n", next->value);
 			redirection_node = new_ast_node(next->type); 
 			(*tokens)->next = NULL;
-			redirection_node->left = parse_redirection(&ptr);
+			if (next->next->next && next->next->next->type == IDENTIFIER)
+			{
+				// printf("yesy\n");
+				redirection_node->left = parse_command_with_sepa_arg(ptr, next->next->next);
+			}
+			else
+				redirection_node->left = parse_redirection(&ptr);
 			redirection_node->right = parse_command(&next->next);
 			return (redirection_node);
 		}
