@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:11:04 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/11 21:20:45 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/12 19:59:56 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	extract_path(void)
 	// {
 	// 	printf("%s\n", g_shell_data.path[i]);
 	// }
-	free(path);
+	// free(path);
 }
 
 char    *extract_key(char *env)
@@ -68,7 +68,7 @@ char    *extract_value(char *env)
     while (env[i] && env[i] != '=')
         i++;
     if (!env[i])
-        return (NULL);
+        return (ft_strdup(""));
     i++;
     j = i;
     while (env[j])

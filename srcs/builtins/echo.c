@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 01:36:59 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/04 04:17:39 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/07 10:30:10 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static int check_option(char *s)
     int i = 1;
 
     if (s[0] != '-')
+        return (0);
+	if (s[1] == '\0')
         return (0);
     while (s[i])
     {
