@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/12 20:19:09 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/12 20:29:39 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,47 +47,6 @@ int	get_cmd_path(char	*args)
 	}
 	
 	return (0);
-    char			*cmd;
-    char			*path;
-
-    if (g_shell_data.ast == NULL || g_shell_data.ast->args == NULL) {
-        return 0;
-    }
-    
-    cmd = ft_strrchr(g_shell_data.ast->args[0], '/');
-    // printf("cmd %s\n", g_shell_data.ast->args[0]);
-    if (cmd)
-    {
-        if (access(g_shell_data.ast->args[0], X_OK) != -1)
-        {
-            g_shell_data.simple_cmd->cmd_path = g_shell_data.ast->args[0];
-            // printf("simple_cmd path %s\n", g_shell_data.simple_cmd->cmd_path);
-            return (1);
-        }
-    }
-    else
-    {
-        cmd = g_shell_data.ast->args[0];
-        // printf("cmd %s\n", cmd);
-        while (*g_shell_data.path)
-        {
-            // printf("path %s\n", *g_shell_data.path);
-            path = ft_strjoin(*g_shell_data.path, "/");
-            path = ft_strjoin(path, cmd);
-            // printf("path %s\n", path);
-            if (access(path, X_OK) != -1)
-            {
-                // printf("before \n");
-                g_shell_data.simple_cmd->cmd_path = path;
-                // printf("simple_cmd path %s\n", g_shell_data.simple_cmd->cmd_path);
-                return (1);
-            }
-            free(path);
-            g_shell_data.path++;
-        }
-    }
-    
-    return (0);
 }
 
 

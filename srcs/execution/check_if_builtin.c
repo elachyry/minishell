@@ -6,11 +6,11 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:13:08 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/12 20:01:18 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/12 20:29:06 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int execute_builtin(char **args)
 {
