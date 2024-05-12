@@ -17,7 +17,9 @@ TOKENIZATION = srcs/tokenization/ft_tokenize_handler.c srcs/tokenization/ft_toke
 
 EXECUTION = srcs/execution/execution.c srcs/execution/check_if_builtin.c 
 
-SRCS = srcs/initialize_environment_list.c srcs/minishell.c srcs/signal.c $(BUILTINS) $(INPUT_VALIDATION) $(PARSING) $(TOKENIZATION) $(EXECUTION)
+EXPANDER = srcs/expander/expander.c
+
+SRCS = srcs/initialize_environment_list.c srcs/minishell.c srcs/signal.c $(BUILTINS) $(INPUT_VALIDATION) $(PARSING) $(TOKENIZATION) $(EXECUTION) $(EXPANDER)
 
 # SRCS = $(wildcard srcs/*.c) $(wildcard srcs/builtins/*.c) $(wildcard srcs/input_validation/*.c) $(wildcard srcs/tokenization/*.c) $(wildcard srcs/parsing/*.c)
 

@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 00:57:54 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/03 06:06:14 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/11 11:04:14 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_exit(char **args)
 		if (args[2])
 		{
 			ft_putstr_fd("exit\nminishell: exit: too many arguments\n", 2);
-			exit(1);
+			return ;
 		}
 	}
 	ft_putstr_fd("exit\n", 2);

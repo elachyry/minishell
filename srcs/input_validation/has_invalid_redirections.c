@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:49:24 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/07 06:58:34 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/11 18:48:25 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_bool	redirections_check(char *input, char sign, char sign2)
 	}
 	return (true);
 }
+
 
 t_bool	has_invalid_redirections(char *input)
 {

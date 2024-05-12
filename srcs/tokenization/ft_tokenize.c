@@ -3,37 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenize.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:25:38 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/06 22:33:22 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/10 18:25:14 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+// t_token	*handle_other_chars(char **input, t_token *token_list)
+// {
+// 	char	*start;
+// 	char	*identifier;
+// 	char	quote_type;
+
+// 	start = *input;
+// 	if (**input == '\'' || **input == '\"')
+// 	{
+// 		quote_type = **input;
+// 		(*input)++;
+// 		while (*(*input + 1) && **input != quote_type )
+// 			(*input)++;
+// 		(*input)++;
+// 	}
+// 	else
+// 	{
+// 		while (**input && !ft_isspace(**input) && **input != '<' && **input != '>'
+// 			&& **input != '|' && **input != '(' && **input != ')'
+// 			&& **input != '&' && **input != '|' && **input != '\''
+// 			&& **input != '\"')
+// 			(*input)++;
+// 	}
+// 	identifier = ft_strndup(start, *input - start);
+// 	if (identifier == NULL)
+// 	{
+// 		printf("Error: malloc failed\n");
+// 		exit(1);
+// 	}
+// 	token_list = add_token(token_list, IDENTIFIER, identifier);
+// 	return (token_list);
+// }
+
+void	update_quote_status(char c, int *in_quote, char *quote_char)
+{
+	if (!*in_quote && (c == '\'' || c == '\"'))
+	{
+		*in_quote = 1;
+		*quote_char = c;
+	}
+	else if (*in_quote && c == *quote_char)
+		*in_quote = 0;
+}
+
 t_token	*handle_other_chars(char **input, t_token *token_list)
 {
 	char	*start;
+	int		in_quote;
+	char	quote_char;
 	char	*identifier;
-	char	quote_type;
 
 	start = *input;
-	if (**input == '\'' || **input == '\"')
+	in_quote = 0;
+	quote_char = '\0';
+	while (**input)
 	{
-		quote_type = **input;
+		update_quote_status(**input, &in_quote, &quote_char);
+		if (!in_quote && ft_strchr(" \t\n><|", **input))
+			break ;
 		(*input)++;
-		while (*(*input + 1) && **input != quote_type)
-			(*input)++;
-		(*input)++;
-	}
-	else
-	{
-		while (**input && !ft_isspace(**input) && **input != '<' && **input != '>'
-			&& **input != '|' && **input != '(' && **input != ')'
-			&& **input != '&' && **input != '|' && **input != '\''
-			&& **input != '\"')
-			(*input)++;
 	}
 	identifier = ft_strndup(start, *input - start);
 	if (identifier == NULL)
@@ -44,6 +82,7 @@ t_token	*handle_other_chars(char **input, t_token *token_list)
 	token_list = add_token(token_list, IDENTIFIER, identifier);
 	return (token_list);
 }
+
 
 t_token	*handle_special_chars(char **input, t_token *token_list)
 {

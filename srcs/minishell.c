@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/05/07 10:45:43 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/11 14:21:40 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,12 @@ void	initialize_shell(char **envp)
 }
 
 
+
 int	main(int ac, char **av, char **envp)
 {
 	t_token		*tokens;
 	t_ast_node	*ast;
 	
-
 	(void)av;
 	(void)ac;
 	if (ac != 1)
@@ -102,11 +102,12 @@ int	main(int ac, char **av, char **envp)
 			continue ;
 		
 		tokens = ft_tokenize(g_shell_data.line);
-		free(g_shell_data.line);
 		// display_tokens(tokens);
+		tokens = expand_tokens(tokens);
+		free(g_shell_data.line);
 		ast = parse_tokens(&tokens);
 		g_shell_data.ast = ast;
-		generate_ast_diagram(ast);
+		// generate_ast_diagram(ast);
 		execution();
 	}
 	return (0);
