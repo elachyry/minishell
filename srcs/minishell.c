@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/05/11 14:21:40 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/12 19:51:14 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,46 @@ void	initialize_shell(char **envp)
 	extract_path();
 }
 
+t_bool	is_redirection(int type)
+{
+	return (type == LessThanOperator || type == GreaterThanOperator
+		|| type == DoubleLessThanOperator || type == DoubleGreaterThanOperator);
+}
+
+t_bool	check_tokens(t_token *tok)
+{
+	if (tok && tok->type == PipeSymbol)
+		return (printf("%s `|'\n", SYNTAX_ERR), true);
+	while (tok)
+	{
+		if ((is_redirection(tok->type)) \
+			&& (!tok->next || tok->next->type != IDENTIFIER))
+		{
+			if (tok->next)
+				return (printf("%s `%s'\n", \
+					SYNTAX_ERR, tok->next->value), true);
+			return (printf("%s `newline'\n", SYNTAX_ERR), true);
+		}
+		if (tok->type == PipeSymbol && (!tok->next \
+			|| (tok->next->type != IDENTIFIER && !is_redirection(tok->next->type))))
+		{
+			if (tok->next)
+				return (printf("%s `%s'\n", \
+					SYNTAX_ERR, tok->next->value), true);
+			return (printf("%s `newline'\n", SYNTAX_ERR), true);
+		}
+		tok = tok->next;
+	}
+	return (false);
+}
+
 
 
 int	main(int ac, char **av, char **envp)
 {
 	t_token		*tokens;
 	t_ast_node	*ast;
+	// t_bool	no_error;
 	
 	(void)av;
 	(void)ac;
@@ -98,12 +132,14 @@ int	main(int ac, char **av, char **envp)
 	{
 		handle_signals();
 		display_prompt(&g_shell_data.line);
-		if (!syntax_error_checker(g_shell_data.line))
-			continue ;
-		
+		// if (!syntax_error_checker(g_shell_data.line))
+		// 	continue ;
 		tokens = ft_tokenize(g_shell_data.line);
-		// display_tokens(tokens);
+		display_tokens(tokens);
 		tokens = expand_tokens(tokens);
+		// no_error = !check_tokens(tokens);
+		// if (!no_error)
+		// 	continue ;
 		free(g_shell_data.line);
 		ast = parse_tokens(&tokens);
 		g_shell_data.ast = ast;

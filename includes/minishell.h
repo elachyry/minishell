@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/11 18:48:47 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/12 15:20:42 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # include "/Users/akaddour/readline/include/readline/history.h"
 // # include "/Users/melachyr/readline/readline.h"
 // # include "/Users/melachyr/readline/history.h"
+
+# define SYNTAX_ERR "minishell: syntax error near unexpected token"
 
 typedef enum e_bool
 {
@@ -90,10 +92,14 @@ int		is_valid_key(char *key);
 //input_validation
 t_bool	has_unclosed_parenthesis(char *input);
 t_bool	has_unclosed_quotes(char *input);
-t_bool	has_invalid_redirections(char *input);
-t_bool	has_misplaced_operators(char *input);
+t_bool	has_invalid_redirections(const char *input);
+t_bool	has_misplaced_operators(const char *input);
 t_bool	syntax_checker(char	*input);
 t_bool	syntax_error_checker(char	*input);
+
+int	is_invalid_operator(const char **input);
+const char	*skip_spaces(const char *input);
+void	update_quote_counts(char c, int *s_q_count, int *d_q_count);
 
 //execution
 void	execution(void);
