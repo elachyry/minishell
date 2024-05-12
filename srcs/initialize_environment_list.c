@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:11:04 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/12 19:59:56 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/12 20:17:00 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char    *extract_value(char *env)
     while (env[i] && env[i] != '=')
         i++;
     if (!env[i])
-        return (ft_strdup(""));
+        return (NULL);
     i++;
     j = i;
     while (env[j])
@@ -79,9 +79,12 @@ char    *extract_value(char *env)
     j = 0;
     while (env[i])
     {
-        value[j] = env[i];
+        if (env[i] != '\'' && env[i] != '\"') // Skip quotes
+        {
+            value[j] = env[i];
+            j++;
+        }
         i++;
-        j++;
     }
     value[j] = '\0';
     return (value);

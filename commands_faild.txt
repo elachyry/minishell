@@ -64,18 +64,33 @@ ls >> > ls
 ls << < ls
 
 ls | > ls
+ls | < ls
+ls | >> ls
+ls | << ls
+
 ls || < ls
 ls && >> ls
-ls | < ls
 ls && << ls
 ls || > ls
 ls && << ls
-ls | >> ls
 ls || << ls
 ls && > ls
-ls | << ls
 ls || > ls
 ls && < ls
+
+
+
+
+
+//////
+ls < a || ls√
+ls | > A < A√
+>> l√
+ls < a > ls1s | < a > ls3s√
+ls >> a | ls > a | Makefile >> a && echo "hello" √
+ls >> a | ls > a || Makefile >> a && ls√
+echo >> test bonjour
+>> test echo bonjour
 
 
 

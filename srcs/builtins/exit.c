@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 00:57:54 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/08 14:59:24 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/12 20:17:27 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_exit(char **args)
 		if (args[2])
 		{
 			ft_putstr_fd("exit\nminishell: exit: too many arguments\n", 2);
-			exit(1);
+			return ;
 		}
 	}
 	ft_putstr_fd("exit\n", 2);
