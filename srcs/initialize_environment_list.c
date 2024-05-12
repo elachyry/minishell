@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize_environment_list.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:11:04 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/07 03:53:45 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/11 21:20:45 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@ void	extract_path(void)
 			path = env->value;
 		env = env->next;
 	}
-	g_shell_data.path = ft_split(path, ':');
+	if (path)
+		g_shell_data.path = ft_split(path, ':');
+	else
+		g_shell_data.path = ft_split(" ", ':');
+	
 	// for (int i = 0; g_shell_data.path[i] != NULL; i++)
 	// {
 	// 	printf("%s\n", g_shell_data.path[i]);

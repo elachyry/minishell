@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/11 20:52:33 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/12 19:40:30 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,63 @@ t_files	*new_file_node(char *filename, t_token_type type)
 	node->is_opened = false;
 	return (node);
 }
+
+char	*get_here_doc_name()
+{
+	char	*name;
+	char	line[2];
+	int		fd;
+	int		c;
+	
+	name = malloc(sizeof(char) * 11);
+	if (name == NULL)
+		return (NULL);
+	fd = open("/dev/random", O_RDONLY);
+	if (fd == -1)
+	{
+		free(name);
+		return (NULL);
+	}
+	c = 0;
+	while (c < 11)
+	{
+		read(fd, line, 1);
+		if (ft_isalpha(line[0]))
+		{
+			name[c] = line[0];
+			c++;
+		}
+	}
+	name[c] = '\0';
+	close(fd);
+	return (name);
+}
+
+// void	here_doc()
+// {
+// 	char	*str;
+// 	int		infile;
+
+// 	str = NULL;
+// 	// infile = open(pipex.in_file_path, O_CREAT | O_RDWR, 0644);
+// 	write(1, "> ", 2);
+// 	while (1)
+// 	{
+// 		str = get_next_line(0);
+// 		if (str)
+// 		{
+// 			if (ft_strcmp(pipex.delimiter, str) == 0)
+// 			{
+// 				free(str);
+// 				break ;
+// 			}
+// 			write(1, "> ", 2);
+// 			write(infile, str, ft_strlen(str));
+// 			free(str);
+// 		}
+// 	}
+// 	close(infile);
+// }
 
 
 t_files	*lst_file_last(t_files *head)
@@ -402,13 +459,7 @@ void execute_ast(t_ast_node *node)
 		// dprintf(2, "DoubleLessThanOperator\n");
 		
 		
-		// int fd = open(node->right->args[0], O_RDONLY);
-		// if (fd == -1) {
-		// 	perror("open");
-		// 	exit(EXIT_FAILURE);
-		// }
-		// dup2(fd, STDIN_FILENO); 
-		// close(fd); 
+		// t_files
 		// execute_ast(node->left);
 		
 	}

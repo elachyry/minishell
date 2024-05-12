@@ -32,7 +32,7 @@ $(NAME):  $(OBJS)
 
 
 clean:
-	@make -C $(LIBFT_PATH) clean
+#@make -C $(LIBFT_PATH) clean
 	rm -f $(OBJS)
 
 fclean:
