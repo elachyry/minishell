@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/13 20:21:26 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/13 20:41:39 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,129 +169,129 @@ int execute_command(char **args)
 	}
 	else
 	{
-	pid_t pid = fork();
-	int status = 0;
-	if (pid == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-	else if (pid == 0)
-	{
-		t_files	*file = g_shell_data.simple_cmd->files;
-		// dprintf(2, "1 files %p\n", file);
-		while (file)
+		pid_t pid = fork();
+		int status = 0;
+		if (pid == -1)
 		{
-			// dprintf(2, "file = %s\n", file->filename);
-			// dprintf(2, "file type = %s\n", get_token_type_name(file->type));
-			if (file->type == LessThanOperator)
+			perror("fork");
+			exit(EXIT_FAILURE);
+		}
+		else if (pid == 0)
+		{
+			t_files	*file = g_shell_data.simple_cmd->files;
+			// dprintf(2, "1 files %p\n", file);
+			while (file)
 			{
-				// dprintf(2, "file in = %s\n", file->filename);
-				int in_fd = open(file->filename, O_RDONLY);
-				if (in_fd == -1)
+				// dprintf(2, "file = %s\n", file->filename);
+				// dprintf(2, "file type = %s\n", get_token_type_name(file->type));
+				if (file->type == LessThanOperator)
 				{
-					if (!file->is_opened)
-						perror(file->filename);
+					// dprintf(2, "file in = %s\n", file->filename);
+					int in_fd = open(file->filename, O_RDONLY);
+					if (in_fd == -1)
+					{
+						if (!file->is_opened)
+							perror(file->filename);
+						close(in_fd);
+						exit(EXIT_FAILURE);
+					}
+					if (dup2(in_fd, STDIN_FILENO) == -1)
+					{
+						perror("dup2");
+						exit(EXIT_FAILURE);
+					}
 					close(in_fd);
-					exit(EXIT_FAILURE);
 				}
-				if (dup2(in_fd, STDIN_FILENO) == -1)
+				else if (file->type == GreaterThanOperator)
 				{
-					perror("dup2");
-					exit(EXIT_FAILURE);
-				}
-				close(in_fd);
-			}
-			else if (file->type == GreaterThanOperator)
-			{
-				// dprintf(2, "file out = %s\n", file->filename);
-				int out_fd = open(file->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-				if (out_fd == -1)
-				{
-					perror(file->filename);
+					// dprintf(2, "file out = %s\n", file->filename);
+					int out_fd = open(file->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+					if (out_fd == -1)
+					{
+						perror(file->filename);
+						close(out_fd);
+						exit(EXIT_FAILURE);
+					}
+					if (dup2(out_fd, STDOUT_FILENO) == -1)
+					{
+						perror("dup2");
+						exit(EXIT_FAILURE);
+					}
 					close(out_fd);
-					exit(EXIT_FAILURE);
 				}
-				if (dup2(out_fd, STDOUT_FILENO) == -1)
+				else if (file->type == DoubleGreaterThanOperator)
 				{
-					perror("dup2");
-					exit(EXIT_FAILURE);
-				}
-				close(out_fd);
-			}
-			else if (file->type == DoubleGreaterThanOperator)
-			{
-				// dprintf(2, "file appe = %s\n", file->filename);
+					// dprintf(2, "file appe = %s\n", file->filename);
 
-				int fd = open(file->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-				if (fd == -1)
-				{
-					perror(file->filename);
-					exit(EXIT_FAILURE);
+					int fd = open(file->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+					if (fd == -1)
+					{
+						perror(file->filename);
+						exit(EXIT_FAILURE);
+					}
+					if (dup2(fd, STDOUT_FILENO) == -1)
+					{
+						perror("dup2");
+						g_shell_data.simple_cmd->files = NULL;
+						exit(EXIT_FAILURE);
+					}
+					close(fd);
 				}
-				if (dup2(fd, STDOUT_FILENO) == -1)
-				{
-					perror("dup2");
-					g_shell_data.simple_cmd->files = NULL;
-					exit(EXIT_FAILURE);
-				}
-				close(fd);
+				file = file->next;
 			}
-			file = file->next;
+			
+			int	status = get_cmd_path(args[0]);
+			if (!status)
+			{
+				ft_putstr_fd("command not found: ", 2);
+				ft_putstr_fd(args[0], 2);
+				ft_putstr_fd("\n", 2);
+				exit(127);
+			}
+			else if (status == 2)
+			{
+				perror(args[0]);
+				exit(126);
+			}
+			execve(g_shell_data.simple_cmd->cmd_path, args, g_shell_data.environment);
+			if (!ft_strcmp(args[0], "."))
+			{
+				ft_putstr_fd(args[0], 2);
+				ft_putstr_fd(": filename argument required", 2);
+				ft_putstr_fd("\n", 2);
+				ft_putstr_fd(args[0], 2);
+				ft_putstr_fd(": usage: . filename [arguments]", 2);
+				ft_putstr_fd("\n", 2);
+				exit(2);
+			}
+			if (access(args[0], F_OK) == 0)
+			{
+				ft_putstr_fd(args[0], 2);
+				ft_putstr_fd(": is a directory", 2);
+				ft_putstr_fd("\n", 2);
+				exit(126);
+			}
+			perror("execve");
+			exit(EXIT_FAILURE);
+			
 		}
-		
-		int	status = get_cmd_path(args[0]);
-		if (!status)
+		else
 		{
-			ft_putstr_fd("command not found: ", 2);
-			ft_putstr_fd(args[0], 2);
-			ft_putstr_fd("\n", 2);
-			exit(127);
+			// printf("parent\n");
+			waitpid(pid, &status, 0);
+			// dprintf(2, "status before wait %d\n", WEXITSTATUS(status));
+			if (WIFEXITED(status))
+			{
+				// dprintf(2, "status in wait %d\n", WEXITSTATUS(status));
+				if (WEXITSTATUS(status) != 0)
+					g_shell_data.simple_cmd->files = NULL;
+			}
+			// dup2(g_shell_data.saved_stdin, STDIN_FILENO);
+			// // Restore stdout to original
+			// dup2(g_shell_data.saved_stdout, STDOUT_FILENO);
 		}
-		else if (status == 2)
-		{
-			perror(args[0]);
-			exit(126);
-		}
-		execve(g_shell_data.simple_cmd->cmd_path, args, g_shell_data.environment);
-		if (!ft_strcmp(args[0], "."))
-		{
-			ft_putstr_fd(args[0], 2);
-			ft_putstr_fd(": filename argument required", 2);
-			ft_putstr_fd("\n", 2);
-			ft_putstr_fd(args[0], 2);
-			ft_putstr_fd(": usage: . filename [arguments]", 2);
-			ft_putstr_fd("\n", 2);
-			exit(2);
-		}
-		if (access(args[0], F_OK) == 0)
-		{
-			ft_putstr_fd(args[0], 2);
-			ft_putstr_fd(": is a directory", 2);
-			ft_putstr_fd("\n", 2);
-			exit(126);
-		}
-		perror("execve");
-		exit(EXIT_FAILURE);
-		
-	}
-	else
-	{
-		// printf("parent\n");
-		waitpid(pid, &status, 0);
-		// dprintf(2, "status before wait %d\n", WEXITSTATUS(status));
-		if (WIFEXITED(status))
-		{
-			// dprintf(2, "status in wait %d\n", WEXITSTATUS(status));
-			if (WEXITSTATUS(status) != 0)
-				g_shell_data.simple_cmd->files = NULL;
-		}
-		// dup2(g_shell_data.saved_stdin, STDIN_FILENO);
-		// // Restore stdout to original
-		// dup2(g_shell_data.saved_stdout, STDOUT_FILENO);
-	}
-	// dprintf(2, "status after wait %d\n", WEXITSTATUS(status));
-	return (WEXITSTATUS(status));
+		// dprintf(2, "status after wait %d\n", WEXITSTATUS(status));
+		return (WEXITSTATUS(status));
 	}
 }
 
