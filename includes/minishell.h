@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/13 14:47:06 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/13 20:49:57 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@
 // # include "/Users/akaddour/readline/include/readline/history.h"
 # include "/Users/melachyr/readline/readline.h"
 # include "/Users/melachyr/readline/history.h"
-
-# define SYNTAX_ERR "minishell: syntax error near unexpected token"
 
 typedef enum e_bool
 {
