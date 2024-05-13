@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/12 20:12:53 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:47:06 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <fcntl.h>
 # include "tokenizing.h"
 #include  "../libraries/libft/libft.h"
+#include  "../libraries/get_next_line/get_next_line.h"
 # define READLINE_LIBRARY
 // # include "/Users/akaddour/readline/include/readline/readline.h"
 // # include "/Users/akaddour/readline/include/readline/history.h"
@@ -70,6 +71,8 @@ typedef struct s_shell_data
 	char			**path;
 	int				status;
 	int				nbr_cmd;
+	t_bool			sig_exit;
+	t_bool 			ctl;
 	t_token			*tokens;
 	t_ast_node		*ast;
 	t_simple_cmd	*simple_cmd;

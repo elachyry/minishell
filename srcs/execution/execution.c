@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/12 21:30:52 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/13 20:21:26 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,19 @@ int	get_cmd_path(char	*args)
 	
 	// printf("path %s\n", g_shell_data.path[0]);
 	// printf("cmd %s\n", args);
+	// printf("cmd %d\n", cmd[0]);
 	cmd = ft_strrchr(args, '/');
-	// printf("cmd %s\n", cmd);
-	if (cmd)
+	if (args[0] == '\0')
+		return (0);
+	else if (cmd)
 	{
 		if (access(cmd, X_OK) != -1 || access(args, X_OK) != -1)
 		{
 			g_shell_data.simple_cmd->cmd_path = args;
 			return (1);
 		}
+		else if (access(args, X_OK) == -1)
+			return (2);
 	}
 	else
 	{
@@ -45,7 +49,6 @@ int	get_cmd_path(char	*args)
 			g_shell_data.path++;
 		}
 	}
-	
 	return (0);
 }
 
@@ -71,7 +74,7 @@ char	*get_here_doc_name()
 	int		fd;
 	int		c;
 	
-	name = malloc(sizeof(char) * 11);
+	name = malloc(sizeof(char) * 12);
 	if (name == NULL)
 		return (NULL);
 	fd = open("/dev/random", O_RDONLY);
@@ -80,6 +83,7 @@ char	*get_here_doc_name()
 		free(name);
 		return (NULL);
 	}
+	// printf("fd = %d\n", fd);
 	c = 0;
 	while (c < 11)
 	{
@@ -95,31 +99,33 @@ char	*get_here_doc_name()
 	return (name);
 }
 
-// void	here_doc()
-// {
-// 	char	*str;
-// 	int		infile;
+void	here_doc(char *delimiter, int fd)
+{
+	char	*str;
 
-// 	str = NULL;
-// 	// infile = open(pipex.in_file_path, O_CREAT | O_RDWR, 0644);
-// 	write(1, "> ", 2);
-// 	while (1)
-// 	{
-// 		str = get_next_line(0);
-// 		if (str)
-// 		{
-// 			if (ft_strcmp(pipex.delimiter, str) == 0)
-// 			{
-// 				free(str);
-// 				break ;
-// 			}
-// 			write(1, "> ", 2);
-// 			write(infile, str, ft_strlen(str));
-// 			free(str);
-// 		}
-// 	}
-// 	close(infile);
-// }
+	str = NULL;
+	// infile = open(pipex.in_file_path, O_CREAT | O_RDWR, 0644);
+	// printf("dele = %s\n", delimiter);
+	delimiter = ft_strjoin(delimiter, "\n");
+	write(1, "> ", 2);
+	while (1)
+	{
+		str = get_next_line(0);
+		if (str)
+		{
+			// printf("strcmp = %d\n", ft_strcmp(delimiter, str));
+			if (ft_strcmp(delimiter, str) == 0)
+			{
+				free(str);
+				break ;
+			}
+			write(1, "> ", 2);
+			write(fd, str, ft_strlen(str));
+			free(str);
+		}
+	}
+	close(fd);
+}
 
 
 t_files	*lst_file_last(t_files *head)
@@ -156,6 +162,13 @@ int execute_command(char **args)
 {
 	// dprintf(2, "execute_command %s\n", args[0]);
 	// dprintf(2, "pre files %p\n", g_shell_data.simple_cmd->files);
+	if (check_if_builtin(args[0]))
+	{
+		// dprintf(2, "builtin\n");
+		return execute_builtin(args);
+	}
+	else
+	{
 	pid_t pid = fork();
 	int status = 0;
 	if (pid == -1)
@@ -226,21 +239,47 @@ int execute_command(char **args)
 			}
 			file = file->next;
 		}
-		if (!get_cmd_path(args[0]))
+		
+		int	status = get_cmd_path(args[0]);
+		if (!status)
 		{
 			ft_putstr_fd("command not found: ", 2);
 			ft_putstr_fd(args[0], 2);
 			ft_putstr_fd("\n", 2);
 			exit(127);
 		}
+		else if (status == 2)
+		{
+			perror(args[0]);
+			exit(126);
+		}
 		execve(g_shell_data.simple_cmd->cmd_path, args, g_shell_data.environment);
+		if (!ft_strcmp(args[0], "."))
+		{
+			ft_putstr_fd(args[0], 2);
+			ft_putstr_fd(": filename argument required", 2);
+			ft_putstr_fd("\n", 2);
+			ft_putstr_fd(args[0], 2);
+			ft_putstr_fd(": usage: . filename [arguments]", 2);
+			ft_putstr_fd("\n", 2);
+			exit(2);
+		}
+		if (access(args[0], F_OK) == 0)
+		{
+			ft_putstr_fd(args[0], 2);
+			ft_putstr_fd(": is a directory", 2);
+			ft_putstr_fd("\n", 2);
+			exit(126);
+		}
 		perror("execve");
 		exit(EXIT_FAILURE);
+		
 	}
 	else
 	{
 		// printf("parent\n");
 		waitpid(pid, &status, 0);
+		// dprintf(2, "status before wait %d\n", WEXITSTATUS(status));
 		if (WIFEXITED(status))
 		{
 			// dprintf(2, "status in wait %d\n", WEXITSTATUS(status));
@@ -251,7 +290,9 @@ int execute_command(char **args)
 		// // Restore stdout to original
 		// dup2(g_shell_data.saved_stdout, STDOUT_FILENO);
 	}
+	// dprintf(2, "status after wait %d\n", WEXITSTATUS(status));
 	return (WEXITSTATUS(status));
+	}
 }
 
 
@@ -332,8 +373,9 @@ void execute_ast(t_ast_node *node)
 		
 		g_shell_data.simple_cmd->files = NULL;
 		int left_status = g_shell_data.status;
-		// dprintf(2, "status %d\n", left_status);
-		if (left_status == 0)
+		// dprintf(2, "status % d\n", left_status);
+		// dprintf(2, "sig exit %d\n", g_shell_data.sig_exit);
+		if (left_status == 0 && g_shell_data.sig_exit)
 			execute_ast(node->right);
 		else if (node->right
 			&& (node->right->type == LogicalAnd || node->right->type == LogicalOr))
@@ -354,20 +396,21 @@ void execute_ast(t_ast_node *node)
 	else if (node->type == LogicalOr)
 	{
 		// dprintf(2, "LogicalOr\n");
-
+		// g_shell_data.sig_exit = true;
 		execute_ast(node->left);
+		// g_shell_data.sig_exit = false;
 		g_shell_data.simple_cmd->files = NULL;
 		int left_status = g_shell_data.status;
-		// dprintf(2, "status %d\n", left_status);
-		if (left_status != 0)
+		// dprintf(2, "status % d\n", left_status);
+		// dprintf(2, "sig exit %d\n", g_shell_data.sig_exit);
+		if (left_status != 0 || g_shell_data.sig_exit == true)
 		{
-			// dprintf(2, "hiii\n");
 			execute_ast(node->right);
 		}
 		else if (node->right
 			&& (node->right->type == LogicalAnd || node->right->type == LogicalOr))
 		{
-			dprintf(2, "yesss %s\n", get_token_type_name(node->right->type));
+			// dprintf(2, "yesss %s\n", get_token_type_name(node->right->type));
 			if (node->right->type == LogicalAnd)
 			{
 				if (left_status == 0)
@@ -454,15 +497,6 @@ void execute_ast(t_ast_node *node)
 		// Restore stdout to original
 		// dup2(saved_stdout, STDOUT_FILENO);
 	}
-	else if (node->type == DoubleLessThanOperator)
-	{
-		// dprintf(2, "DoubleLessThanOperator\n");
-		
-		
-		// t_files
-		// execute_ast(node->left);
-		
-	}
 	else if (node->type == DoubleGreaterThanOperator)
 	{
 		// dprintf(2, "DoubleGreaterThanOperator\n");
@@ -472,24 +506,62 @@ void execute_ast(t_ast_node *node)
 		// g_shell_data.simple_cmd->out_file = node->right->args[0];
 		t_files	*file = new_file_node(node->right->args[0], DoubleGreaterThanOperator);
 		add_lst_file(&g_shell_data.simple_cmd->files, file);
-		g_shell_data.simple_cmd->is_first++;
+		// g_shell_data.simple_cmd->is_first++;
 		// if (!node->right->right && !node->left && g_shell_data.simple_cmd->is_first == 1)
 		// {
 			int fd = open(node->right->args[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
+			if (fd == -1)
+			{
+				perror("open");
+				close(fd);
+				exit(EXIT_FAILURE);
+			}
 			close(fd);
 		// }
 		// int fd = open(node->right->args[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
-		// if (fd == -1) {
-		// 	perror("open");
-		// 	exit(EXIT_FAILURE);
-		// }
 		// dup2(fd, STDOUT_FILENO);
 		// close(fd); 
 		execute_ast(node->right->right);
-		execute_ast(node->left); 
+		execute_ast(node->left);
 		// dup2(saved_stdin, STDIN_FILENO);
 		// // Restore stdout to original
 		// dup2(saved_stdout, STDOUT_FILENO);
+	}
+	else if (node->type == DoubleLessThanOperator)
+	{
+		// dprintf(2, "DoubleLessThanOperator\n");
+		
+		pid_t	pid = fork();
+		if (pid == -1)
+		{
+			perror("fork");
+			exit(EXIT_FAILURE);
+		}
+		if (pid == 0)
+		{
+			signal(SIGINT, SIG_DFL);
+			char *name = get_here_doc_name();
+			char *here_doc_path = ft_strjoin("/tmp/", name);
+			free(name);
+			t_files	*file = new_file_node(here_doc_path, LessThanOperator);
+			add_lst_file(&g_shell_data.simple_cmd->files, file);
+			int fd = open(here_doc_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if (fd == -1)
+			{
+				perror("open");
+				close(fd);
+				exit(EXIT_FAILURE);
+			}
+			here_doc(node->right->args[0], fd);
+			
+		}
+		else
+		{
+			waitpid(pid, NULL, 0);
+			execute_ast(node->right->right);
+			execute_ast(node->left);
+		}
+		
 	}
 	else if (node->type == OpeningParenthesis)
 	{

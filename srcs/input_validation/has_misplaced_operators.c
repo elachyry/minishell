@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   has_misplaced_operators.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:41:36 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/12 15:52:35 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:58:06 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
