@@ -12,39 +12,37 @@ ls | cat || || ls && ls √
 
 <<|ls
 
-Minishell:~$ < | ls
+Minishell:~$ ls < | ls
 syntax error
-Minishell:~$ < || ls
+Minishell:~$ ls < || ls
 syntax error
-Minishell:~$ < & ls
+Minishell:~$ ls < & ls
 syntax error
-Minishell:~$ < && ls
+Minishell:~$ ls < && ls
 syntax error
-Minishell:~$ > | ls
+Minishell:~$ ls > | ls
 syntax error
-Minishell:~$ > || ls
+Minishell:~$ ls > || ls
 syntax error
-Minishell:~$ > & ls
+Minishell:~$ ls > & ls
 syntax error
-Minishell:~$ > && ls
+Minishell:~$ ls > && ls
 syntax error
-Minishell:~$ >> | ls
+Minishell:~$ ls >> | ls
 syntax error
-Minishell:~$ >> || ls
+Minishell:~$ ls >> || ls
 syntax error
-Minishell:~$ >> && ls
+Minishell:~$ ls >> && ls
 syntax error
-Minishell:~$ >> & ls
+Minishell:~$ ls >> & ls
 syntax error
-Minishell:~$ << | ls
+Minishell:~$ ls << | ls
 syntax error
-Minishell:~$ << || ls
+Minishell:~$ ls << || ls
 syntax error
-Minishell:~$ << || ls
+Minishell:~$ ls << & ls
 syntax error
-Minishell:~$ << & ls
-syntax error
-Minishell:~$ << && ls
+Minishell:~$ ls << && ls
 
 
 >|ls weird case here it's not syntax error but here > | ls is considered as syntax error
@@ -53,7 +51,6 @@ ls << >> ls
 ls > < ls
 ls < > ls
 ls > << ls
-
 ls > > ls
 ls < < ls
 ls >> >> ls
@@ -62,6 +59,8 @@ ls << << ls
 ls < << ls
 ls >> > ls
 ls << < ls
+
+
 
 ls | > ls
 ls | < ls
