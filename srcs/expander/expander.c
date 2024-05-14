@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:42:28 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/11 14:20:48 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/14 18:34:59 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,10 +297,82 @@ t_token	*expand_env_variable(t_token *tokens)
     return (tokens);
 }
 
+#include <dirent.h>
+
+int match(const char *string, const char *pattern)
+{
+    while (*string)
+    {
+        if (*pattern == '*')
+        {
+            if (match(string, pattern + 1))
+                return 1;
+            string++;
+        }
+        else if (*pattern == *string)
+        {
+            pattern++;
+            string++;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    while (*pattern == '*')
+        pattern++;
+
+    return !*pattern;
+}
+
+t_token *expand_wildcards(t_token *tokens)
+{
+    t_token *tok;
+    char *tmp;
+    DIR *dir;
+    struct dirent *entry;
+
+    tok = tokens;
+    while (tok)
+    {
+        tmp = tok->value;
+        while (*tmp)
+        {
+            if (*tmp == '*')
+            {
+                dir = opendir(".");
+                if (dir == NULL)
+                {
+                    perror("opendir");
+                    return (tokens);
+                }
+                while ((entry = readdir(dir)) != NULL)
+                {
+                    // Skip hidden files unless the pattern starts with a dot
+                    if (entry->d_name[0] == '.' && tok->value[0] != '.')
+                        continue;
+
+                    if (match(entry->d_name, tok->value))
+                    {
+                        printf("%s\n", entry->d_name);
+                    }
+                }
+                closedir(dir);
+                break;
+            }
+            tmp++;
+        }
+        tok = tok->next;
+    }
+    return (tokens);
+}
+
 t_token *expand_tokens(t_token *tokens)
 {
 	tokens = expand_env_variable(tokens);
 	tokens = expand_quotes(tokens);
+    tokens = expand_wildcards(tokens);
 	return (tokens);
 }
 
