@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:30:23 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/11 10:51:42 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/14 22:11:09 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void display_cd_error(char *path)
 int	ft_cd(char *path)
 {
     char    *cwd;
-    if (!path)
+    if (!path || (ft_strlen(path) == 0 && get_env_value(path) == NULL))
         return (back_to_home());
     if (chdir(path) != 0)
     {
