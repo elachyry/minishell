@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/13 20:41:39 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/14 21:23:29 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,22 @@ int	get_cmd_path(char	*args)
 	
 	// printf("path %s\n", g_shell_data.path[0]);
 	// printf("cmd %s\n", args);
-	// printf("cmd %d\n", cmd[0]);
+	// printf("args %d\n", args[0]);
+	extract_path();
 	cmd = ft_strrchr(args, '/');
 	if (args[0] == '\0')
 		return (0);
 	else if (cmd)
 	{
+		char	*p = ft_strjoin("./", cmd);
 		if (access(cmd, X_OK) != -1 || access(args, X_OK) != -1)
 		{
 			g_shell_data.simple_cmd->cmd_path = args;
+			return (1);
+		}
+		else if (access(cmd, X_OK) != -1 && !g_shell_data.path)
+		{
+			g_shell_data.simple_cmd->cmd_path = p;
 			return (1);
 		}
 		else if (access(args, X_OK) == -1)
@@ -99,13 +106,33 @@ char	*get_here_doc_name()
 	return (name);
 }
 
+
+char	*expand_here_doc(char *str)
+{
+	// char	*result;
+	char	*value;
+
+	value = NULL;
+	// if (ft_strchr(str, '$'))
+	// {	
+	// 	result = ft_strtrim(str, "\'\"\n");
+	// 	result++;
+		// printf("result = %s\n", result);
+		value = get_env_value(str);
+		// printf("value = %s\n", value);
+	// }
+	return (value);
+}
+
 void	here_doc(char *delimiter, int fd)
 {
 	char	*str;
+	t_bool	is_var = false;
 
 	str = NULL;
 	// infile = open(pipex.in_file_path, O_CREAT | O_RDWR, 0644);
 	// printf("dele = %s\n", delimiter);
+	// printf("should expand : %d\n", g_shell_data.simple_cmd->should_expand);
 	delimiter = ft_strjoin(delimiter, "\n");
 	write(1, "> ", 2);
 	while (1)
@@ -120,9 +147,62 @@ void	here_doc(char *delimiter, int fd)
 				break ;
 			}
 			write(1, "> ", 2);
-			write(fd, str, ft_strlen(str));
-			free(str);
+			if (g_shell_data.simple_cmd->should_expand)
+			{
+				char *result = NULL;//"""'$USER"$USER'"
+				char	*tmp;
+				while (*str)
+				{
+					// printf("str = %c\n", *str);
+					is_var = false;
+					if (*str == '$')
+					{
+						is_var = true;
+						int	i = 0;
+						if (*(str + 1) == '$')
+						{
+							write(fd, str, 2);
+							str += 2;
+							continue ;
+						}
+						tmp = str;
+						// printf("start %c\n", *tmp);
+						tmp++;
+						while (*tmp && *tmp != '\'' && *tmp != '\"' && !ft_isspace(*tmp) && *tmp != '$')
+						{
+							i++;
+							tmp++;
+						}
+						// printf("end %c\n", *tmp);
+						// printf("i =  %d\n", i);
+						char *sub = ft_substr(str, 1, i);
+						
+						// printf("sub = %s\n", sub);
+						if (sub)
+						{
+							result = expand_here_doc(sub);
+							// printf("result = %s\n", result);
+							if (result)
+								write(fd, result, ft_strlen(result));
+						}
+						else
+						{
+							write(fd, str, 1);
+						}
+						str = tmp;
+					}
+					if (*str != '$')
+						write(fd, str, 1);
+					if (*str && *str != '$')
+						str++;
+				}
+			}
+			else
+				write(fd, str, ft_strlen(str));
+			// free(str);
 		}
+		else
+			break ;
 	}
 	close(fd);
 }
@@ -157,6 +237,71 @@ void	add_lst_file(t_files **head, t_files *node)
 	}
 }
 
+void	open_files()
+{
+	t_files	*file = g_shell_data.simple_cmd->files;
+	// dprintf(2, "1 files %p\n", file);
+	while (file)
+	{
+		// dprintf(2, "file = %s\n", file->filename);
+		// dprintf(2, "file type = %s\n", get_token_type_name(file->type));
+		if (file->type == LessThanOperator)
+		{
+			// dprintf(2, "file in = %s\n", file->filename);
+			int in_fd = open(file->filename, O_RDONLY);
+			if (in_fd == -1)
+			{
+				if (!file->is_opened)
+					perror(file->filename);
+				close(in_fd);
+				exit(EXIT_FAILURE);
+			}
+			if (dup2(in_fd, STDIN_FILENO) == -1)
+			{
+				perror("dup2");
+				exit(EXIT_FAILURE);
+			}
+			close(in_fd);
+		}
+		else if (file->type == GreaterThanOperator)
+		{
+			// dprintf(2, "file out = %s\n", file->filename);
+			int out_fd = open(file->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if (out_fd == -1)
+			{
+				perror(file->filename);
+				close(out_fd);
+				exit(EXIT_FAILURE);
+			}
+			if (dup2(out_fd, STDOUT_FILENO) == -1)
+			{
+				perror("dup2");
+				exit(EXIT_FAILURE);
+			}
+			close(out_fd);
+		}
+		else if (file->type == DoubleGreaterThanOperator)
+		{
+			// dprintf(2, "file appe = %s\n", file->filename);
+
+			int fd = open(file->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			if (fd == -1)
+			{
+				perror(file->filename);
+				exit(EXIT_FAILURE);
+			}
+			if (dup2(fd, STDOUT_FILENO) == -1)
+			{
+				perror("dup2");
+				g_shell_data.simple_cmd->files = NULL;
+				exit(EXIT_FAILURE);
+			}
+			close(fd);
+		}
+		file = file->next;
+	}
+}
+
 
 int execute_command(char **args)
 {
@@ -165,7 +310,13 @@ int execute_command(char **args)
 	if (check_if_builtin(args[0]))
 	{
 		// dprintf(2, "builtin\n");
-		return execute_builtin(args);
+		int	stdin = dup(STDIN_FILENO);
+		int	stdout = dup(STDOUT_FILENO);
+		open_files();
+		int status =  execute_builtin(args);
+		dup2(stdin, STDIN_FILENO);
+		dup2(stdout, STDOUT_FILENO);
+		return (status);
 	}
 	else
 	{
@@ -178,68 +329,7 @@ int execute_command(char **args)
 		}
 		else if (pid == 0)
 		{
-			t_files	*file = g_shell_data.simple_cmd->files;
-			// dprintf(2, "1 files %p\n", file);
-			while (file)
-			{
-				// dprintf(2, "file = %s\n", file->filename);
-				// dprintf(2, "file type = %s\n", get_token_type_name(file->type));
-				if (file->type == LessThanOperator)
-				{
-					// dprintf(2, "file in = %s\n", file->filename);
-					int in_fd = open(file->filename, O_RDONLY);
-					if (in_fd == -1)
-					{
-						if (!file->is_opened)
-							perror(file->filename);
-						close(in_fd);
-						exit(EXIT_FAILURE);
-					}
-					if (dup2(in_fd, STDIN_FILENO) == -1)
-					{
-						perror("dup2");
-						exit(EXIT_FAILURE);
-					}
-					close(in_fd);
-				}
-				else if (file->type == GreaterThanOperator)
-				{
-					// dprintf(2, "file out = %s\n", file->filename);
-					int out_fd = open(file->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-					if (out_fd == -1)
-					{
-						perror(file->filename);
-						close(out_fd);
-						exit(EXIT_FAILURE);
-					}
-					if (dup2(out_fd, STDOUT_FILENO) == -1)
-					{
-						perror("dup2");
-						exit(EXIT_FAILURE);
-					}
-					close(out_fd);
-				}
-				else if (file->type == DoubleGreaterThanOperator)
-				{
-					// dprintf(2, "file appe = %s\n", file->filename);
-
-					int fd = open(file->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-					if (fd == -1)
-					{
-						perror(file->filename);
-						exit(EXIT_FAILURE);
-					}
-					if (dup2(fd, STDOUT_FILENO) == -1)
-					{
-						perror("dup2");
-						g_shell_data.simple_cmd->files = NULL;
-						exit(EXIT_FAILURE);
-					}
-					close(fd);
-				}
-				file = file->next;
-			}
-			
+			open_files();
 			int	status = get_cmd_path(args[0]);
 			if (!status)
 			{
@@ -368,7 +458,7 @@ void execute_ast(t_ast_node *node)
 	}
 	else if (node->type == LogicalAnd)
 	{
-		// dprintf(2, "LogicalAnd\n");
+		dprintf(2, "LogicalAnd\n");
 		execute_ast(node->left);
 		
 		g_shell_data.simple_cmd->files = NULL;
@@ -395,7 +485,7 @@ void execute_ast(t_ast_node *node)
 	}
 	else if (node->type == LogicalOr)
 	{
-		// dprintf(2, "LogicalOr\n");
+		dprintf(2, "LogicalOr\n");
 		// g_shell_data.sig_exit = true;
 		execute_ast(node->left);
 		// g_shell_data.sig_exit = false;
@@ -531,6 +621,72 @@ void execute_ast(t_ast_node *node)
 	{
 		// dprintf(2, "DoubleLessThanOperator\n");
 		
+		// pid_t	pid = fork();
+		// if (pid == -1)
+		// {
+		// 	perror("fork");
+		// 	exit(EXIT_FAILURE);
+		// }
+		// if (pid == 0)
+		// {
+		// 	signal(SIGINT, SIG_DFL);
+		// 	char *name = get_here_doc_name();
+		// 	char *here_doc_path = ft_strjoin("/tmp/", name);
+		// 	free(name);
+		// 	t_files	*file = new_file_node(here_doc_path, LessThanOperator);
+		// 	add_lst_file(&g_shell_data.simple_cmd->files, file);
+		// 	int fd = open(here_doc_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		// 	if (fd == -1)
+		// 	{
+		// 		perror("open");
+		// 		close(fd);
+		// 		exit(EXIT_FAILURE);
+		// 	}
+		// 	here_doc(node->right->args[0], fd);
+			
+			execute_ast(node->right->right);
+			execute_ast(node->left);
+		// 	exit(EXIT_SUCCESS);
+		// }
+		// else
+		// {
+		// 	waitpid(pid, NULL, 0);
+		// }
+	}
+	else if (node->type == OpeningParenthesis)
+	{
+		
+		execute_ast(node->left);
+	}
+
+	// g_shell_data.status = status;
+}
+
+void	execute_here_docs(t_ast_node *node)
+{
+	if (!node)
+		return ;
+	// dprintf(2, "hi %s\n", get_token_type_name(node->type));
+	if (node->type == PipeSymbol || node->type == LogicalAnd || node->type == LogicalOr)
+	{
+		// dprintf(2, "PipeSymbol%s\n", get_token_type_name(node->type));
+		execute_here_docs(node->left);
+		execute_here_docs(node->right); 
+	}
+	else if (node->type == LessThanOperator || node->type == GreaterThanOperator || node->type == DoubleGreaterThanOperator || node->type ==IDENTIFIER)
+	{
+		// dprintf(2, "GreaterThanOperator %s\n", get_token_type_name(node->type));
+		execute_here_docs(node->left);
+		execute_here_docs(node->right); 
+	}
+	else if (node->type == DoubleLessThanOperator)
+	{
+		// dprintf(2, "DoubleLessThanOperator%s\n", get_token_type_name(node->type));
+		char *name = get_here_doc_name();
+		// printf("here_doc name = %s\n", name);
+		char *here_doc_path = ft_strjoin("/tmp/", name);
+		free(name);
+		g_shell_data.simple_cmd->here_doc_path = here_doc_path;
 		pid_t	pid = fork();
 		if (pid == -1)
 		{
@@ -540,11 +696,6 @@ void execute_ast(t_ast_node *node)
 		if (pid == 0)
 		{
 			signal(SIGINT, SIG_DFL);
-			char *name = get_here_doc_name();
-			char *here_doc_path = ft_strjoin("/tmp/", name);
-			free(name);
-			t_files	*file = new_file_node(here_doc_path, LessThanOperator);
-			add_lst_file(&g_shell_data.simple_cmd->files, file);
 			int fd = open(here_doc_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (fd == -1)
 			{
@@ -553,23 +704,15 @@ void execute_ast(t_ast_node *node)
 				exit(EXIT_FAILURE);
 			}
 			here_doc(node->right->args[0], fd);
-			
+			exit(EXIT_SUCCESS);
 		}
 		else
 		{
 			waitpid(pid, NULL, 0);
-			execute_ast(node->right->right);
-			execute_ast(node->left);
+			execute_here_docs(node->right->right);
+			execute_here_docs(node->left);
 		}
-		
 	}
-	else if (node->type == OpeningParenthesis)
-	{
-		
-		execute_ast(node->left);
-	}
-
-	// g_shell_data.status = status;
 }
 
 
@@ -583,7 +726,22 @@ void	execution(void)
 	// 	else
 	// 		execute_single_cmd();
 	// }
+	if (g_shell_data.simple_cmd->nbr_here_doc >= 17)
+	{	
+		ft_putstr_fd("maximum here-document count exceeded\n", 2);
+		exit(2);
+	}
+	t_ast_node	*ast = g_shell_data.ast;
+	g_shell_data.simple_cmd->here_doc_path = NULL;
+	execute_here_docs(g_shell_data.ast);
 	g_shell_data.simple_cmd->files = NULL;
+	// printf("last here_doc name = %s\n", g_shell_data.simple_cmd->here_doc_path);
+	if (g_shell_data.simple_cmd->here_doc_path)
+	{
+		t_files	*file = new_file_node(g_shell_data.simple_cmd->here_doc_path, LessThanOperator);
+		add_lst_file(&g_shell_data.simple_cmd->files, file);
+	}
 	g_shell_data.simple_cmd->is_first = 0;
-	execute_ast(g_shell_data.ast); 
+	// printf("node = %s\n", get_token_type_name(ast->type));
+	execute_ast(ast); 
 }

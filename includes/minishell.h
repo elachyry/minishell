@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/13 20:49:57 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/14 11:56:39 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,11 @@ typedef struct	s_simple_cmd
 {
 	char	**cmd;
 	char	*cmd_path;
-	t_files	*files;
+	char	*here_doc_path;
+	int		nbr_here_doc;
 	int		is_first;
+	t_bool	should_expand;
+	t_files	*files;
 }	t_simple_cmd;
 
 typedef struct s_shell_data
