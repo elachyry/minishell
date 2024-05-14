@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 04:02:38 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/09 17:06:02 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/14 13:37:23 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@ int	ft_env(void)
 	while (env)
 	{
 		if (env->value)
-			printf("%s=%s\n", env->key, env->value);
+		{
+			ft_putstr_fd(env->key, 1);
+			ft_putstr_fd("=", 1);
+			ft_putstr_fd(env->value, 1);
+			ft_putstr_fd("\n", 1);
+		}
 		env = env->next;
 	}
 	return (0);
