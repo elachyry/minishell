@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:30:23 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/11 10:51:42 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/15 14:40:12 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,3 @@ int	ft_cd(char *path)
         update_env_value("PWD", cwd);
     return (0);
 }
-
-
-// not working segv
-// cd "doesntexist" 2>/dev/null

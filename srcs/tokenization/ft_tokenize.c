@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:25:38 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/10 18:25:14 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/15 14:26:15 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_token	*handle_other_chars(char **input, t_token *token_list)
 	while (**input)
 	{
 		update_quote_status(**input, &in_quote, &quote_char);
-		if (!in_quote && ft_strchr(" \t\n><|", **input))
+		if (!in_quote && ft_strchr(" \t\n><|()&", **input))
 			break ;
 		(*input)++;
 	}
