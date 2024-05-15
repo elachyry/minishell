@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/15 10:32:06 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/15 12:10:27 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -659,8 +659,26 @@ void execute_ast(t_ast_node *node)
 	}
 	else if (node->type == OpeningParenthesis)
 	{
+		t_token		*tokens;
+		t_ast_node	*ast;
+		char		*line;
 		
-		execute_ast(node->left);
+		line = *node->args;
+		line = ft_strjoin(line, " ");
+		node->args++;
+		while (*node->args)
+		{
+			// dprintf(2, "args = %s\n", *node->args);
+			line = ft_strjoin(line, *node->args);
+			line = ft_strjoin(line, " ");
+			node->args++;
+		}
+		// dprintf(2, "line = %s\n", line);
+		tokens = ft_tokenize(line);
+		free(line);
+		// display_tokens(tokens);
+		ast = parse_tokens(&tokens);
+		execute_ast(ast);
 	}
 
 	// g_shell_data.status = status;

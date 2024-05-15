@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 00:57:54 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/12 20:17:27 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/15 12:50:38 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	ft_exit(char **args)
 {
-	int		i;
 	int		status;
 
-	i = 0;
 	status = 0;
 	if (args[1])
 	{
