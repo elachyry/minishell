@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:37:53 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/14 09:52:39 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/15 11:28:45 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,6 +250,7 @@ t_ast_node	*parse_parenthese(t_token **tokens)
 				count++;
 				tmp = tmp->next;
 			}
+			// printf("count = %d\n", count);
 			cmd = malloc(sizeof(char *) * (count + 1));
 			if (!cmd)
 				return (NULL);
@@ -263,6 +264,8 @@ t_ast_node	*parse_parenthese(t_token **tokens)
 				tmp = tmp->next;
 			}
 			cmd[i] = NULL;
+			// for (int i = 0; cmd[i] != NULL; i++)
+			// 	dprintf(2, "%s\n", cmd[i]);
 			*tokens = tmp;
 			node = malloc(sizeof(t_ast_node));
 			node->args = cmd;
@@ -308,7 +311,7 @@ t_ast_node	*parse_logical_operator(t_token **tokens)
 	
 	ptr = *tokens;
 	logical_node = NULL;
-	while (*tokens && (*tokens)->next)
+	while (*tokens && (*tokens)->next && (*tokens)->next->type != OpeningParenthesis && (*tokens)->type != OpeningParenthesis)
 	{
 		next = (*tokens)->next;
 		if (next->type == LogicalAnd || next->type == LogicalOr)

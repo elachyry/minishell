@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:20:08 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/09 10:43:17 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/15 12:09:17 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_ast_node
 	struct s_ast_node	*right;
 }	t_ast_node;
 
+void	display_tokens(t_token *tokens);
 t_token	*ft_tokenize(char *input);
 void	ft_skip_spaces(char **line);
 t_token	*add_token(t_token *token_list, t_token_type type, char *value);
