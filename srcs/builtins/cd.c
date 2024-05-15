@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:30:23 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/15 14:48:02 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/15 19:51:59 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ static void display_cd_error(char *path)
 int	ft_cd(char *path)
 {
     char    *cwd;
+    char    *oldpwd;
+
+    oldpwd = getcwd(NULL, 0); // Save the current directory
     if (!path || (ft_strlen(path) == 0 && get_env_value(path) == NULL))
         return (back_to_home());
     if (chdir(path) != 0)
@@ -48,8 +51,8 @@ int	ft_cd(char *path)
         display_cd_error(path);
         return (1);
     }
-    if (get_env_value("PWD"))
-        update_env_value("OLDPWD", get_env_value("PWD"));
+    if (get_env_value("OLDPWD")) // Check if OLDPWD exists before updating it
+        update_env_value("OLDPWD", oldpwd); // Update OLDPWD after changing the directory
     cwd = getcwd(NULL, 0);
     if (!cwd)
     {
