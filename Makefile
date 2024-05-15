@@ -19,7 +19,9 @@ EXECUTION = srcs/execution/execution.c srcs/execution/check_if_builtin.c
 
 EXPANDER = srcs/expander/expander.c
 
-SRCS = srcs/initialize_environment_list.c srcs/minishell.c srcs/signal.c $(BUILTINS) $(INPUT_VALIDATION) $(PARSING) $(TOKENIZATION) $(EXECUTION) $(EXPANDER)
+GET_NEXT_LINE = libraries/get_next_line/get_next_line.c libraries/get_next_line/get_next_line_utils.c
+
+SRCS = srcs/initialize_environment_list.c srcs/minishell.c srcs/signal.c $(BUILTINS) $(INPUT_VALIDATION) $(PARSING) $(TOKENIZATION) $(EXECUTION) $(EXPANDER) $(GET_NEXT_LINE)
 
 # SRCS = $(wildcard srcs/*.c) $(wildcard srcs/builtins/*.c) $(wildcard srcs/input_validation/*.c) $(wildcard srcs/tokenization/*.c) $(wildcard srcs/parsing/*.c)
 
@@ -34,7 +36,7 @@ $(NAME):  $(OBJS)
 
 
 clean:
-	@make -C $(LIBFT_PATH) clean
+#@make -C $(LIBFT_PATH) clean
 	rm -f $(OBJS)
 
 fclean:

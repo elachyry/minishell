@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:42:28 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/14 18:34:59 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/15 14:47:15 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,67 +54,71 @@
 
 // echo " $USER  \$ "'$PWD'
 
-char *remove_all_quotes(char *str)
+char *remove_all_quotes(t_token *token, char *str)
 {
-    char *new_str;
-    int i, j;
-    int in_single_quotes = 0;
-    int in_double_quotes = 0;
-    int in_variable = 0;
+	char *new_str;
+	int i, j;
+	int in_single_quotes = 0;
+	int in_double_quotes = 0;
+	int in_variable = 0;
 
-    new_str = malloc(strlen(str) + 1); // Allocate memory for new string
-    if (!new_str)
-        return NULL;
+	new_str = malloc(strlen(str) + 1); // Allocate memory for new string
+	if (!new_str)
+		return NULL;
 
-    i = 0;
-    j = 0;
-    while (str[i])
-    {
-        if (str[i] == '\"' && !in_single_quotes) // If the character is a double quote and we're not inside single quotes
-        {
-            in_double_quotes = !in_double_quotes; // Toggle the in_double_quotes flag
-            if (str[i+1] == '$') // If the next character is a $, we're inside a variable
-            {
-                in_variable = 1;
-            }
-            else if (in_variable) // If we're at the end of a variable, stop marking it
-            {
-                in_variable = 0;
-            }
-        }
-        else if (str[i] == '\'' && !in_double_quotes) // If the character is a single quote and we're not inside double quotes
-        {
-            in_single_quotes = !in_single_quotes; // Toggle the in_single_quotes flag
-        }
-        else
-        {
-            new_str[j] = str[i]; // Copy it to the new string
-            j++;
-        }
-        i++;
-    }
-    new_str[j] = '\0'; // Null-terminate the new string
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] == '\"' && !in_single_quotes) // If the character is a double quote and we're not inside single quotes
+		{
+			if (token->prev && token->prev->type == DoubleLessThanOperator)
+				g_shell_data.simple_cmd->should_expand = false;
+			in_double_quotes = !in_double_quotes; // Toggle the in_double_quotes flag
+			if (str[i+1] == '$') // If the next character is a $, we're inside a variable
+			{
+				in_variable = 1;
+			}
+			else if (in_variable) // If we're at the end of a variable, stop marking it
+			{
+				in_variable = 0;
+			}
+		}
+		else if (str[i] == '\'' && !in_double_quotes) // If the character is a single quote and we're not inside double quotes
+		{
+			if (token->prev && token->prev->type == DoubleLessThanOperator)
+				g_shell_data.simple_cmd->should_expand = false;
+			in_single_quotes = !in_single_quotes; // Toggle the in_single_quotes flag
+		}
+		else
+		{
+			new_str[j] = str[i]; // Copy it to the new string
+			j++;
+		}
+		i++;
+	}
+	new_str[j] = '\0'; // Null-terminate the new string
 
-    return (new_str);
+	return (new_str);
 }
 
 t_token	*expand_quotes(t_token *tokens)
 {
-    t_token	*token;
-    char	*tmp;
+	t_token	*token;
+	char	*tmp;
 
-    token = tokens;
-    while (token)
-    {
-        if (token->type == IDENTIFIER)
-        {
-            tmp = remove_all_quotes(token->value);
-            free(token->value);
-            token->value = tmp;
-        }
-        token = token->next;
-    }
-    return (tokens);
+	token = tokens;
+	while (token)
+	{
+		if (token->type == IDENTIFIER)
+		{
+			tmp = remove_all_quotes(token, token->value);
+			free(token->value);
+			token->value = tmp;
+		}
+		token = token->next;
+	}
+	return (tokens);
 }
 char	*ft_getenv(char *name, t_env *env)
 {
@@ -215,86 +219,91 @@ char	*get_var_value(char **value, char *line, t_env *env)
 
 char	*shearch_and_replace(char *line)
 {
-    char	*ret;
-    char	*value;
-    int in_single_quotes = 0;
-    int in_double_quotes = 0;
-    int nested_quotes = 0;
+	char	*ret;
+	char	*value;
+	int in_single_quotes = 0;
+	int in_double_quotes = 0;
+	int nested_quotes = 0;
 
-    ret = "";
-    while (*line)
-    {
-        if (*line == '\'')
-        {
-            if (!in_double_quotes)
-            {
-                in_single_quotes = !in_single_quotes;
-            }
-            else
-            {
-                nested_quotes = !nested_quotes;
-            }
-            ret = append_char(ret, *line);
-        }
-        else if (*line == '\"')
-        {
-            if (!in_single_quotes)
-            {
-                in_double_quotes = !in_double_quotes;
-            }
-            else
-            {
-                nested_quotes = !nested_quotes;
-            }
-            ret = append_char(ret, *line);
-        }
-        else if (*line == '$' && (!in_single_quotes || (in_double_quotes && !nested_quotes)))
-        {
-            line = get_var_value(&value, line + 1, g_shell_data.environment_list);
-            ret = ft_strjoin(ret, value);
-        }
-        else
-        {
-            ret = append_char(ret, *line);
-        }
-        line++;
-    }
-    return (ret);
+	ret = "";
+	while (*line)
+	{
+		if (*line == '\'')
+		{
+			if (!in_double_quotes)
+			{
+				in_single_quotes = !in_single_quotes;
+			}
+			else
+			{
+				nested_quotes = !nested_quotes;
+			}
+			ret = append_char(ret, *line);
+		}
+		else if (*line == '\"')
+		{
+			if (!in_single_quotes)
+			{
+				in_double_quotes = !in_double_quotes;
+			}
+			else
+			{
+				nested_quotes = !nested_quotes;
+			}
+			ret = append_char(ret, *line);
+		}
+		else if (*line == '$' && (!in_single_quotes || (in_double_quotes && !nested_quotes)))
+		{
+			line = get_var_value(&value, line + 1, g_shell_data.environment_list);
+			ret = ft_strjoin(ret, value);
+		}
+		else
+		{
+			ret = append_char(ret, *line);
+		}
+		line++;
+	}
+	return (ret);
 }
 
 t_token	*expand_env_variable(t_token *tokens)
 {
-    t_token	*tok;
-    int in_single_quotes;
-    int in_double_quotes;
-    char *tmp;
+	t_token	*tok;
+	int in_single_quotes;
+	int in_double_quotes;
+	char *tmp;
 
-    tok = tokens;
-    while (tok)
-    {
-        in_single_quotes = 0;
-        in_double_quotes = 0;
-        tmp = tok->value;
-        while (*tmp)
-        {
-            if (*tmp == '\'')
-            {
-                in_single_quotes = !in_single_quotes;
-            }
-            else if (*tmp == '\"')
-            {
-                in_double_quotes = !in_double_quotes;
-            }
-            else if (*tmp == '$' && (!in_single_quotes || in_double_quotes))
-            {
-                tok->value = shearch_and_replace(tok->value);
-                break;
-            }
-            tmp++;
-        }
-        tok = tok->next;
-    }
-    return (tokens);
+	tok = tokens;
+	while (tok)
+	{
+		if (tok->prev && tok->prev->type == DoubleLessThanOperator)
+		{
+			tok = tok->next;
+			continue;
+		}
+		in_single_quotes = 0;
+		in_double_quotes = 0;
+		tmp = tok->value;
+		while (*tmp)
+		{
+			if (*tmp == '\'')
+			{
+				in_single_quotes = !in_single_quotes;
+			}
+			else if (*tmp == '\"')
+			{
+				in_double_quotes = !in_double_quotes;
+			}
+			else if (*tmp == '$' && (!in_single_quotes || in_double_quotes))
+			{
+				tok->value = shearch_and_replace(tok->value);
+				break;
+			}
+			tmp++;
+		}
+		tok = tok->next;
+	}
+	return (tokens);
 }
 
 #include <dirent.h>

@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/05/15 14:40:27 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/15 14:51:12 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	display_prompt(char **line)
 
 void	initialize_shell(char **envp)
 {
+	// printf("envp = %s\n", envp[0]);
 	g_shell_data.line = NULL;
 	g_shell_data.environment = envp;
 	g_shell_data.path = NULL;
@@ -72,7 +73,10 @@ void	initialize_shell(char **envp)
 	g_shell_data.ast = NULL;
 	g_shell_data.status = 0;
 	g_shell_data.nbr_cmd = 0;
+	g_shell_data.sig_exit = false;
+	g_shell_data.ctl = false;
 	g_shell_data.simple_cmd = malloc(sizeof(t_simple_cmd));
+	g_shell_data.simple_cmd->should_expand = true;
 	if (!g_shell_data.simple_cmd)
 		return ;
 	g_shell_data.environment_list = initialize_environment_list(envp);
@@ -100,12 +104,15 @@ int	main(int ac, char **av, char **envp)
 			continue ;
 		tokens = ft_tokenize(g_shell_data.line);
 		tokens = expand_tokens(tokens);
-		// display_tokens(tokens);
 		free(g_shell_data.line);
+		display_tokens(tokens);
 		ast = parse_tokens(&tokens);
 		g_shell_data.ast = ast;
 		// generate_ast_diagram(ast);
+		g_shell_data.ctl = true;
 		execution();
+		g_shell_data.sig_exit = false;
+		g_shell_data.ctl= false;
 	}
 	return (0);
 }

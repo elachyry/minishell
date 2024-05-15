@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/12 15:20:42 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/15 14:43:03 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@
 # include <errno.h>
 # include <termios.h>
 # include <sys/wait.h>
-# include "tokenizing.h"
 # include <sys/ioctl.h>
+# include <fcntl.h>
+# include "tokenizing.h"
 #include  "../libraries/libft/libft.h"
+#include  "../libraries/get_next_line/get_next_line.h"
 # define READLINE_LIBRARY
 # include "/Users/akaddour/readline/include/readline/readline.h"
 # include "/Users/akaddour/readline/include/readline/history.h"
 // # include "/Users/melachyr/readline/readline.h"
 // # include "/Users/melachyr/readline/history.h"
-
-# define SYNTAX_ERR "minishell: syntax error near unexpected token"
 
 typedef enum e_bool
 {
@@ -46,10 +46,23 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_files
+{
+	t_token_type	type;
+	char			*filename;
+	t_bool			is_opened;
+	struct s_files	*next;
+}	t_files;
+
 typedef struct	s_simple_cmd
 {
 	char	**cmd;
 	char	*cmd_path;
+	char	*here_doc_path;
+	int		nbr_here_doc;
+	int		is_first;
+	t_bool	should_expand;
+	t_files	*files;
 }	t_simple_cmd;
 
 typedef struct s_shell_data
@@ -59,6 +72,8 @@ typedef struct s_shell_data
 	char			**path;
 	int				status;
 	int				nbr_cmd;
+	t_bool			sig_exit;
+	t_bool 			ctl;
 	t_token			*tokens;
 	t_ast_node		*ast;
 	t_simple_cmd	*simple_cmd;
@@ -68,6 +83,7 @@ typedef struct s_shell_data
 
 extern t_shell_data g_shell_data;
 
+const char	*get_token_type_name(t_token_type type);
 
 //initialization
 t_env	*initialize_environment_list(char **env);
