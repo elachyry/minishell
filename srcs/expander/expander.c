@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:42:28 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/15 19:50:37 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/15 21:49:42 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char *remove_all_quotes(t_token *token, char *str)
 	int in_double_quotes = 0;
 	int in_variable = 0;
 
-	new_str = malloc(strlen(str) + 1); // Allocate memory for new string
+	new_str = malloc(ft_strlen(str) + 1); // Allocate memory for new string
 	if (!new_str)
 		return NULL;
 
@@ -333,12 +333,55 @@ int match(const char *string, const char *pattern)
     return !*pattern;
 }
 
+// t_token *expand_wildcards(t_token *tokens)
+// {
+//     t_token *tok;
+//     char *tmp;
+//     DIR *dir;
+//     struct dirent *entry;
+
+//     tok = tokens;
+//     while (tok)
+//     {
+//         tmp = tok->value;
+//         while (*tmp)
+//         {
+//             if (*tmp == '*')
+//             {
+//                 dir = opendir(".");
+//                 if (dir == NULL)
+//                 {
+//                     perror("opendir");
+//                     return (tokens);
+//                 }
+//                 while ((entry = readdir(dir)) != NULL)
+//                 {
+//                     // Skip hidden files unless the pattern starts with a dot
+//                     if (entry->d_name[0] == '.' && tok->value[0] != '.')
+//                         continue;
+
+//                     if (match(entry->d_name, tok->value))
+//                     {
+//                         printf("%s\n", entry->d_name);
+//                     }
+//                 }
+//                 closedir(dir);
+//                 break;
+//             }
+//             tmp++;
+//         }
+//         tok = tok->next;
+//     }
+//     return (tokens);
+// }
+
 t_token *expand_wildcards(t_token *tokens)
 {
     t_token *tok;
     char *tmp;
     DIR *dir;
     struct dirent *entry;
+    char *file_list = NULL;
 
     tok = tokens;
     while (tok)
@@ -360,73 +403,43 @@ t_token *expand_wildcards(t_token *tokens)
                     if (entry->d_name[0] == '.' && tok->value[0] != '.')
                         continue;
 
-                    if (match(entry->d_name, tok->value))
-                    {
-                        printf("%s\n", entry->d_name);
-                    }
+                   	if (match(entry->d_name, tok->value))
+					{
+					    // Concatenate the matching filename to the file list
+					    char *filename_with_space = ft_strjoin(entry->d_name, " ");
+					    char *new_file_list;
+					    if (file_list)
+					    {
+					        new_file_list = ft_strjoin(file_list, filename_with_space);
+					    }
+					    else
+					    {
+					        new_file_list = ft_strjoin("", filename_with_space);
+					    }
+					    free(filename_with_space);
+					    if (file_list)
+					        free(file_list);
+					    file_list = new_file_list;
+					}
                 }
                 closedir(dir);
                 break;
             }
             tmp++;
         }
-        tok = tok->next;
-    }
-    return (tokens);
-}
-
-t_token *expand_wildcards(t_token *tokens)
-{
-    t_token *tok;
-    char *tmp;
-    DIR *dir;
-    struct dirent *entry;
-    char **file_list = NULL;
-    int file_count = 0;
-
-    tok = tokens;
-    while (tok)
-    {
-        tmp = tok->value;
-        while (*tmp)
+        if (file_list)
         {
-            if (*tmp == '*')
+            if (tok)
             {
-                dir = opendir(".");
-                if (dir == NULL)
-                {
-                    perror("opendir");
-                    return (tokens);
-                }
-                while ((entry = readdir(dir)) != NULL)
-                {
-                    // Skip hidden files unless the pattern starts with a dot
-                    if (entry->d_name[0] == '.' && tok->value[0] != '.')
-                        continue;
-
-                    if (match(entry->d_name, tok->value))
-                    {
-                        file_list = realloc(file_list, sizeof(char*) * (file_count + 1));
-                        file_list[file_count] = strdup(entry->d_name);
-                        file_count++;
-                    }
-                }
-                closedir(dir);
-                break;
+                tok->value = file_list;
             }
-            tmp++;
+            else
+            {
+                // Handle the case where tok is null
+                // You might want to return an error or create a new token
+            }
         }
         tok = tok->next;
-    }
-
-    // Replace the wildcard token with the list of matching filenames
-    if (file_count > 0)
-    {
-        for (int i = 0; i < file_count; i++)
-        {
-            printf("%s\n", file_list[i]);
-            tok = add_token(tok, IDENTIFIER, file_list[i]);
-        }
     }
 
     return (tokens);
