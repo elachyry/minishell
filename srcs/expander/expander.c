@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:42:28 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/15 19:50:37 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:10:20 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,62 +375,6 @@ t_token *expand_wildcards(t_token *tokens)
     return (tokens);
 }
 
-t_token *expand_wildcards(t_token *tokens)
-{
-    t_token *tok;
-    char *tmp;
-    DIR *dir;
-    struct dirent *entry;
-    char **file_list = NULL;
-    int file_count = 0;
-
-    tok = tokens;
-    while (tok)
-    {
-        tmp = tok->value;
-        while (*tmp)
-        {
-            if (*tmp == '*')
-            {
-                dir = opendir(".");
-                if (dir == NULL)
-                {
-                    perror("opendir");
-                    return (tokens);
-                }
-                while ((entry = readdir(dir)) != NULL)
-                {
-                    // Skip hidden files unless the pattern starts with a dot
-                    if (entry->d_name[0] == '.' && tok->value[0] != '.')
-                        continue;
-
-                    if (match(entry->d_name, tok->value))
-                    {
-                        file_list = realloc(file_list, sizeof(char*) * (file_count + 1));
-                        file_list[file_count] = strdup(entry->d_name);
-                        file_count++;
-                    }
-                }
-                closedir(dir);
-                break;
-            }
-            tmp++;
-        }
-        tok = tok->next;
-    }
-
-    // Replace the wildcard token with the list of matching filenames
-    if (file_count > 0)
-    {
-        for (int i = 0; i < file_count; i++)
-        {
-            printf("%s\n", file_list[i]);
-            tok = add_token(tok, IDENTIFIER, file_list[i]);
-        }
-    }
-
-    return (tokens);
-}
 
 t_token *expand_tokens(t_token *tokens)
 {
