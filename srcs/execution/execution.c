@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/14 21:23:29 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/15 10:32:06 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,15 @@ int	get_cmd_path(char	*args)
 		return (0);
 	else if (cmd)
 	{
-		char	*p = ft_strjoin("./", cmd);
 		if (access(cmd, X_OK) != -1 || access(args, X_OK) != -1)
 		{
 			g_shell_data.simple_cmd->cmd_path = args;
 			return (1);
 		}
-		else if (access(cmd, X_OK) != -1 && !g_shell_data.path)
-		{
-			g_shell_data.simple_cmd->cmd_path = p;
-			return (1);
-		}
 		else if (access(args, X_OK) == -1)
 			return (2);
 	}
+	
 	else
 	{
 		cmd = args;
@@ -54,6 +49,12 @@ int	get_cmd_path(char	*args)
 			}
 			free(path);
 			g_shell_data.path++;
+		}
+		char	*p = ft_strjoin("./", cmd);
+		if (access(p, X_OK) != -1 && !g_shell_data.path[0])
+		{
+			g_shell_data.simple_cmd->cmd_path = cmd;
+			return (1);
 		}
 	}
 	return (0);
@@ -333,6 +334,7 @@ int execute_command(char **args)
 			int	status = get_cmd_path(args[0]);
 			if (!status)
 			{
+				ft_putstr_fd("minishell: ", 2);
 				ft_putstr_fd("command not found: ", 2);
 				ft_putstr_fd(args[0], 2);
 				ft_putstr_fd("\n", 2);
@@ -346,6 +348,7 @@ int execute_command(char **args)
 			execve(g_shell_data.simple_cmd->cmd_path, args, g_shell_data.environment);
 			if (!ft_strcmp(args[0], "."))
 			{
+				ft_putstr_fd("minishell: ", 2);
 				ft_putstr_fd(args[0], 2);
 				ft_putstr_fd(": filename argument required", 2);
 				ft_putstr_fd("\n", 2);
@@ -356,6 +359,7 @@ int execute_command(char **args)
 			}
 			if (access(args[0], F_OK) == 0)
 			{
+				ft_putstr_fd("minishell: ", 2);
 				ft_putstr_fd(args[0], 2);
 				ft_putstr_fd(": is a directory", 2);
 				ft_putstr_fd("\n", 2);
@@ -458,14 +462,14 @@ void execute_ast(t_ast_node *node)
 	}
 	else if (node->type == LogicalAnd)
 	{
-		dprintf(2, "LogicalAnd\n");
+		// dprintf(2, "LogicalAnd\n");
 		execute_ast(node->left);
 		
 		g_shell_data.simple_cmd->files = NULL;
 		int left_status = g_shell_data.status;
 		// dprintf(2, "status % d\n", left_status);
 		// dprintf(2, "sig exit %d\n", g_shell_data.sig_exit);
-		if (left_status == 0 && g_shell_data.sig_exit)
+		if (left_status == 0 && !g_shell_data.sig_exit)
 			execute_ast(node->right);
 		else if (node->right
 			&& (node->right->type == LogicalAnd || node->right->type == LogicalOr))
@@ -485,7 +489,7 @@ void execute_ast(t_ast_node *node)
 	}
 	else if (node->type == LogicalOr)
 	{
-		dprintf(2, "LogicalOr\n");
+		// dprintf(2, "LogicalOr\n");
 		// g_shell_data.sig_exit = true;
 		execute_ast(node->left);
 		// g_shell_data.sig_exit = false;
@@ -493,7 +497,7 @@ void execute_ast(t_ast_node *node)
 		int left_status = g_shell_data.status;
 		// dprintf(2, "status % d\n", left_status);
 		// dprintf(2, "sig exit %d\n", g_shell_data.sig_exit);
-		if (left_status != 0 || g_shell_data.sig_exit == true)
+		if (left_status != 0 || g_shell_data.sig_exit)
 		{
 			execute_ast(node->right);
 		}
@@ -728,7 +732,7 @@ void	execution(void)
 	// }
 	if (g_shell_data.simple_cmd->nbr_here_doc >= 17)
 	{	
-		ft_putstr_fd("maximum here-document count exceeded\n", 2);
+		ft_putstr_fd("minishell: maximum here-document count exceeded\n", 2);
 		exit(2);
 	}
 	t_ast_node	*ast = g_shell_data.ast;

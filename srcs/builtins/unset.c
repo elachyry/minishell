@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 00:39:02 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/14 10:51:34 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/15 10:32:46 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void    delete_env_value(char *key)
 
 static void    display_unset_error(char *key)
 {
-    ft_putstr_fd("unset: `", 2);
+    ft_putstr_fd("minishell: unset: `", 2);
     ft_putstr_fd(key, 2);
     ft_putstr_fd("': not a valid identifier\n", 2);
 }

@@ -110,3 +110,9 @@ echo >> test bonjour
 
 
 ls1 && ls || ls && ls || ls && ls && ls || ls && ls || ls && ls
+
+
+
+
+ls ||| ls
+ls &&& ls

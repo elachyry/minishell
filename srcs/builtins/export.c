@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:38:47 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/11 12:41:17 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/15 10:32:33 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static void ft_export_print(void)
 
 static void	display_export_error(char *key)
 {
-    ft_putstr_fd("export: `", 2);
+    ft_putstr_fd("minishell: export: `", 2);
     ft_putstr_fd(key, 2);
     ft_putstr_fd("': not a valid identifier\n", 2);
 }
