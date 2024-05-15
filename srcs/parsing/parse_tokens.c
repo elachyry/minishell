@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:37:53 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/15 12:54:57 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/15 21:47:16 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,21 @@ t_ast_node	*new_ast_file_node(t_token *token)
 	return (node);
 }
 
+int	table_count(char **tab)
+{
+	int	i;
+
+	if (!tab || !*tab)
+		return (0);
+	i = 0;
+	while (*tab)
+	{
+		i++;
+		tab++;
+	}
+	return (i);
+}
+
 t_ast_node	*parse_command(t_token	**tokens)
 {
 	int			count;
@@ -66,18 +81,46 @@ t_ast_node	*parse_command(t_token	**tokens)
 		count++;
 		ptr = ptr->next;
 	}
-	// dprintf(2, "count %d\n", count);
-	cmd = malloc(sizeof(char *) * (count + 1));
-	if (!cmd)
-		return (NULL);
 	ptr = *tokens;
-	i = -1;
-	while (++i < count)
+	char **tmp = NULL;
+	int count2 = 0;
+	while (ptr && ptr->type == IDENTIFIER)
 	{
-		cmd[i] = ptr->value;
+		tmp = ft_split(ptr->value, ' ');
+		// printf("tbale %s\n", tmp[0]);
+		count2 += table_count(tmp);
+		// dprintf(2, "inside while count2 %d\n", count2);
 		ptr = ptr->next;
 	}
-	cmd[i] = NULL;
+	// dprintf(2, "count2 %d\n", count2);
+	ptr = *tokens;
+	if (!count2)
+		count2 = 1;
+	cmd = malloc(sizeof(char *) * (count2 + 1));
+	if (!cmd)
+		return (NULL);
+	int	j = 0;
+	tmp = NULL;
+	while (ptr && ptr->type == IDENTIFIER)
+	{
+		// printf("token  %s\n", ptr->value);
+		tmp = ft_split(ptr->value, ' ');
+		i = -1;
+		while (tmp && tmp[++i] != NULL)
+		{
+			// printf("tbale2 %s\n", tmp[i]);
+			cmd[j] = tmp[i];
+			j++;
+		}
+		// cmd[i] = ptr->value;
+		ptr = ptr->next;
+	}
+	if (j == 0)
+	{
+		cmd[0] = ft_strdup("");
+		j++;
+	}
+	cmd[j] = NULL;
 	*tokens = ptr;
 	node = malloc(sizeof(t_ast_node));
 	node->args = cmd;
@@ -85,8 +128,10 @@ t_ast_node	*parse_command(t_token	**tokens)
 	node->left = NULL;
 	// printf("parse_command2 token = %s\n", *tokens == NULL ? "NULL" : (*tokens)->value);
 	node->right = parse_redirection(tokens);
+	// printf("----------------------\n");
 	// for (int i = 0; cmd[i] != NULL; i++)
 	// 	dprintf(2, "%s\n", cmd[i]);
+	// printf("----------------------\n");
 	// g_shell_data.nbr_cmd++;
 	
 	return (node);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_if_builtin.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:13:08 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/13 11:14:43 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/15 21:04:22 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int execute_builtin(char **args)
 
 t_bool	check_if_builtin(char *arg)
 {
+	if (!arg)
+		return (false);
 	if (!ft_strcmp(arg, "echo"))
 		return (true);
 	if (!ft_strcmp(arg, "cd"))
