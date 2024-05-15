@@ -6,11 +6,13 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:37:53 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/15 11:28:45 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/15 12:54:57 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+t_ast_node	*parse_parenthese(t_token **tokens);
 
 t_ast_node	*new_ast_node(t_token_type type)
 {
@@ -220,7 +222,7 @@ t_ast_node	*parse_redirection(t_token **tokens)
 		}
 		*tokens = next;
 	}
-    return (parse_command(&ptr));
+    return (parse_parenthese(&ptr));
 }
 
 
@@ -276,7 +278,7 @@ t_ast_node	*parse_parenthese(t_token **tokens)
 		}
 		*tokens = (*tokens)->next;
 	}
-	return (parse_redirection(&ptr));
+	return (parse_command(&ptr));
 }
 t_ast_node	*parse_pipeline(t_token **tokens)
 {
@@ -293,13 +295,13 @@ t_ast_node	*parse_pipeline(t_token **tokens)
 		{
 			(*tokens)->next = NULL;
 			pipe_node = new_ast_node(next->type);
-			pipe_node->left = parse_parenthese(&ptr);
+			pipe_node->left = parse_redirection(&ptr);
 			pipe_node->right = parse_pipeline(&(next->next));
 			return (pipe_node);
 		}
 		*tokens = next;
 	}
-	return (parse_parenthese(&ptr));
+	return (parse_redirection(&ptr));
 }
 
 
