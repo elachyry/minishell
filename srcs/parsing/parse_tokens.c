@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:37:53 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/12 21:38:18 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/14 09:52:39 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,6 @@ t_ast_node	*parse_command_with_sepa_arg(t_token *tokens, t_token *args)
 	int	j = -1;
 	while (++j < count2)
 	{
-		printf("t\n");
 		cmd[i] = ptr2->value;
 		ptr2 = ptr2->next;
 		i++;
@@ -186,6 +185,8 @@ t_ast_node	*parse_redirection(t_token **tokens)
 		|| (*tokens)->type == GreaterThanOperator || (*tokens)->type == DoubleGreaterThanOperator)
 	{
 		// dprintf(2, "1 %s\n", (*tokens)->value);
+		if ((*tokens)->type == DoubleLessThanOperator)
+			g_shell_data.simple_cmd->nbr_here_doc++;
 		redirection_node = new_ast_node((*tokens)->type);
 		*tokens = NULL;
 		redirection_node->left = parse_redirection(tokens);
@@ -203,6 +204,8 @@ t_ast_node	*parse_redirection(t_token **tokens)
 			|| next->type == GreaterThanOperator || next->type == DoubleGreaterThanOperator)
 		{
 			// printf("red = %s\n", next->value);
+			if (next->type == DoubleLessThanOperator)
+				g_shell_data.simple_cmd->nbr_here_doc++;
 			redirection_node = new_ast_node(next->type); 
 			(*tokens)->next = NULL;
 			if (next->next->next && next->next->next->type == IDENTIFIER)
@@ -326,5 +329,6 @@ t_ast_node	*parse_tokens(t_token **tokens)
 	if (!tokens && !*tokens)
 		return (NULL);
 	g_shell_data.nbr_cmd = 0;
+	g_shell_data.simple_cmd->nbr_here_doc = 0;
 	return (parse_logical_operator(tokens));
 }

@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/05/13 20:49:49 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/15 10:21:41 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	initialize_shell(char **envp)
 	g_shell_data.sig_exit = false;
 	g_shell_data.ctl = false;
 	g_shell_data.simple_cmd = malloc(sizeof(t_simple_cmd));
+	g_shell_data.simple_cmd->should_expand = true;
 	if (!g_shell_data.simple_cmd)
 		return ;
 	g_shell_data.environment_list = initialize_environment_list(envp);
@@ -107,7 +108,7 @@ int	main(int ac, char **av, char **envp)
 		free(g_shell_data.line);
 		ast = parse_tokens(&tokens);
 		g_shell_data.ast = ast;
-		generate_ast_diagram(ast);
+		// generate_ast_diagram(ast);
 		g_shell_data.ctl = true;
 		execution();
 		g_shell_data.sig_exit = false;

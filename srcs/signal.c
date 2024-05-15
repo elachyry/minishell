@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 05:30:45 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/13 12:35:33 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/14 11:20:46 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	sigint_handler(int sig)
 		rl_redisplay();
 	}
 	g_shell_data.status = 1;
-		g_shell_data.sig_exit = true;
+	g_shell_data.sig_exit = true;
 
 	// dprintf(2, "status in signal = %d\n", g_shell_data.status);
 	// dprintf(2, "signal\n");

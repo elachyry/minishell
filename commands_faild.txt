@@ -103,3 +103,16 @@ ls >> a | ls > a | Makefile >> a && echo "hello" √
 ls >> a | ls > a || Makefile >> a && ls√
 echo >> test bonjour
 >> test echo bonjour
+
+
+
+///14/05/2024
+
+
+ls1 && ls || ls && ls || ls && ls && ls || ls && ls || ls && ls
+
+
+
+
+ls ||| ls
+ls &&& ls
