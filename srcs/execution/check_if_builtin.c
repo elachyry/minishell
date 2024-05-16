@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:13:08 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/15 21:04:22 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/16 09:27:18 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int execute_builtin(char **args)
 		return (ft_unset(args));
 	if (!ft_strcmp(args[0], "env"))
 		return (ft_env());
-	ft_exit(args);
+	if (!ft_strcmp(args[0], "exit"))
+		return (ft_exit(args));
 	return (0);
 }
 
