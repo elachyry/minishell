@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:42:28 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/15 22:37:27 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/16 09:38:03 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -447,22 +447,48 @@ t_token *expand_wildcards(t_token *tokens)
 
 t_token *expand_tokens(t_token *tokens)
 {
-	tokens = expand_env_variable(tokens);
-	tokens = expand_quotes(tokens);
+    t_token *tok, *next_tok, *prev_tok;
+
+    tokens = expand_env_variable(tokens);
+    tok = tokens;
+    while (tok)
+    {
+        if (*(tok->value) == '\0')
+        {
+            // Save the next and previous tokens
+            next_tok = tok->next;
+            prev_tok = tok->prev;
+
+            // Update the next pointer of the previous token
+            if (prev_tok)
+            {
+                prev_tok->next = next_tok;
+            }
+            else
+            {
+                // If there is no previous token, update the head of the list
+                tokens = next_tok;
+            }
+
+            // Update the prev pointer of the next token
+            if (next_tok)
+            {
+                next_tok->prev = prev_tok;
+            }
+
+            // Free the current token
+            free(tok);
+
+            // Move to the next token
+            tok = next_tok;
+        }
+        else
+        {
+            tok = tok->next;
+        }
+    }
+
+    tokens = expand_quotes(tokens);
     tokens = expand_wildcards(tokens);
-	return (tokens);
+    return (tokens);
 }
-
-// t_token	*expand_env_variable(t_token *tokens)
-// {
-// 	t_token	*tok;
-
-// 	tok = tokens;
-// 	while (tok)
-// 	{
-// 		if (tok->value)
-// 			tok->value = shearch_and_replace(tok->value);
-// 		tok = tok->next;
-// 	}
-// 	return (tokens);
-// }

@@ -1,7 +1,3 @@
 digraph AST {
-"0x603000008ad0" [label="&&"];
-"0x603000008ad0" -> "0x603000008b00" [label="L"];
-"0x603000008b00" [label="CMD: lss"];
-"0x603000008ad0" -> "0x603000008b60" [label="R"];
-"0x603000008b60" [label="(): ps || ls"];
+"0x603000000ee0" [label="CMD: ls ast.dot commands_faild.txt GITEX24MR_Confirmation_6397014639.pdf GITEX24MR_Confirmation_6397015084.pdf init.sh"];
 }

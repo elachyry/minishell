@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/15 20:06:26 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/16 09:36:10 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	extract_path(void);
 int		ft_cd(char *path);
 int 	ft_echo(char **args);
 int		ft_env(void);
-void	ft_exit(char **args);
+int		ft_exit(char **args);
 int		ft_export(char **args);
 int 	ft_pwd(void);
 int		ft_unset(char **args);

@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/15 23:16:55 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/16 10:16:06 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ char	*expand_here_doc(char *str)
 void	here_doc(char *delimiter, int fd)
 {
 	char	*str;
-	t_bool	is_var = false;
 
 	str = NULL;
 	// infile = open(pipex.in_file_path, O_CREAT | O_RDWR, 0644);
