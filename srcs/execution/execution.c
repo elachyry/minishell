@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/15 21:50:14 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/15 23:16:55 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,10 +155,8 @@ void	here_doc(char *delimiter, int fd)
 				while (*str)
 				{
 					// printf("str = %c\n", *str);
-					is_var = false;
 					if (*str == '$')
 					{
-						is_var = true;
 						int	i = 0;
 						if (*(str + 1) == '$')
 						{
