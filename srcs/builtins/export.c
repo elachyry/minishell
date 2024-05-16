@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:38:47 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/15 10:32:33 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/16 09:51:45 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,12 @@ int	ft_export(char **args)
             return (1);
         }
         value = extract_value(args[i]);
-        update_env_value(key, value);
+        // Only update the value if it's not null or if the key doesn't already exist
+        if (value || !get_env_value(key))
+            update_env_value(key, value);
         free(key);
         if (value)
-            free(value);;
+            free(value);
         i++;
     }
     return (0);
