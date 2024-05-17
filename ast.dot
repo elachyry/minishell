@@ -1,3 +1,7 @@
 digraph AST {
-"0x603000001690" [label="CMD: export"];
+"0x603000000d60" [label="|"];
+"0x603000000d60" -> "0x603000000d90" [label="L"];
+"0x603000000d90" [label="CMD: ls"];
+"0x603000000d60" -> "0x603000000df0" [label="R"];
+"0x603000000df0" [label="(): cat && cat"];
 }

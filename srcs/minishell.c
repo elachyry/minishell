@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/05/15 22:37:40 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/16 14:06:43 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	initialize_shell(char **envp)
 	g_shell_data.tokens = NULL;
 	g_shell_data.ast = NULL;
 	g_shell_data.status = 0;
-	g_shell_data.nbr_cmd = 0;
 	g_shell_data.sig_exit = false;
 	g_shell_data.ctl = false;
 	g_shell_data.simple_cmd = malloc(sizeof(t_simple_cmd));

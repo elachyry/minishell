@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_if_builtin.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:13:08 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/16 09:27:18 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:25:10 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int execute_builtin(char **args)
+int	execute_builtin(char **args)
 {
 	if (!ft_strcmp(args[0], "echo"))
 		return (ft_echo(args));
@@ -46,7 +46,7 @@ t_bool	check_if_builtin(char *arg)
 	if (!ft_strcmp(arg, "unset"))
 		return (true);
 	if (!ft_strcmp(arg, "env"))
-		return (true); 
+		return (true);
 	if (!ft_strcmp(arg, "exit"))
 		return (true);
 	return (false);

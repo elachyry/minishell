@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:53:01 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/14 13:54:18 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/16 11:12:06 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (NULL);
 	start = 0;
 	end = ft_strlen(s1);
-	while (s1[start] && ft_strchr_2(set, s1[start]))
+	while (s1[start] && ft_strchr(set, s1[start]))
 		start++;
-	while (end > start && s1[end - 1] && ft_strchr_2(set, s1[end - 1]))
+	while (end > start && s1[end - 1] && ft_strchr(set, s1[end - 1]))
 		end--;
 	if (end <= start)
 		return (ft_strdup(""));
