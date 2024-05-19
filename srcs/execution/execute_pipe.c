@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:20:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/18 09:27:58 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:21:39 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	execute_pipe(t_ast_node *node)
 
 	if (pipe(pipefd) == -1)
 		perror_message("pipe", EXIT_FAILURE);
+	// g_shell_data.simple_cmd->is_parenthis = false;
 	left_pid = fork();
 	if (left_pid == -1)
 		perror_message("fork", EXIT_FAILURE);

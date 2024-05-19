@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:42:54 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/19 17:21:59 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/19 22:49:56 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int	execute_command(char **args)
 
 	status = 0;
 	// dprintf(2, "cmd %s\n", args[0]);
+	dprintf(2, "in cmd parenthies %d\n", g_shell_data.simple_cmd->is_parenthis);
 	signal(SIGQUIT, sigquit_handler);
 	if (check_if_builtin(args[0]))
 		return (manage_builtins(args));
@@ -117,7 +118,8 @@ int	execute_command(char **args)
 			perror_message("fork", EXIT_FAILURE);
 		else if (pid == 0)
 		{
-			redirect_files();
+			if (g_shell_data.simple_cmd->is_parenthis > 1 || !g_shell_data.simple_cmd->is_parenthis)
+				redirect_files();
 			status = get_cmd_path(args[0]);
 			cmd_not_found(args, status);
 			execve(g_shell_data.simple_cmd->cmd_path,

@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 14:50:49 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/19 12:16:52 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:43:44 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,32 @@ t_bool has_misplaced_operators_2(const char *input) {
     return true;
 }
 
+t_bool has_invalid_redirections_2(const char *input) {
+    int s_q_count = 0;
+    int d_q_count = 0;
+    t_bool encountered_and_or = false;
+    while (*input) {
+        update_quote_counts(*input, &s_q_count, &d_q_count);
+        if (!(s_q_count % 2) && !(d_q_count % 2) && (*input == '>' || *input == '<'))
+		{
+			if (*(input + 1) == ')')
+				return (false);
+            if (is_invalid_operator(&input))
+                return false;
+        } else if (!encountered_and_or && !(s_q_count % 2) && !(d_q_count % 2) && (*input == '|' || *input == '&')) {
+            const char *temp = input;
+            temp++;
+            if (*temp == *input) {
+                encountered_and_or = true;
+                input += 2;
+                continue;
+            }
+        }
+        input++;
+    }
+    return true;
+}
+
 
 t_bool	syntax_error_checker(char	*input)
 {
@@ -119,6 +145,7 @@ t_bool	syntax_error_checker(char	*input)
 	if (!has_misplaced_operators(str)
 		|| !has_misplaced_operators_2(g_shell_data.line)
 		|| !has_invalid_redirections(str)
+		|| !has_invalid_redirections_2(g_shell_data.line)
 		|| !has_unclosed_quotes(g_shell_data.line)
 		|| !has_unclosed_parenthesis(g_shell_data.line)
 		|| !has_invalid_single_ampersand(g_shell_data.line))

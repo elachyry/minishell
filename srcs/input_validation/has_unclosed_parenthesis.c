@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 01:07:45 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/19 12:30:56 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:50:36 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,9 @@ t_bool	has_unclosed_parenthesis(char *input)
     {
         if (*input == '(')
         {
-            // if (prev_non_space && !ft_isspace(prev_non_space) && prev_non_space != '|' && prev_non_space != '&')
-            //     return false; // Return false if '(' is preceded by a non-space character that is not '|' or '&'
+            if (prev_non_space && !ft_isspace(prev_non_space) && prev_non_space != '|' && prev_non_space != '&'
+				&& prev_non_space != '"' && prev_non_space != '\'')
+                return false; // Return false if '(' is preceded by a non-space character that is not '|' or '&'
             open++;
             prev = '(';
             non_whitespace_encountered = false;

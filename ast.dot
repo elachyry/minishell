@@ -1,3 +1,19 @@
 digraph AST {
-"0x603000000d60" [label="CMD: echo 131"];
+"0x60300000a7b0" [label="|"];
+"0x60300000a7b0" -> "0x60300000a7e0" [label="L"];
+"0x60300000a7e0" [label="REDIR: "];
+"0x60300000a7e0" -> "0x60300000a810" [label="L"];
+"0x60300000a810" [label="CMD: ls"];
+"0x60300000a7e0" -> "0x60300000a840" [label="R"];
+"0x60300000a840" [label="CMD: out"];
+"0x60300000a7b0" -> "0x60300000a870" [label="R"];
+"0x60300000a870" [label="REDIR: "];
+"0x60300000a870" -> "0x60300000a8a0" [label="L"];
+"0x60300000a8a0" [label="(): cat && cat && ls"];
+"0x60300000a870" -> "0x60300000a8d0" [label="R"];
+"0x60300000a8d0" [label="CMD: ast.dot"];
+"0x60300000a8d0" -> "0x60300000a900" [label="R"];
+"0x60300000a900" [label="REDIR: "];
+"0x60300000a900" -> "0x60300000a930" [label="R"];
+"0x60300000a930" [label="CMD: out"];
 }
