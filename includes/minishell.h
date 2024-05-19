@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/17 10:00:52 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/18 13:41:33 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct	s_simple_cmd
 	char	*here_doc_path;
 	int		nbr_here_doc;
 	int		is_first;
+	int		is_parenthis;
 	t_bool	should_expand;
 	t_files	*files;
 }	t_simple_cmd;
@@ -112,6 +113,7 @@ const char	*skip_spaces(const char *input);
 void	update_quote_counts(char c, int *s_q_count, int *d_q_count);
 
 //execution
+char	*ft_strjoin_2(char const *s1, char const *s2, size_t len);
 void	execute_ast(t_ast_node *node);
 void	execute_pipe(t_ast_node *node);
 void	execute_logical_and(t_ast_node *node);
@@ -120,7 +122,7 @@ void	execute_less_than(t_ast_node *node);
 void	execute_greater_than(t_ast_node *node);
 void	execute_parenthesis(t_ast_node *ast);
 void	execute_double_greater_than(t_ast_node *node);
-void	expand_here_doc(char *str, int fd);
+char	*expand_here_doc(char *str, int fd);
 t_files	*new_file_node(char *filename, t_token_type type);
 void	add_lst_file(t_files **head, t_files *node);
 t_files	*lst_file_last(t_files *head);

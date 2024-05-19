@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:38:47 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/16 09:51:45 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/18 20:20:00 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,6 @@ int	ft_export(char **args)
             free(value);
         i++;
     }
+		dprintf(2, "a = %s\n", get_env_value("a"));
     return (0);
 }

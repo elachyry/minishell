@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   has_misplaced_operators.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:41:36 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/15 14:48:10 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/19 12:16:22 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+
 
 t_bool has_misplaced_operators(const char *input) {
     int expect_command_next = 0;
@@ -22,7 +24,9 @@ t_bool has_misplaced_operators(const char *input) {
         return false;
     while (*input) {
         update_quote_counts(*input, &s_q_count, &d_q_count);
-        if (!(s_q_count % 2) && !(d_q_count % 2) && (*input == '|' || *input == '&')) {
+        if (!(s_q_count % 2) && !(d_q_count % 2) && (*input == '|' || *input == '&')){
+			if (*(input + 1) == ')' || *(input - 1) == '(')
+				return (false);
             if (!encountered_and_or) {
                 encountered_and_or = true;
                 const char *temp = input;
@@ -32,7 +36,7 @@ t_bool has_misplaced_operators(const char *input) {
                     if (*temp == *input) {
                         return false; // Return false if there are three consecutive | or & characters
                     }
-                    input += 2;
+                    input++;
                     continue;
                 }
             }

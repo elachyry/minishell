@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 10:31:45 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/16 14:09:18 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/18 20:16:03 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ static void	create_args_table(t_token **ptr, char **cmd)
 	tmp = NULL;
 	while (*ptr && (*ptr)->type == IDENTIFIER)
 	{
-		tmp = ft_split((*ptr)->value, ' ');
+		tmp = ft_split((*ptr)->value, '\0');
+		// tmp = (*ptr)->value;
 		i = -1;
 		while (tmp && tmp[++i] != NULL)
 		{
@@ -96,5 +97,9 @@ t_ast_node	*parse_command(t_token	**tokens, t_bool is_custom)
 		node->right = parse_redirection(tokens);
 	else
 		node->right = NULL;
+	// for (int j = 0; cmd[j] ; j++)
+	// {
+	// 	printf("arg = %s\n", cmd[j]);
+	// }
 	return (node);
 }

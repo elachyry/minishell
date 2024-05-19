@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:15:09 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/16 14:14:03 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/19 10:57:59 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,13 @@ t_ast_node	*parse_parenthese(t_token **tokens)
 	t_token		*ptr;
 
 	ptr = *tokens;
-	while (*tokens && (*tokens)->next)
+	// dprintf(2, "parenth = %s\n", ptr->value);
+	while (*tokens)
 	{
 		next = *tokens;
 		if (next->type == OpeningParenthesis)
 		{
+			g_shell_data.simple_cmd->is_parenthis = true;
 			return (extract_bash_cmd(tokens));
 		}
 		*tokens = (*tokens)->next;

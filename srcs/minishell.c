@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/05/16 14:06:43 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/19 10:25:42 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	initialize_shell(char **envp)
 	g_shell_data.ctl = false;
 	g_shell_data.simple_cmd = malloc(sizeof(t_simple_cmd));
 	g_shell_data.simple_cmd->should_expand = true;
+	g_shell_data.simple_cmd->is_parenthis = false;
 	if (!g_shell_data.simple_cmd)
 		return ;
 	g_shell_data.environment_list = initialize_environment_list(envp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:30:23 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/15 19:51:59 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/18 14:15:42 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	back_to_home(void)
         update_env_value("PWD", home);
         return (0);
     }
-    return (1);
+    return (0);
 }
 
 static void display_cd_error(char *path)

@@ -99,7 +99,6 @@ ls < a || ls√
 ls | > A < A√
 >> l√
 ls < a > ls1s | < a > ls3s√
-ls >> a | ls > a | Makefile >> a && echo "hello" √
 ls >> a | ls > a || Makefile >> a && ls√
 echo >> test bonjour
 >> test echo bonjour
@@ -117,3 +116,26 @@ ls1 && ls || ls && ls || ls && ls && ls || ls && ls || ls && ls
 ls ||| ls
 ls &&& ls
 < Makefile (cat && grep NAME)
+
+ls && (< ls || ls )
+
+
+(cd && pwd) √
+ls | (cat -e && wc)  > out √
+ls && << eof cat √
+ls | ls | ls | ls | fjdk | fdfd && cat √
+(ls && ls -la) > out √
+(ls && ls -la > t) > out√
+signals in herdoc√
+ export a="hello world"√
+ ls >> a | ls > a | Makefile >> a && echo "hello"√
+echo $USER"        $USER"'   $USER'√
+>out>out2 ls>out3 -la√
+ (ls && ls -la) > out | cat Makefile > out√
+export a=ls && export a+=" hello"√
+ls && pwd && (ls || ls)√
+
+
+"(ls && pwd)"
+export a=hello && echo $a
+ls | | cat

@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:49:24 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/13 20:46:32 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/17 21:32:54 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,10 @@ t_bool has_invalid_redirections(const char *input) {
     t_bool encountered_and_or = false;
     while (*input) {
         update_quote_counts(*input, &s_q_count, &d_q_count);
-        if (!(s_q_count % 2) && !(d_q_count % 2) && (*input == '>' || *input == '<')) {
+        if (!(s_q_count % 2) && !(d_q_count % 2) && (*input == '>' || *input == '<'))
+		{
+			if (*(input + 1) == ')')
+				return (false);
             if (is_invalid_operator(&input))
                 return false;
         } else if (!encountered_and_or && !(s_q_count % 2) && !(d_q_count % 2) && (*input == '|' || *input == '&')) {

@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:20:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/16 18:18:24 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/18 09:27:58 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	execute_pipe(t_ast_node *node)
 	waitpid(right_pid, &right_status, WCONTINUED);
 	waitpid(left_pid, NULL, WCONTINUED);
 	if (WIFEXITED(right_status))
-		g_shell_data.status = right_status;
+		g_shell_data.status = WEXITSTATUS(right_status);
 	else
 		g_shell_data.status = 1;
 }

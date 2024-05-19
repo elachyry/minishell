@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:42:54 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/16 18:24:28 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/19 09:30:44 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ static void	wait_for_cmd(pid_t pid, int *status)
 	if (WIFEXITED(*status))
 	{
 		if (WEXITSTATUS(*status) != 0)
+		{
+			// dprintf(2, "cmd fail\n");
 			g_shell_data.simple_cmd->files = NULL;
+		}
 	}
 }
 
@@ -82,6 +85,7 @@ int	execute_command(char **args)
 	pid_t	pid;
 
 	status = 0;
+	// dprintf(2, "cmd %s\n", args[0]);
 	if (check_if_builtin(args[0]))
 		return (manage_builtins(args));
 	else

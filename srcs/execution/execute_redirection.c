@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:20:20 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/16 18:25:24 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/19 09:30:33 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	execute_greater_than(t_ast_node *node)
 	int		fd;
 	t_files	*file;
 
+	// dprintf(2, "great than\n");
 	file = new_file_node(node->right->args[0], GreaterThanOperator);
 	add_lst_file(&g_shell_data.simple_cmd->files, file);
 	g_shell_data.simple_cmd->is_first++;

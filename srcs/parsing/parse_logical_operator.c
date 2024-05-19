@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:54:09 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/16 14:13:51 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/18 20:34:38 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ t_ast_node	*parse_logical_operator(t_token **tokens)
 
 	ptr = *tokens;
 	logical_node = NULL;
+	if (*tokens && (*tokens)->type == OpeningParenthesis)
+	{
+		while ((*tokens && (*tokens)->next) && (*tokens)->type != ClosingParenthesis)
+			*tokens = (*tokens)->next;
+	}
 	while (*tokens && (*tokens)->next
 		&& (*tokens)->next->type != OpeningParenthesis
 		&& (*tokens)->type != OpeningParenthesis)
