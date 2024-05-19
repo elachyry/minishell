@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:11:04 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/12 20:17:00 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/19 15:21:46 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	extract_path(void)
 	t_env	*env;
 	
 	env = g_shell_data.environment_list;
-	
+	path = NULL;
 	while (env)
 	{
 		if (!ft_strcmp(env->key, "PATH"))
@@ -28,8 +28,9 @@ void	extract_path(void)
 	if (path)
 		g_shell_data.path = ft_split(path, ':');
 	else
-		g_shell_data.path = ft_split(" ", ':');
+		g_shell_data.path = ft_split("", ':');
 	
+	// printf("path = %s\n", g_shell_data.path[0]);
 	// for (int i = 0; g_shell_data.path[i] != NULL; i++)
 	// {
 	// 	printf("%s\n", g_shell_data.path[i]);

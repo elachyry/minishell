@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 19:03:46 by akaddour          #+#    #+#             */
-/*   Updated: 2023/11/12 19:10:58 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/19 15:05:53 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_strrchr(const char *s, int c)
 	{
 		len--;
 		if (s[len] == (char)c)
-			return ((char *)s + len);
+			return ((char *)s + (len + 1));
 	}
 	return (NULL);
 }

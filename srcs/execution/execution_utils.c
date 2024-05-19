@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:36:16 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/16 18:20:24 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/19 14:46:04 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	perror_message(char *file, int status)
 {
+	// ft_putstr_fd("hiii: ", 2);
 	ft_putstr_fd("minishell: ", 2);
 	perror(file);
 	exit(status);

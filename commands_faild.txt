@@ -139,3 +139,17 @@ ls && pwd && (ls || ls)√
 "(ls && pwd)"
 export a=hello && echo $a
 ls | | cat
+
+//new handles
+/bin/ps emg,;,
+/bin/ps (ls)
+/bin/top √
+'/bin/ls filethatdoesntexist' √
+
+// not the same behaiver
+run cat run ctrl-c run echo $? √
+run cat run ctrl-\ √
+ls "" or ls ''√
+
+//heap over-flow
+echo "   "''   cat lol.c | cat > lol.c ''" " √

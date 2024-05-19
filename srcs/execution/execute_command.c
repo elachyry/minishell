@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:42:54 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/19 09:30:44 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:21:59 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static void	cmd_not_found(char **args, int status)
 	}
 	else if (status == 2)
 		perror_message(args[0], 126);
+	else if (status == 3)
+		perror_message(args[0], 127);
 }
 
 static int	manage_builtins(char **args)
@@ -78,6 +80,25 @@ static void	wait_for_cmd(pid_t pid, int *status)
 		}
 	}
 }
+void	sigquit_handler(int sig)
+{
+	// dprintf(2, "status in signal2 = %d\n", g_shell_data.status);
+	(void) sig;
+	printf("Quit: 3\n");
+	if(!g_shell_data.ctl)
+	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	g_shell_data.status = 131;
+	g_shell_data.sig_exit = 2;
+	
+	// dprintf(2, "pid = %d | ppid = %d \n", getpid(), getppid());
+	// dprintf(2, "signal\n");
+}
+
+
 
 int	execute_command(char **args)
 {
@@ -86,6 +107,7 @@ int	execute_command(char **args)
 
 	status = 0;
 	// dprintf(2, "cmd %s\n", args[0]);
+	signal(SIGQUIT, sigquit_handler);
 	if (check_if_builtin(args[0]))
 		return (manage_builtins(args));
 	else

@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:28:30 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/19 12:09:55 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/19 13:55:16 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,12 +129,12 @@ void	execute_here_doc(t_ast_node *node)
 	}
 	else if (node->type == DoubleLessThanOperator)
 	{
-		char	*name;
+		// char	*name;
 
-		name = get_here_doc_name();
-		g_shell_data.simple_cmd->here_doc_path = ft_strjoin("/tmp/", name);
-		printf("here doc path = %s\n", g_shell_data.simple_cmd->here_doc_path);
-		free(name);
+		// name = get_here_doc_name();
+		// g_shell_data.simple_cmd->here_doc_path = ft_strjoin("/tmp/", name);
+		// printf("here doc path = %s\n", g_shell_data.simple_cmd->here_doc_path);
+		// free(name);
 		pid = fork();
 		if (pid == -1)
 			perror_message("fork", EXIT_FAILURE);

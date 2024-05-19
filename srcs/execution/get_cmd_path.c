@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:36:12 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/16 20:18:01 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/19 15:21:49 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 static int	check_entred_path(char *args, char *cmd)
 {
-	if (access(cmd, X_OK) != -1 || access(args, X_OK) != -1)
+	if (access(cmd, X_OK) != -1)
 	{
 		g_shell_data.simple_cmd->cmd_path = args;
 		return (1);
 	}
-	else if (access(args, X_OK) == -1)
+	else if (access(args, X_OK) == -1 && access(args, F_OK) != -1)
 		return (2);
+	else if (access(args, X_OK) == -1)
+		return (3);
 	return (0);
 }
 
@@ -29,11 +31,13 @@ static int	search_for_cmd_path(char *args)
 	char	*cmd;
 	char	*path;
 	char	*p;
+	int		i;
 
 	cmd = args;
-	while (*g_shell_data.path)
+	i = -1;
+	while (g_shell_data.path[++i])
 	{
-		path = ft_strjoin(*g_shell_data.path, "/");
+		path = ft_strjoin(g_shell_data.path[i], "/");
 		path = ft_strjoin(path, cmd);
 		if (access(path, X_OK) != -1)
 		{
@@ -41,10 +45,9 @@ static int	search_for_cmd_path(char *args)
 			return (1);
 		}
 		free(path);
-		g_shell_data.path++;
 	}
 	p = ft_strjoin("./", cmd);
-	if (access(p, X_OK) != -1 && !g_shell_data.path[0])
+	if (access(p, X_OK) != -1 && g_shell_data.path[0] == NULL)
 	{
 		g_shell_data.simple_cmd->cmd_path = cmd;
 		return (1);

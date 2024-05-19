@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/05/19 10:25:42 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:21:49 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,12 @@ void	initialize_shell(char **envp)
 	g_shell_data.tokens = NULL;
 	g_shell_data.ast = NULL;
 	g_shell_data.status = 0;
-	g_shell_data.sig_exit = false;
+	g_shell_data.sig_exit = 0;
 	g_shell_data.ctl = false;
 	g_shell_data.simple_cmd = malloc(sizeof(t_simple_cmd));
 	g_shell_data.simple_cmd->should_expand = true;
 	g_shell_data.simple_cmd->is_parenthis = false;
+	g_shell_data.simple_cmd->nbr_here_doc = 0;
 	if (!g_shell_data.simple_cmd)
 		return ;
 	g_shell_data.environment_list = initialize_environment_list(envp);
@@ -101,7 +102,10 @@ int	main(int ac, char **av, char **envp)
 		handle_signals();
 		display_prompt(&g_shell_data.line);
 		if (!syntax_error_checker(g_shell_data.line))
+		{
+			g_shell_data.status = 258;
 			continue ;
+		}
 		tokens = ft_tokenize(g_shell_data.line);
 		tokens = expand_tokens(tokens);
 		free(g_shell_data.line);
@@ -111,7 +115,7 @@ int	main(int ac, char **av, char **envp)
 		generate_ast_diagram(ast);
 		g_shell_data.ctl = true;
 		execution();
-		g_shell_data.sig_exit = false;
+		g_shell_data.sig_exit = 0;
 		g_shell_data.ctl= false;
 	}
 	return (0);
