@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/19 17:21:41 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/20 22:18:22 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct	s_simple_cmd
 	int		nbr_here_doc;
 	int		is_first;
 	int		is_parenthis;
+	int		is_parenthis_red_ch;
 	t_bool	should_expand;
 	t_files	*files;
 }	t_simple_cmd;
@@ -113,6 +114,7 @@ const char	*skip_spaces(const char *input);
 void	update_quote_counts(char c, int *s_q_count, int *d_q_count);
 
 //execution
+t_ast_node	*extract_bash_cmd(t_token **tokens);
 char	*ft_strjoin_2(char const *s1, char const *s2, size_t len);
 void	execute_ast(t_ast_node *node);
 void	execute_pipe(t_ast_node *node);

@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 11:29:16 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/20 12:15:45 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/20 20:43:42 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_ast_node	*parse_cmd_sep_args(t_token *tokens, t_token *args)
 	char		**cmd;
 	t_ast_node	*node;
 
-	dprintf(2, "parse_cmd_sep_argsn\n");
+	// dprintf(2, "parse_cmd_sep_argsn\n");
 	// dprintf(2, "tokens %s\n", tokens->value);
 	cmd = malloc(sizeof(char *) * (get_nbr_of_args(tokens, args) + 1));
 	if (!cmd)

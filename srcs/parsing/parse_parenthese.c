@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:15:09 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/19 21:47:58 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/20 22:03:06 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	get_nbr_of_cmd(t_token *ptr)
 	return (count);
 }
 
-static t_ast_node	*extract_bash_cmd(t_token **tokens)
+t_ast_node	*extract_bash_cmd(t_token **tokens)
 {
 	int			i;
 	int			count;

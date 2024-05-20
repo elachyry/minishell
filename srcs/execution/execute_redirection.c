@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:20:20 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/19 09:30:33 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/20 22:57:06 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@ void	execute_less_than(t_ast_node *node)
 	t_files	*file;
 	t_files	*last;
 
+	dprintf(2, "less than = %s\n", node->right->args[0]);
+	// dprintf(2, "node right = %p\n", node->right);
+	// dprintf(2, "node right args = %p\n", node->right->args);
+	if (g_shell_data.simple_cmd->is_parenthis)
+	{
+		if (!g_shell_data.simple_cmd->is_parenthis_red_ch)
+			g_shell_data.simple_cmd->files = NULL;
+		g_shell_data.simple_cmd->is_parenthis_red_ch = true;
+	}
 	file = new_file_node(node->right->args[0], LessThanOperator);
 	add_lst_file(&g_shell_data.simple_cmd->files, file);
 	g_shell_data.simple_cmd->is_first++;
@@ -42,7 +51,13 @@ void	execute_greater_than(t_ast_node *node)
 	int		fd;
 	t_files	*file;
 
-	// dprintf(2, "great than\n");
+	dprintf(2, "great than = %s\n", node->right->args[0]);
+	if (g_shell_data.simple_cmd->is_parenthis)
+	{
+		if (!g_shell_data.simple_cmd->is_parenthis_red_ch)
+			g_shell_data.simple_cmd->files = NULL;
+		g_shell_data.simple_cmd->is_parenthis_red_ch = true;
+	}
 	file = new_file_node(node->right->args[0], GreaterThanOperator);
 	add_lst_file(&g_shell_data.simple_cmd->files, file);
 	g_shell_data.simple_cmd->is_first++;
@@ -57,6 +72,12 @@ void	execute_double_greater_than(t_ast_node *node)
 	int		fd;
 	t_files	*file;
 
+	if (g_shell_data.simple_cmd->is_parenthis)
+	{
+		if (!g_shell_data.simple_cmd->is_parenthis_red_ch)
+			g_shell_data.simple_cmd->files = NULL;
+		g_shell_data.simple_cmd->is_parenthis_red_ch = true;
+	}
 	file = new_file_node(node->right->args[0], DoubleGreaterThanOperator);
 	add_lst_file(&g_shell_data.simple_cmd->files, file);
 	fd = open(node->right->args[0], O_WRONLY | O_CREAT | O_APPEND, 0644);

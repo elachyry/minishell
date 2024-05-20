@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:06:36 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/20 15:51:05 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/20 22:46:22 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ void	redirect_files(void)
 {
 	t_files	*file;
 
-	// dprintf(2, "redirect_files %s\n", g_shell_data.simple_cmd->files->filename);
 	file = g_shell_data.simple_cmd->files;
 	while (file)
 	{
+		dprintf(2, "redirect_files %s\n", g_shell_data.simple_cmd->files->filename);
 		// dprintf(2, "jjjjjj\n");
 		if (file->type == LessThanOperator
 			|| file->type == DoubleLessThanOperator)
@@ -98,6 +98,7 @@ void	redirect_files(void)
 			double_greater_than_operator(file);
 		file = file->next;
 	}
+		// dprintf(2, "g_shell_data.simple_cmd->is_parenthis %d\n", g_shell_data.simple_cmd->is_parenthis);
 	if (g_shell_data.simple_cmd->is_parenthis)
 	{
 		// dprintf(2, "increment parenthis\n");

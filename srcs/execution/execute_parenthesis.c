@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:32:55 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/20 11:10:28 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/20 22:18:59 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void	execute_parenthesis(t_ast_node *node)
 			node->args++;
 		}
 		g_shell_data.simple_cmd->is_parenthis = true;
+		g_shell_data.simple_cmd->is_parenthis_red_ch = false;
 		tokens = ft_tokenize(line);
 		tokens = expand_tokens(tokens);
 		free(line);

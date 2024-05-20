@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:58:24 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/20 15:33:53 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/20 22:02:41 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@ void remove_node(t_token **head, t_token *node)
 
 //handle if the cmd starts with redirecion
 //second if handle when command comes after the file ex: >a cat <b >>c
-static t_ast_node	*help_func(t_token **tokens, t_token *ptr)
+static t_ast_node	*help_func(t_token **tokens, t_token *ptr, t_bool is_parenth)
 {
 	t_ast_node	*redirection_node;
 	t_token 	*to_delete;
 
 	// dprintf(2, "ggggg in red next = %s\n", (*tokens)->next->value);
+	// dprintf(2, "is_paren = %d\n", is_parenth);
 	// dprintf(2, "1 in red next = %s\n", (*tokens)->next->value);
 	// dprintf(2, "1 in red next next = %s\n", (*tokens)->next->next->value);
 	if ((*tokens)->type == DoubleLessThanOperator)
@@ -39,7 +40,6 @@ static t_ast_node	*help_func(t_token **tokens, t_token *ptr)
 	
 	t_token	*tmp = *tokens;
 	*tokens = NULL;
-
 	while (tmp && tmp->next)
 	{
 		// printf("in while tmp %s tmp->next->next %s\n", tmp->value, tmp->next->next->value);
@@ -66,12 +66,22 @@ static t_ast_node	*help_func(t_token **tokens, t_token *ptr)
 		tmp = tmp->next;
 	}
 	// printf("join result = %d\n", cmd[0]);
-	if (cmd[0] != '\0')
+	if (is_parenth)
 	{
-		redirection_node->left = new_ast_node(IDENTIFIER);
-		redirection_node->left->args = ft_split(cmd, ' ');
+		redirection_node->left = parse_parenthese(&ptr);
+		// printf("ptrrrr = %s\n", ptr->value);
+		redirection_node->right = new_ast_file_node(ptr->next->next);
+		redirection_node->right->right = parse_redirection(&ptr->next->next->next);
 	}
-	redirection_node->right = parse_command(&ptr->next, false);
+	else
+	{
+		if (cmd[0] != '\0')
+		{
+			redirection_node->left = new_ast_node(IDENTIFIER);
+			redirection_node->left->args = ft_split(cmd, ' ');
+		}
+		redirection_node->right = parse_command(&ptr->next, false);
+	}
 	// redirection_node->left = parse_redirection(tokens);
 	
 	// if (redirection_node->left == NULL
@@ -166,16 +176,20 @@ t_ast_node	*parse_redirection(t_token **tokens)
 {
 	t_token		*ptr;
 	t_token		*next;
+	t_bool		is_parenth;
 
 	if (!tokens || !*tokens)
 		return (NULL);
 	ptr = *tokens;
 	// dprintf(2, "red2 = %s\n", ptr->value);
+	is_parenth = false;
 	if ((*tokens)->type == OpeningParenthesis)
 	{
+		is_parenth = true;
 		// dprintf(2, "inside if in red = %s\n", (*tokens)->value);
 		while ((*tokens && (*tokens)->next) && (*tokens)->type != ClosingParenthesis)
 			*tokens = (*tokens)->next;
+		*tokens = (*tokens)->next;
 	}
 	// dprintf(2, "after if in red = %s\n", (*tokens)->value);
 	// dprintf(2, "red = %s\n", ptr->value);
@@ -185,7 +199,7 @@ t_ast_node	*parse_redirection(t_token **tokens)
 		|| (*tokens)->type == DoubleGreaterThanOperator)
 		&& (*tokens)->next->type != OpeningParenthesis
 		&& (*tokens)->type != OpeningParenthesis)
-		return (help_func(tokens, ptr));
+		return (help_func(tokens, ptr, is_parenth));
 	while (*tokens && (*tokens)->next && (*tokens)->next->type != OpeningParenthesis
 		&& (*tokens)->type != OpeningParenthesis)
 	{
