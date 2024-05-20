@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 01:07:45 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/19 20:50:36 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/20 11:47:43 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,17 @@
 //         return (false);
 //     return (true);
 // }
-
 t_bool	has_unclosed_parenthesis(char *input)
 {
-    int		open;
-    char	prev;
-    char    prev_non_space;
-    t_bool	non_whitespace_encountered;
+	int		open;
+	char	prev;
+	char    prev_non_space;
+	t_bool	non_whitespace_encountered;
 
-    open = 0;
-    prev = 0;
-    prev_non_space = 0;
-    non_whitespace_encountered = false;
+	open = 0;
+	prev = 0;
+	prev_non_space = 0;
+	non_whitespace_encountered = false;
     while (*input)
     {
         if (*input == '(')
@@ -75,6 +74,12 @@ t_bool	has_unclosed_parenthesis(char *input)
             if (open == 0 || prev == '(' || !non_whitespace_encountered)
                 return (false);
             open--;
+			// Check for redirection operators before closing parenthesis
+            const char *temp = input - 1;
+            while (ft_isspace(*temp))
+                temp--;
+            if (*temp == '>' || *temp == '<')
+                return (false); // Invalid if redirection operator is before closing parenthesis
         }
         else
         {

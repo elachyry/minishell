@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:32:55 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/19 22:43:13 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/20 11:10:28 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	redirect_files_2(void)
 			less_than_operator(file);
 		else if (file->type == GreaterThanOperator)
 		{
-			dprintf(2, "is parenthies = %d\n", g_shell_data.simple_cmd->is_parenthis);
+			// dprintf(2, "is parenthies = %d\n", g_shell_data.simple_cmd->is_parenthis);
 				greater_than_operator(file);
 		}
 		else if (file->type == DoubleGreaterThanOperator)

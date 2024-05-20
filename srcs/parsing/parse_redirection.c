@@ -6,18 +6,28 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:58:24 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/19 14:02:08 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:33:53 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void remove_node(t_token **head, t_token *node)
+{
+	if (!node) return;
+	if (node->prev) node->prev->next = node->next;
+	if (node->next) node->next->prev = node->prev;
+	if (*head == node) *head = node->next;
+	free(node->value);
+	free(node);
+}
 
 //handle if the cmd starts with redirecion
 //second if handle when command comes after the file ex: >a cat <b >>c
 static t_ast_node	*help_func(t_token **tokens, t_token *ptr)
 {
 	t_ast_node	*redirection_node;
-	// t_token		*tmp;
+	t_token 	*to_delete;
 
 	// dprintf(2, "ggggg in red next = %s\n", (*tokens)->next->value);
 	// dprintf(2, "1 in red next = %s\n", (*tokens)->next->value);
@@ -25,50 +35,69 @@ static t_ast_node	*help_func(t_token **tokens, t_token *ptr)
 	if ((*tokens)->type == DoubleLessThanOperator)
 		g_shell_data.simple_cmd->nbr_here_doc++;
 	redirection_node = new_ast_node((*tokens)->type);
-	// tmp = *tokens;
+	char	*cmd = ft_strdup("");
+	
 	t_token	*tmp = *tokens;
-	t_token	*tmp2 = *tokens;
 	*tokens = NULL;
-	// dprintf(2, "1 in ffff = %p\n", tmp);
-	// if (tmp && tmp->next && tmp->next->next && tmp->next->next->type == IDENTIFIER)
-	// 	redirection_node->left = parse_cmd_sep_args(ptr, tmp->next->next);
-	// else
-	redirection_node->left = parse_redirection(tokens);
-	// dprintf(2, "left %p\n",redirection_node->left);
-	// dprintf(2, "tmp %s\n", tmp->value);
-	if (redirection_node->left == NULL
-		&& ptr->next->next
-		&& ptr->next->next->type == IDENTIFIER)
+
+	while (tmp && tmp->next)
 	{
-		while (tmp && tmp->next && (tmp->type == LessThanOperator
+		// printf("in while tmp %s tmp->next->next %s\n", tmp->value, tmp->next->next->value);
+		if (tmp && tmp->next->next && tmp->next->next->type == IDENTIFIER && (tmp->type == LessThanOperator
 		|| tmp->type == DoubleLessThanOperator
 		|| tmp->type == GreaterThanOperator
-		|| tmp->type == DoubleGreaterThanOperator
-		|| tmp->type == IDENTIFIER))
+		|| tmp->type == DoubleGreaterThanOperator))
 		{
-			// dprintf(2, "in while %s\n", tmp->value);
-			tmp = tmp->next;
-			ptr = ptr->next;
+			// printf("in if\n");
+			tmp = tmp->next->next;
+			while (tmp && tmp->type == IDENTIFIER)
+			{
+				// printf("tmp in if = %s\n", tmp->value);
+				cmd = ft_strjoin(cmd, tmp->value);
+				cmd = ft_strjoin(cmd, " ");
+				// printf("join in if = %s\n", cmd);
+				to_delete = tmp;
+                tmp = tmp->next;
+                remove_node(tokens, to_delete);
+				// printf("tmp in if after incrme = %s\n", tmp->value);
+			}
+			continue ;
 		}
-		// dprintf(2, "result  %s\n", tmp->value);
-		while (tmp && tmp->type == IDENTIFIER)
-		{
-			tmp = tmp->prev;
-			ptr = ptr->prev;
-		}
-		// dprintf(2, "result2  %s\n", tmp->next->value);
-		tmp = tmp->next->next;
-		// dprintf(2, "result3  %s\n", tmp->value);
-		// dprintf(2, "ptr next  %s\n", ptr->next->value);
-		ptr->next->next = NULL;
-		ptr = tmp2;
-		if (tmp && tmp->type == IDENTIFIER)
-			redirection_node->left = parse_cmd_sep_args(ptr->next->next, tmp);
-		else
-			redirection_node->left = parse_command(&ptr->next->next, true);
-		// redirection_node->left = parse_command(&ptr->next->next, true);
+		tmp = tmp->next;
+	}
+	// printf("join result = %d\n", cmd[0]);
+	if (cmd[0] != '\0')
+	{
+		redirection_node->left = new_ast_node(IDENTIFIER);
+		redirection_node->left->args = ft_split(cmd, ' ');
 	}
 	redirection_node->right = parse_command(&ptr->next, false);
+	// redirection_node->left = parse_redirection(tokens);
+	
+	// if (redirection_node->left == NULL
+	// 	&& tmp->next->next
+	// 	&& tmp->next->next->type == IDENTIFIER)
+	// {
+	// 	tmp = tmp->next;
+	// 	while (tmp && tmp->next && tmp->next->next == IDENTIFIER)
+	// 	{
+	// 		tmp = tmp->next;
+	// 		ptr = ptr->next;
+	// 	}
+	// 	while (tmp && tmp->type == IDENTIFIER)
+	// 	{
+	// 		tmp = tmp->prev;
+	// 		ptr = ptr->prev;
+	// 	}
+	// 	tmp = tmp->next->next;
+	// 	ptr->next->next = NULL;
+	// 	ptr = tmp2;
+	// 	if (tmp && tmp->type == IDENTIFIER)
+	// 		redirection_node->left = parse_cmd_sep_args(ptr->next->next, tmp);
+	// 	else
+	// 		redirection_node->left = parse_command(&ptr->next->next, true);
+	// }
+	// redirection_node->right = parse_command(&ptr->next, false);
 	return (redirection_node);
 }
 
@@ -76,6 +105,7 @@ static t_ast_node	*help_func(t_token **tokens, t_token *ptr)
 static t_ast_node	*help_func_2(t_token **tokens, t_token *next, t_token *ptr)
 {
 	t_ast_node	*redirection_node;
+	t_token 	*to_delete;
 
 	// dprintf(2, "1 in red = %s\n", (*tokens)->value);
 	if (next->type == DoubleLessThanOperator)
@@ -84,35 +114,49 @@ static t_ast_node	*help_func_2(t_token **tokens, t_token *next, t_token *ptr)
 	// dprintf(2, "2 in red = %s\n", (*tokens)->value);
 	(*tokens)->next = NULL;
 	// dprintf(2, "test %s\n", next->next->next->value);
-	t_token	*tmp = next;
-	t_token	*tmp2 = next;
-	while (tmp && tmp->next && (tmp->type == LessThanOperator
-		|| tmp->type == DoubleLessThanOperator
-		|| tmp->type == GreaterThanOperator
-		|| tmp->type == DoubleGreaterThanOperator
-		|| tmp->type == IDENTIFIER))
-	{
-		tmp = tmp->next;
-		next = next->next;
-	}
-	// dprintf(2, "result  %s\n", tmp->value);
+	char	*cmd = ft_strdup("");
+	
+	t_token	*tmp = ptr;
 	while (tmp && tmp->type == IDENTIFIER)
 	{
-		tmp = tmp->prev;
-		next = next->prev;
+		cmd = ft_strjoin(cmd, tmp->value);
+		cmd = ft_strjoin(cmd, " ");
+		to_delete = tmp;
+		tmp = tmp->next;
+		remove_node(tokens, to_delete);
 	}
-	// dprintf(2, "result2  %s\n", tmp->value);
-	tmp = tmp->next->next;
-	next->next->next = NULL;
-	next = tmp2;
-	// dprintf(2, "result3  %s\n", tmp->value);
-	if (tmp && tmp->type == IDENTIFIER)
-		redirection_node->left = parse_cmd_sep_args(ptr, tmp);
-	else
-		redirection_node->left = parse_redirection(&ptr);
+	// printf("first join result = %s\n", cmd);
+	tmp = next;
+	// printf("tmp = %s\n", tmp->value);
+	while (tmp && tmp->next)
+	{
+		// printf("in while tmp %s tmp->next->next %s\n", tmp->value, tmp->next->next->value);
+		if (tmp && tmp->next->next && tmp->next->next->type == IDENTIFIER && (tmp->type == LessThanOperator
+		|| tmp->type == DoubleLessThanOperator
+		|| tmp->type == GreaterThanOperator
+		|| tmp->type == DoubleGreaterThanOperator))
+		{
+			// printf("in if\n");
+			tmp = tmp->next->next;
+			while (tmp && tmp->type == IDENTIFIER)
+			{
+				// printf("tmp in if = %s\n", tmp->value);
+				cmd = ft_strjoin(cmd, tmp->value);
+				cmd = ft_strjoin(cmd, " ");
+				// printf("join in if = %s\n", cmd);
+				to_delete = tmp;
+                tmp = tmp->next;
+                remove_node(tokens, to_delete);
+				// printf("tmp in if after incrme = %s\n", tmp->value);
+			}
+			continue ;
+		}
+		tmp = tmp->next;
+	}
+	// printf("join result = %s\n", cmd);
+	redirection_node->left = new_ast_node(IDENTIFIER);
+	redirection_node->left->args = ft_split(cmd, ' ');
 	redirection_node->right = parse_command(&next->next, false);
-	// dprintf(2, "created node in red = %s\n", redirection_node->right->args[0]);
-	// dprintf(2, "3 in red = %s\n", (*tokens)->value);
 	return (redirection_node);
 }
 
@@ -158,3 +202,12 @@ t_ast_node	*parse_redirection(t_token **tokens)
 	}
 	return (parse_parenthese(&ptr));
 }
+// dprintf(2, "tmp = %s | tmp->next = %s tmp->next->next = %d | cond0 = %d | cond1 = %d | cond2 = %d | condF = %d\n", tmp->value, tmp->next->value, tmp->next->next->type == IDENTIFIER, tmp != NULL, tmp->next != NULL, (tmp->type == LessThanOperator
+// 			|| tmp->type == DoubleLessThanOperator
+// 			|| tmp->type == GreaterThanOperator
+// 			|| tmp->type == DoubleGreaterThanOperator
+// 			|| tmp->type == IDENTIFIER), tmp && tmp->next && tmp->next->next == IDENTIFIER && (tmp->type == LessThanOperator
+// 			|| tmp->type == DoubleLessThanOperator
+// 			|| tmp->type == GreaterThanOperator
+// 			|| tmp->type == DoubleGreaterThanOperator
+// 			|| tmp->type == IDENTIFIER));

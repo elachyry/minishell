@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/19 17:22:50 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:50:42 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	execution(void)
 		g_shell_data.simple_cmd->is_first = 0;
 		execute_ast(ast);
 	}
+	g_shell_data.simple_cmd->nbr_here_doc = 0;
 	if (g_shell_data.simple_cmd->here_doc_path)
 		unlink(g_shell_data.simple_cmd->here_doc_path);
 }

@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:42:54 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/19 22:49:56 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/20 11:11:16 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	execute_command(char **args)
 
 	status = 0;
 	// dprintf(2, "cmd %s\n", args[0]);
-	dprintf(2, "in cmd parenthies %d\n", g_shell_data.simple_cmd->is_parenthis);
+	// dprintf(2, "in cmd parenthies %d\n", g_shell_data.simple_cmd->is_parenthis);
 	signal(SIGQUIT, sigquit_handler);
 	if (check_if_builtin(args[0]))
 		return (manage_builtins(args));
