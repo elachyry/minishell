@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:20:08 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/21 13:52:37 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:44:04 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ t_token	*handle_greater_than(char **input, t_token *token_list);
 t_token	*handle_parenthesis(char **input, t_token *token_list);
 t_token	*handle_pipe(char **input, t_token *token_list);
 t_token	*create_token_node(const char *value, int type);
+void	add_node_after(t_token *target_node, t_token *new_node);
 t_token *expand_tokens(t_token *tokens);
 
 

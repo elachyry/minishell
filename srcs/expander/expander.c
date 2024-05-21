@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:42:28 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/21 13:56:40 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:42:53 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,16 +375,6 @@ int match(const char *string, const char *pattern)
 //     return (tokens);
 // }
 
-void	add_node_after(t_token *target_node, t_token *new_node)
-{
-	if (!target_node || !new_node) return;
-
-	new_node->next = target_node->next;
-	new_node->prev = target_node;
-	if (target_node->next)
-		target_node->next->prev = new_node;
-	target_node->next = new_node;
-}
 
 t_token *expand_wildcards(t_token *tokens)
 {

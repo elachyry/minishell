@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenize_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 04:27:20 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/21 13:52:28 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 16:10:41 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,29 @@ void	ft_skip_spaces(char **line)
 	while (**line && ft_isspace(**line))
 		(*line)++;
 }
+
+void	add_node_after(t_token *target_node, t_token *new_node)
+{
+	if (!target_node || !new_node)
+		return ;
+	new_node->next = target_node->next;
+	new_node->prev = target_node;
+	if (target_node->next)
+		target_node->next->prev = new_node;
+	target_node->next = new_node;
+}
+
 t_token	*create_token_node(const char *value, int type)
 {
-	t_token *new_token = (t_token *)malloc(sizeof(t_token));
+	t_token	*new_token;
+
+	new_token = (t_token *)malloc(sizeof(t_token));
 	if (!new_token)
 	{
 		printf("Error: malloc failed\n");
 		exit(1);
 	}
-	new_token->value = strdup(value);
+	new_token->value = ft_strdup(value);
 	new_token->type = type;
 	new_token->next = NULL;
 	new_token->prev = NULL;

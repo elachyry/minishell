@@ -1,3 +1,3 @@
 digraph AST {
-"0x603000000d60" [label="CMD: echo 1"];
+"0x603000002d10" [label="CMD: env"];
 }
