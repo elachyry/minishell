@@ -1,0 +1,3 @@
+digraph AST {
+"0x603000006010" [label="CMD: bash"];
+}

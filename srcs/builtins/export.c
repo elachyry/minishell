@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:38:47 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/18 20:20:00 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 10:52:37 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,5 @@ int	ft_export(char **args)
             free(value);
         i++;
     }
-		dprintf(2, "a = %s\n", get_env_value("a"));
     return (0);
 }

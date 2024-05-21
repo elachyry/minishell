@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:16:44 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/20 22:30:04 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 09:40:40 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	execute_logical_and(t_ast_node *node)
 	execute_ast(node->left);
 	g_shell_data.simple_cmd->files = NULL;
 	left_status = g_shell_data.status;
-	dprintf(2, "anddddddd\n");
+	// dprintf(2, "anddddddd\n");
 	if (left_status == 0 && !g_shell_data.sig_exit)
 		execute_ast(node->right);
 	else if (node->right

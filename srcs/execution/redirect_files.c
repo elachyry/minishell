@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:06:36 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/20 22:46:22 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 09:40:45 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	redirect_files(void)
 	file = g_shell_data.simple_cmd->files;
 	while (file)
 	{
-		dprintf(2, "redirect_files %s\n", g_shell_data.simple_cmd->files->filename);
+		// dprintf(2, "redirect_files %s\n", g_shell_data.simple_cmd->files->filename);
 		// dprintf(2, "jjjjjj\n");
 		if (file->type == LessThanOperator
 			|| file->type == DoubleLessThanOperator)

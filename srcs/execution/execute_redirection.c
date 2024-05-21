@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:20:20 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/20 22:57:06 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 09:40:01 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	execute_less_than(t_ast_node *node)
 	t_files	*file;
 	t_files	*last;
 
-	dprintf(2, "less than = %s\n", node->right->args[0]);
+	// dprintf(2, "less than = %s\n", node->right->args[0]);
 	// dprintf(2, "node right = %p\n", node->right);
 	// dprintf(2, "node right args = %p\n", node->right->args);
 	if (g_shell_data.simple_cmd->is_parenthis)
@@ -51,7 +51,7 @@ void	execute_greater_than(t_ast_node *node)
 	int		fd;
 	t_files	*file;
 
-	dprintf(2, "great than = %s\n", node->right->args[0]);
+	// dprintf(2, "great than = %s\n", node->right->args[0]);
 	if (g_shell_data.simple_cmd->is_parenthis)
 	{
 		if (!g_shell_data.simple_cmd->is_parenthis_red_ch)

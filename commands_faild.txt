@@ -113,11 +113,11 @@ ls1 && ls || ls && ls || ls && ls && ls || ls && ls || ls && ls
 
 
 
-ls ||| ls
-ls &&& ls
-< Makefile (cat && grep NAME)
+ls ||| ls √
+ls &&& ls √
+< Makefile (cat && grep NAME)√
 
-ls && (< ls || ls )
+ls && (< ls || ls )√
 
 
 (cd && pwd) √
@@ -136,13 +136,12 @@ export a=ls && export a+=" hello"√
 ls && pwd && (ls || ls)√
 
 
-"(ls && pwd)"
-export a=hello && echo $a
-ls | | cat
+"(ls && pwd)"√
+ls | | cat√
 
 //new handles
-/bin/ps emg,;,
-/bin/ps (ls)
+/bin/ps emg,;,√
+/bin/ps (ls)√
 /bin/top √
 '/bin/ls filethatdoesntexist' √
 
@@ -153,3 +152,11 @@ ls "" or ls ''√
 
 //heap over-flow
 echo "   "''   cat lol.c | cat > lol.c ''" " √
+
+
+
+( ls)√
+<< l " "√
+
+
+export a=hello && echo $a

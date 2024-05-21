@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:20:08 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/16 12:11:36 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 13:52:37 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_token	*handle_less_than(char **input, t_token *token_list);
 t_token	*handle_greater_than(char **input, t_token *token_list);
 t_token	*handle_parenthesis(char **input, t_token *token_list);
 t_token	*handle_pipe(char **input, t_token *token_list);
-
+t_token	*create_token_node(const char *value, int type);
 t_token *expand_tokens(t_token *tokens);
 
 

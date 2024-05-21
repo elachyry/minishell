@@ -6,15 +6,15 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:36:12 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/19 15:21:49 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 10:15:09 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	check_entred_path(char *args, char *cmd)
+static int	check_entred_path(char *args)
 {
-	if (access(cmd, X_OK) != -1)
+	if (access(args, X_OK) != -1)
 	{
 		g_shell_data.simple_cmd->cmd_path = args;
 		return (1);
@@ -59,12 +59,14 @@ int	get_cmd_path(char *args)
 {
 	char	*cmd;
 
+	if (!args)
+		return (0);
 	extract_path();
 	cmd = ft_strrchr(args, '/');
 	if (args[0] == '\0')
 		return (0);
 	else if (cmd)
-		return (check_entred_path(args, cmd));
+		return (check_entred_path(args));
 	else
 		return (search_for_cmd_path(args));
 	return (0);

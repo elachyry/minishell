@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:58:24 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/20 22:02:41 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 10:18:21 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static t_ast_node	*help_func(t_token **tokens, t_token *ptr, t_bool is_parenth)
 			{
 				// printf("tmp in if = %s\n", tmp->value);
 				cmd = ft_strjoin(cmd, tmp->value);
-				cmd = ft_strjoin(cmd, " ");
+				cmd = ft_strjoin(cmd, "*");
 				// printf("join in if = %s\n", cmd);
 				to_delete = tmp;
                 tmp = tmp->next;
@@ -78,7 +78,7 @@ static t_ast_node	*help_func(t_token **tokens, t_token *ptr, t_bool is_parenth)
 		if (cmd[0] != '\0')
 		{
 			redirection_node->left = new_ast_node(IDENTIFIER);
-			redirection_node->left->args = ft_split(cmd, ' ');
+			redirection_node->left->args = ft_split(cmd, '*');
 		}
 		redirection_node->right = parse_command(&ptr->next, false);
 	}
@@ -193,7 +193,7 @@ t_ast_node	*parse_redirection(t_token **tokens)
 	}
 	// dprintf(2, "after if in red = %s\n", (*tokens)->value);
 	// dprintf(2, "red = %s\n", ptr->value);
-	if (((*tokens)->type == LessThanOperator
+	if (*tokens && ((*tokens)->type == LessThanOperator
 		|| (*tokens)->type == DoubleLessThanOperator
 		|| (*tokens)->type == GreaterThanOperator
 		|| (*tokens)->type == DoubleGreaterThanOperator)

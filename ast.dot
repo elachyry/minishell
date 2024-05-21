@@ -1,11 +1,3 @@
 digraph AST {
-"0x603000001720" [label="REDIR: "];
-"0x603000001720" -> "0x603000001750" [label="L"];
-"0x603000001750" [label="(): cat < Makefile && cat < init.sh"];
-"0x603000001720" -> "0x603000001780" [label="R"];
-"0x603000001780" [label="CMD: ast.dot"];
-"0x603000001780" -> "0x6030000017b0" [label="R"];
-"0x6030000017b0" [label="REDIR: "];
-"0x6030000017b0" -> "0x6030000017e0" [label="R"];
-"0x6030000017e0" [label="CMD: out"];
+"0x603000001300" [label="CMD: ls -la GITEX24MR_Confirmation_6397014639.pdf GITEX24MR_Confirmation_6397015084.pdf"];
 }
