@@ -7,7 +7,7 @@ CC = cc
 
 CFLAGS =  -Wall -Wextra -Werror -fsanitize=address -g3 
 
-BUILTINS = srcs/builtins/builtins_utils.c srcs/builtins/cd.c srcs/builtins/echo.c srcs/builtins/env.c srcs/builtins/exit.c srcs/builtins/export.c srcs/builtins/pwd.c srcs/builtins/unset.c
+BUILTINS = srcs/builtins/builtins_utils.c srcs/builtins/cd.c srcs/builtins/echo.c srcs/builtins/env.c srcs/builtins/exit.c srcs/builtins/export.c srcs/builtins/pwd.c srcs/builtins/unset.c srcs/builtins/export_utils.c
 
 INPUT_VALIDATION = srcs/input_validation/has_invalid_redirections.c srcs/input_validation/has_misplaced_operators.c srcs/input_validation/has_unclosed_parenthesis.c srcs/input_validation/has_unclosed_quotes.c srcs/input_validation/syntax_checker.c
 
@@ -34,8 +34,8 @@ all: $(NAME)
 
 $(NAME):  $(OBJS) 
 #@make -C $(LIBFT_PATH)
-#$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -L /Users/akaddour/readline/lib -lreadline -lncurses
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -L /Users/melachyr/readline/lib -lreadline -lncurses
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -L /Users/akaddour/readline/lib -lreadline -lncurses
+#$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -L /Users/melachyr/readline/lib -lreadline -lncurses
 
 
 clean:

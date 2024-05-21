@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 00:57:54 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/19 14:12:20 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:39:57 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	ft_exit(char **args)
 		{
 			ft_putstr_fd("exit\nminishell: exit: too many arguments\n", 2);
 			g_shell_data.status = 1;
-			// printf("g_shell_data.status = %d\n", g_shell_data.status);
 			return (1);
 		}
 	}

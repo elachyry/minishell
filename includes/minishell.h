@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/20 22:18:22 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:30:09 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@
 #include  "../libraries/libft/libft.h"
 #include  "../libraries/get_next_line/get_next_line.h"
 # define READLINE_LIBRARY
-// # include "/Users/akaddour/readline/include/readline/readline.h"
-// # include "/Users/akaddour/readline/include/readline/history.h"
-# include "/Users/melachyr/readline/readline.h"
-# include "/Users/melachyr/readline/history.h"
+# include "/Users/akaddour/readline/include/readline/readline.h"
+# include "/Users/akaddour/readline/include/readline/history.h"
+// # include "/Users/melachyr/readline/readline.h"
+// # include "/Users/melachyr/readline/history.h"
 
 typedef struct s_env
 {
@@ -100,6 +100,8 @@ int		ft_unset(char **args);
 void	update_env_value(char *key, char *value);
 char    *get_env_value(char *key);
 int		is_valid_key(char *key);
+void	sort_env_array(t_env **env_array, int count);
+void	handle_key_value(char *str, char *key , char *value);
 
 //input_validation
 t_bool	has_unclosed_parenthesis(char *input);

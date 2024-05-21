@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:53:01 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/16 11:12:06 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:37:03 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 	ft_strlcpy(str, &s1[start], (end - start + 1));
 	return (str);
 }
-
-
-// int main(void)
-// {
-// 	char *str = "\'\"$USER\'\"";
-// 	printf("result : %s\n", ft_strtrim_2(str, "\'\""));
-// }

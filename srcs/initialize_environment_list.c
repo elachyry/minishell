@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize_environment_list.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:11:04 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/19 15:21:46 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:52:32 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,20 @@ void	extract_path(void)
 	// free(path);
 }
 
-char    *extract_key(char *env)
+char	*extract_key(char *env)
 {
-    char    *key;
-    int     i;
+	char	*key;
+	int		i;
 
-    i = 0;
-    while (env[i] && env[i] != '=')
-        i++;
-    key = malloc(i + 1);
-    if (!key)
-        return (NULL);
-    i = 0;
-    while (env[i] && env[i] != '=')
-    {
-        key[i] = env[i];
-        i++;
-    }
-    key[i] = '\0';
-    return (key);
+	i = 0;
+	while (env[i] && env[i] != '=' && !(env[i] == '+' && env[i+1] == '='))
+		i++;
+	key = malloc(i + 1);
+	if (!key)
+		return (NULL);
+	ft_strncpy(key, env, i);
+	key[i] = '\0';
+	return (key);
 }
 
 char    *extract_value(char *env)
