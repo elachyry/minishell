@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:30:23 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/21 15:50:45 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/21 23:28:50 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ int	ft_cd(char *path)
 		display_cd_error(path);
 		return (1);
 	}
-	if (get_env_value("OLDPWD"))
-		update_env_value("OLDPWD", oldpwd);
+	update_env_value("OLDPWD", oldpwd);
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{

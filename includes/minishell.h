@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 15:30:09 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/22 00:02:50 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,12 @@ t_bool	has_invalid_redirections(const char *input);
 t_bool	has_misplaced_operators(const char *input);
 t_bool	syntax_checker(char	*input);
 t_bool	syntax_error_checker(char	*input);
+t_bool	check_redirection_operator(const char **input, int *s_q_count, \
+int *d_q_count, t_bool *encountered_and_or);
+void	init_var(int *next_command, int *s_q_count, \
+int *d_q_count, t_bool *enc_and_or);
+t_bool	operator_mispla(const char **input, int *next_command, \
+t_bool *enc_and_or, const char **temp);
 
 int	is_invalid_operator(const char **input);
 const char	*skip_spaces(const char *input);

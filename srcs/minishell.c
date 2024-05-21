@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/05/21 13:36:18 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 23:27:22 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	main(int ac, char **av, char **envp)
 		// display_tokens(tokens);
 		ast = parse_tokens(&tokens);
 		g_shell_data.ast = ast;
-		generate_ast_diagram(ast);
+		// generate_ast_diagram(ast);
 		g_shell_data.ctl = true;
 		execution();
 		g_shell_data.sig_exit = 0;

@@ -3,96 +3,97 @@
 /*                                                        :::      ::::::::   */
 /*   has_unclosed_parenthesis.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 01:07:45 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/20 11:47:43 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 23:10:51 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// t_bool	has_unclosed_parenthesis(char *input)
-// {
-//     int		open;
-//     char	prev;
-//     t_bool	non_whitespace_encountered;
+static void	init_vars(int *open, char *prev_ns, \
+t_bool *non_ws_enc, t_bool *after_cp)
+{
+	*open = 0;
+	*prev_ns = 0;
+	*non_ws_enc = false;
+	*after_cp = false;
+}
 
-//     open = 0;
-//     prev = 0;
-//     non_whitespace_encountered = false;
-//     while (*input)
-//     {
-//         if (*input == '(')
-//         {
-//             open++;
-//             prev = '(';
-//             non_whitespace_encountered = false;
-//         }
-//         else if (*input == ')')
-//         {
-//             if (open == 0 || prev == '(' || !non_whitespace_encountered)
-//                 return (false);
-//             open--;
-//         }
-//         else
-//         {
-//             prev = *input;
-//             if (!ft_isspace(*input))
-//                 non_whitespace_encountered = true;
-//         }
-//         input++;
-//     }
-//     if (open != 0)
-//         return (false);
-//     return (true);
-// }
+t_bool	handle_opening_parenthesis(int *open, \
+char *prev_ns, t_bool *non_ws_enc)
+{
+	if (*prev_ns && !ft_isspace(*prev_ns)
+		&& *prev_ns != '|' && *prev_ns != '&'
+		&& *prev_ns != '"' && *prev_ns != '\'')
+		return (false);
+	(*open)++;
+	*non_ws_enc = false;
+	return (true);
+}
+
+t_bool	handle_close_par(char **input, int *open, \
+t_bool *non_ws_enc, t_bool *after_cp)
+{
+	const char	*temp;
+
+	if (*open == 0 || !(*non_ws_enc))
+		return (false);
+	(*open)--;
+	temp = (*input) - 1;
+	while (ft_isspace(*temp))
+		temp--;
+	if (*temp == '>' || *temp == '<')
+		return (false);
+	(*after_cp) = true;
+	return (true);
+}
+
+t_bool	handle_after_closing_parenthesis(char **input, t_bool *after_cp)
+{
+	if (*after_cp && !ft_isspace(**input))
+	{
+		if (**input == '>' || **input == '<'
+			|| **input == '|' || **input == '&')
+			*after_cp = false;
+		else
+			return (false);
+	}
+	return (true);
+}
+
+static void	initialization(char **input, char *prev_ns, t_bool *non_ws_enc)
+{
+	*non_ws_enc = true;
+	*prev_ns = **input;
+}
+
 t_bool	has_unclosed_parenthesis(char *input)
 {
-	int		open;
-	char	prev;
-	char    prev_non_space;
-	t_bool	non_whitespace_encountered;
+	int			open;
+	char		prev_ns;
+	t_bool		non_ws_enc;
+	t_bool		after_cp;
 
-	open = 0;
-	prev = 0;
-	prev_non_space = 0;
-	non_whitespace_encountered = false;
-    while (*input)
-    {
-        if (*input == '(')
-        {
-            if (prev_non_space && !ft_isspace(prev_non_space) && prev_non_space != '|' && prev_non_space != '&'
-				&& prev_non_space != '"' && prev_non_space != '\'')
-                return false; // Return false if '(' is preceded by a non-space character that is not '|' or '&'
-            open++;
-            prev = '(';
-            non_whitespace_encountered = false;
-        }
-        else if (*input == ')')
-        {
-            if (open == 0 || prev == '(' || !non_whitespace_encountered)
-                return (false);
-            open--;
-			// Check for redirection operators before closing parenthesis
-            const char *temp = input - 1;
-            while (ft_isspace(*temp))
-                temp--;
-            if (*temp == '>' || *temp == '<')
-                return (false); // Invalid if redirection operator is before closing parenthesis
-        }
-        else
-        {
-            prev = *input;
-            if (!ft_isspace(*input))
-            {
-                non_whitespace_encountered = true;
-                prev_non_space = *input;
-            }
-        }
-        input++;
-    }
-    if (open != 0)
-        return (false);
-    return (true);
+	init_vars(&open, &prev_ns, &non_ws_enc, &after_cp);
+	while (*input)
+	{
+		if (*input == '(')
+		{
+			if (!handle_opening_parenthesis(&open, &prev_ns, &non_ws_enc))
+				return (false);
+		}
+		else if (*input == ')')
+		{
+			if (!handle_close_par(&input, &open, &non_ws_enc, &after_cp))
+				return (false);
+		}
+		else if (!handle_after_closing_parenthesis(&input, &after_cp))
+			return (false);
+		else if (!ft_isspace(*input))
+			initialization(&input, &prev_ns, &non_ws_enc);
+		input++;
+	}
+	return (open == 0);
 }
