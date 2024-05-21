@@ -1,3 +1,0 @@
-digraph AST {
-"0x603000006e20" [label="CMD: cat file2"];
-}

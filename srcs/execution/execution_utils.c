@@ -6,19 +6,11 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:36:16 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/19 14:46:04 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 17:49:11 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	perror_message(char *file, int status)
-{
-	// ft_putstr_fd("hiii: ", 2);
-	ft_putstr_fd("minishell: ", 2);
-	perror(file);
-	exit(status);
-}
 
 t_files	*new_file_node(char *filename, t_token_type type)
 {

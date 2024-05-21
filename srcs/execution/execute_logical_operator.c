@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:16:44 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 09:40:40 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 17:40:12 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	execute_logical_and(t_ast_node *node)
 	execute_ast(node->left);
 	g_shell_data.simple_cmd->files = NULL;
 	left_status = g_shell_data.status;
-	// dprintf(2, "anddddddd\n");
 	if (left_status == 0 && !g_shell_data.sig_exit)
 		execute_ast(node->right);
 	else if (node->right
@@ -43,14 +42,10 @@ void	execute_logical_or(t_ast_node *node)
 	int	left_status;
 
 	execute_ast(node->left);
-	// printf("test\n");
 	g_shell_data.simple_cmd->files = NULL;
-	// printf("test2\n");
 	left_status = g_shell_data.status;
 	if (left_status != 0 || g_shell_data.sig_exit == 1)
-	{
 		execute_ast(node->right);
-	}
 	else if (node->right
 		&& (node->right->type == LogicalAnd || node->right->type == LogicalOr))
 	{

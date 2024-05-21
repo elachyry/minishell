@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/20 22:18:22 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 22:42:58 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	execute_less_than(t_ast_node *node);
 void	execute_greater_than(t_ast_node *node);
 void	execute_parenthesis(t_ast_node *ast);
 void	execute_double_greater_than(t_ast_node *node);
-char	*expand_here_doc(char *str, int fd);
+char	*expand_here_doc(char *str);
 t_files	*new_file_node(char *filename, t_token_type type);
 void	add_lst_file(t_files **head, t_files *node);
 t_files	*lst_file_last(t_files *head);
@@ -137,6 +137,17 @@ int 	execute_command(char **args);
 void	execution(void);
 t_bool	check_if_builtin(char *arg);
 int 	execute_builtin(char **args);
+void	less_than_operator(t_files *file);
+void	greater_than_operator(t_files *file);
+void	double_greater_than_operator(t_files *file);
+void	sigquit_handler(int sig);
+void	cmd_not_found(char **args, int status);
+void	execve_fail(char **args);
+int		redirect_files_buildin(void);
+void	remove_node(t_token **head, t_token *node);
+void	add_node_after(t_token *target_node, t_token *new_node);
+t_ast_node	*cmd_before_red(t_token **tokens, t_token *ptr, t_bool is_parenth);
+t_ast_node	*cmd_after_red(t_token **tokens, t_token *next, t_token *ptr);
 
 //signals
 void	handle_signals(void);

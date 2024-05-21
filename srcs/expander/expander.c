@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:42:28 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/21 13:56:40 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 21:57:09 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,17 +375,6 @@ int match(const char *string, const char *pattern)
 //     return (tokens);
 // }
 
-void	add_node_after(t_token *target_node, t_token *new_node)
-{
-	if (!target_node || !new_node) return;
-
-	new_node->next = target_node->next;
-	new_node->prev = target_node;
-	if (target_node->next)
-		target_node->next->prev = new_node;
-	target_node->next = new_node;
-}
-
 t_token *expand_wildcards(t_token *tokens)
 {
     t_token *tok;
@@ -442,8 +431,9 @@ t_token *expand_wildcards(t_token *tokens)
         {
             if (tok)
             {
+				// tok->value = file_list;
 				char	**tmp = ft_split(file_list, ' ');
-                tok->value = tmp[0];
+				tok->value = tmp[0];
 				int i = 1;
 				t_token	*node;
 				while (tmp[i])
@@ -509,7 +499,7 @@ t_token *expand_tokens(t_token *tokens)
         }
     }
 
-    tokens = expand_quotes(tokens);
+    // tokens = expand_quotes(tokens);
     tokens = expand_wildcards(tokens);
     return (tokens);
 }

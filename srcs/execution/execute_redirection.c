@@ -6,21 +6,29 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:20:20 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 09:40:01 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 17:51:53 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+static void	file_not_found(t_ast_node *node, int fd)
+{
+	t_files	*last;
+
+	last = lst_file_last(g_shell_data.simple_cmd->files);
+	last->is_opened = true;
+	ft_putstr_fd("minishell: ", 2);
+	perror(node->right->args[0]);
+	close(fd);
+	g_shell_data.status = 1;
+}
+
 void	execute_less_than(t_ast_node *node)
 {
 	int		fd;
 	t_files	*file;
-	t_files	*last;
 
-	// dprintf(2, "less than = %s\n", node->right->args[0]);
-	// dprintf(2, "node right = %p\n", node->right);
-	// dprintf(2, "node right args = %p\n", node->right->args);
 	if (g_shell_data.simple_cmd->is_parenthis)
 	{
 		if (!g_shell_data.simple_cmd->is_parenthis_red_ch)
@@ -33,12 +41,7 @@ void	execute_less_than(t_ast_node *node)
 	fd = open(node->right->args[0], O_RDONLY);
 	if (fd == -1)
 	{
-		last = lst_file_last(g_shell_data.simple_cmd->files);
-		last->is_opened = true;
-		ft_putstr_fd("minishell: ", 2);
-		perror(node->right->args[0]);
-		close(fd);
-		g_shell_data.status = 1;
+		file_not_found(node, fd);
 		return ;
 	}
 	close(fd);
@@ -51,7 +54,6 @@ void	execute_greater_than(t_ast_node *node)
 	int		fd;
 	t_files	*file;
 
-	// dprintf(2, "great than = %s\n", node->right->args[0]);
 	if (g_shell_data.simple_cmd->is_parenthis)
 	{
 		if (!g_shell_data.simple_cmd->is_parenthis_red_ch)

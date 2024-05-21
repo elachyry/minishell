@@ -160,3 +160,21 @@ echo "   "''   cat lol.c | cat > lol.c ''" " √
 
 
 export a=hello && echo $a
+
+
+
+
+
+
+
+ls && ls && cat ==> oraha control + C  and exit value √
+(  "ls                     -all")
+echo rfdfs > i ===> and i dos't have permission √
+($ds)  ==> with path=NULL √
+(echo "-                 .n")
+env | grep OLDPWD ==> i'm  unset PWD and cd to home and cd .. and cd .. and go to home with cd and not have oldpwd 
+('$SDFSDF')
+cat << 1 << 1 << 1 << . << 3 "" ==> it's so bad √
+exit + 3
+ls ************************************************.c
+ls "*"

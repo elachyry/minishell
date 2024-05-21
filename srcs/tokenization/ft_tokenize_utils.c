@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 04:27:20 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/21 13:52:28 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 21:57:22 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,27 @@ void	ft_skip_spaces(char **line)
 {
 	while (**line && ft_isspace(**line))
 		(*line)++;
+}
+
+void	add_node_after(t_token *target_node, t_token *new_node)
+{
+	if (!target_node || !new_node) return;
+
+	new_node->next = target_node->next;
+	new_node->prev = target_node;
+	if (target_node->next)
+		target_node->next->prev = new_node;
+	target_node->next = new_node;
+}
+
+void	remove_node(t_token **head, t_token *node)
+{
+	if (!node) return;
+	if (node->prev) node->prev->next = node->next;
+	if (node->next) node->next->prev = node->prev;
+	if (*head == node) *head = node->next;
+	free(node->value);
+	free(node);
 }
 t_token	*create_token_node(const char *value, int type)
 {

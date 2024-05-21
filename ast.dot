@@ -1,3 +1,15 @@
 digraph AST {
-"0x603000001300" [label="CMD: ls -la GITEX24MR_Confirmation_6397014639.pdf GITEX24MR_Confirmation_6397015084.pdf"];
+"0x603000003d00" [label="&&"];
+"0x603000003d00" -> "0x603000003d30" [label="L"];
+"0x603000003d30" [label="CMD: cat"];
+"0x603000003d00" -> "0x603000003d60" [label="R"];
+"0x603000003d60" [label="REDIR: "];
+"0x603000003d60" -> "0x603000003d90" [label="L"];
+"0x603000003d90" [label="CMD: cat"];
+"0x603000003d60" -> "0x603000003dc0" [label="R"];
+"0x603000003dc0" [label="CMD: out1"];
+"0x603000003dc0" -> "0x603000003df0" [label="R"];
+"0x603000003df0" [label="REDIR: "];
+"0x603000003df0" -> "0x603000003e20" [label="R"];
+"0x603000003e20" [label="CMD: Makefile"];
 }

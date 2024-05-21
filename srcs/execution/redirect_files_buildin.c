@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirect_files.c                                   :+:      :+:    :+:   */
+/*   redirec_files_buildin.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:06:36 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 20:32:11 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 20:42:59 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	less_than_operator(t_files *file)
+static int	less_than_operator_2(t_files *file)
 {
 	int	in_fd;
 
@@ -25,17 +25,19 @@ void	less_than_operator(t_files *file)
 			perror(file->filename);
 		}
 		close(in_fd);
-		exit(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	if (dup2(in_fd, STDIN_FILENO) == -1)
 	{
 		g_shell_data.simple_cmd->files = NULL;
-		perror_message("dup2", EXIT_FAILURE);
+		perror("dup2");
+		return (EXIT_FAILURE);
 	}
 	close(in_fd);
+	return (0);
 }
 
-void	greater_than_operator(t_files *file)
+static int	greater_than_operator_2(t_files *file)
 {
 	int	out_fd;
 
@@ -45,17 +47,19 @@ void	greater_than_operator(t_files *file)
 		ft_putstr_fd("minishell: ", 2);
 		perror(file->filename);
 		close(out_fd);
-		exit(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	if (dup2(out_fd, STDOUT_FILENO) == -1)
 	{
 		g_shell_data.simple_cmd->files = NULL;
-		perror_message("dup2", EXIT_FAILURE);
+		perror("dup2");
+		return (EXIT_FAILURE);
 	}
 	close(out_fd);
+	return (0);
 }
 
-void	double_greater_than_operator(t_files *file)
+static int	double_greater_than_operator_2(t_files *file)
 {
 	int	out_fd;
 
@@ -69,12 +73,14 @@ void	double_greater_than_operator(t_files *file)
 	if (dup2(out_fd, STDOUT_FILENO) == -1)
 	{
 		g_shell_data.simple_cmd->files = NULL;
-		perror_message("dup2", EXIT_FAILURE);
+		perror("dup2");
+		return (EXIT_FAILURE);
 	}
 	close(out_fd);
+	return (0);
 }
 
-void	redirect_files(void)
+int	redirect_files_buildin(void)
 {
 	t_files	*file;
 
@@ -83,18 +89,31 @@ void	redirect_files(void)
 	{
 		if (file->type == LessThanOperator
 			|| file->type == DoubleLessThanOperator)
-			less_than_operator(file);
+		{
+			if (less_than_operator_2(file))
+				return (1);
+		}
 		else if (file->type == GreaterThanOperator)
 		{
 			if (g_shell_data.simple_cmd->is_parenthis > 1)
-				double_greater_than_operator(file);
+			{
+				if (double_greater_than_operator_2(file))
+					return (1);
+			}
 			else
-				greater_than_operator(file);
+			{
+				if (greater_than_operator_2(file))
+					return (1);
+			}
 		}
 		else if (file->type == DoubleGreaterThanOperator)
-			double_greater_than_operator(file);
+		{
+			if (double_greater_than_operator_2(file))
+				return (1);
+		}
 		file = file->next;
 	}
 	if (g_shell_data.simple_cmd->is_parenthis)
 		g_shell_data.simple_cmd->is_parenthis++;
+	return (0);
 }

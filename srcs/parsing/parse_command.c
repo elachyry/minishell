@@ -6,26 +6,11 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 10:31:45 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 13:36:14 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:22:11 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-// static int	table_count(char **tab)
-// {
-// 	int	i;
-
-// 	if (!tab || !*tab)
-// 		return (0);
-// 	i = 0;
-// 	while (*tab)
-// 	{
-// 		i++;
-// 		tab++;
-// 	}
-// 	return (i);
-// }
 
 static int	get_nbr_of_args(t_token *ptr)
 {
@@ -69,10 +54,6 @@ static char	**create_args_table(t_token **ptr)
 		j++;
 	}
 	cmd[j] = NULL;
-	// for (int j = 0; cmd[j] ; j++)
-	// {
-	// 	printf("cmd = %s\n", cmd[j]);
-	// }
 	return (cmd);
 }
 
@@ -96,9 +77,5 @@ t_ast_node	*parse_command(t_token	**tokens, t_bool is_custom)
 		node->right = parse_redirection(tokens);
 	else
 		node->right = NULL;
-	// for (int j = 0; cmd[j] ; j++)
-	// {
-	// 	printf("arg = %s\n", cmd[j]);
-	// }
 	return (node);
 }

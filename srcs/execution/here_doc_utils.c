@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:00:16 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/17 16:05:51 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:18:23 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*ft_strjoin_2(char const *s1, char const *s2, size_t len)
 	return (str);
 }
 
-static char	*replace_with_val(char *str, int fd, char **buff)
+static char	*replace_with_val(char *str, char **buff)
 {
 	char	*tmp;
 	char	*result;
@@ -48,7 +48,6 @@ static char	*replace_with_val(char *str, int fd, char **buff)
 	int		i;
 
 	i = 0;
-	(void)fd;
 	result = NULL;
 	tmp = str;
 	tmp++;
@@ -63,24 +62,18 @@ static char	*replace_with_val(char *str, int fd, char **buff)
 	{
 		result = get_env_value(sub);
 		if (result)
-		{
-			// dprintf(2, "result = %s\n", result);
 			*buff = ft_strjoin_2(*buff, result, ft_strlen(result));
-			// dprintf(2, "buf21 = %s\n", *buff);
-		}
-			// write(fd, result, ft_strlen(result));
 	}
 	else
 		*buff = ft_strjoin_2(*buff, str, 1);
-		// write(fd, str, 1);
 	return (tmp);
 }
 
-char	*expand_here_doc(char *str, int fd)
+char	*expand_here_doc(char *str)
 {
 	int		i;
 	char	*buff;
-	
+
 	buff = ft_strdup("");
 	while (*str)
 	{
@@ -90,23 +83,15 @@ char	*expand_here_doc(char *str, int fd)
 			if (*(str + 1) == '$')
 			{
 				buff = ft_strjoin_2(buff, str, 2);
-				// write(fd, str, 2);
 				str += 2;
 				continue ;
 			}
-			str = replace_with_val(str, fd, &buff);
+			str = replace_with_val(str, &buff);
 		}
 		if (*str != '$')
-		{
-			
 			buff = ft_strjoin_2(buff, str, 1);
-			// dprintf(2, "buf2 = %s\n", buff);
-			
-		}
-			// write(fd, str, 1);
 		if (*str && *str != '$')
 			str++;
 	}
-	// dprintf(2, "buf = %s\n", buff);
 	return (buff);
 }

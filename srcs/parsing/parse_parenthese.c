@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:15:09 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/20 22:03:06 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 21:54:03 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ t_ast_node	*parse_parenthese(t_token **tokens)
 	t_token		*ptr;
 
 	ptr = *tokens;
-	// dprintf(2, "parenth = %s\n", ptr->value);
 	while (*tokens)
 	{
 		next = *tokens;

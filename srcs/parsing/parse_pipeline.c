@@ -6,11 +6,21 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:51:56 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/18 20:34:19 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 23:25:50 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static void	help_func(t_token **tokens)
+{
+	if (*tokens && (*tokens)->type == OpeningParenthesis)
+	{
+		while ((*tokens && (*tokens)->next)
+			&& (*tokens)->type != ClosingParenthesis)
+			*tokens = (*tokens)->next;
+	}
+}
 
 //this function for parsing the pipeline by creating a node type Pipeline
 t_ast_node	*parse_pipeline(t_token **tokens)
@@ -21,15 +31,9 @@ t_ast_node	*parse_pipeline(t_token **tokens)
 
 	ptr = *tokens;
 	pipe_node = NULL;
-	// dprintf(2, "pipe = %s\n", ptr->value);
-	if (*tokens  && (*tokens)->type == OpeningParenthesis)
-	{
-		// dprintf(2, "inside if in pipe = %s\n", (*tokens)->value);
-		while ((*tokens && (*tokens)->next) && (*tokens)->type != ClosingParenthesis)
-			*tokens = (*tokens)->next;
-	}
-	// dprintf(2, "afetr if in pipe = %s\n", (*tokens)->value);
-	while (*tokens && (*tokens)->next && (*tokens)->next->type != OpeningParenthesis
+	help_func(tokens);
+	while (*tokens && (*tokens)->next
+		&& (*tokens)->next->type != OpeningParenthesis
 		&& (*tokens)->type != OpeningParenthesis)
 	{
 		next = (*tokens)->next;

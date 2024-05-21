@@ -6,26 +6,31 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/20 15:50:42 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 20:05:07 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static void	handle_command(t_ast_node *node)
+{
+	int	status;
+
+	status = execute_command(node->args);
+	if (g_shell_data.sig_exit == 1)
+		g_shell_data.status = 130;
+	else if (g_shell_data.sig_exit == 2)
+		g_shell_data.status = 131;
+	else
+		g_shell_data.status = status;
+}
 
 void	execute_ast(t_ast_node *node)
 {
 	if (node == NULL)
 		return ;
 	if (node->type == IDENTIFIER)
-	{
-		int status = execute_command(node->args);
-		if (g_shell_data.sig_exit == 1)
-			g_shell_data.status = 1;
-		else if (g_shell_data.sig_exit == 2)
-			g_shell_data.status = 131;
-		else
-			g_shell_data.status = status;
-	}
+		handle_command(node);
 	else if (node->type == PipeSymbol)
 		execute_pipe(node);
 	else if (node->type == LogicalAnd)
@@ -47,10 +52,9 @@ void	execute_ast(t_ast_node *node)
 		execute_parenthesis(node);
 }
 
-void	execution(void)
+static void	handle_here_doc(void)
 {
-	t_ast_node	*ast;
-	t_files		*file;
+	char	*name;
 
 	if (g_shell_data.simple_cmd->nbr_here_doc >= 17)
 	{
@@ -58,24 +62,28 @@ void	execution(void)
 		exit(2);
 	}
 	g_shell_data.status = 0;
-	ast = g_shell_data.ast;
 	g_shell_data.simple_cmd->here_doc_path = NULL;
-	char	*name;
-
 	if (g_shell_data.simple_cmd->nbr_here_doc > 0)
 	{
 		name = get_here_doc_name();
 		g_shell_data.simple_cmd->here_doc_path = ft_strjoin("/tmp/", name);
-		// printf("here doc path = %s\n", g_shell_data.simple_cmd->here_doc_path);
 		free(name);
 	}
-	execute_here_doc(g_shell_data.ast);
 	g_shell_data.simple_cmd->files = NULL;
+	execute_here_doc(g_shell_data.ast);
+}
+
+void	execution(void)
+{
+	t_ast_node	*ast;
+	t_files		*file;
+
+	handle_here_doc();
+	ast = g_shell_data.ast;
 	if (!g_shell_data.status)
 	{
 		if (g_shell_data.simple_cmd->here_doc_path)
 		{
-			// printf("here doc path 2 = %s\n", g_shell_data.simple_cmd->here_doc_path);
 			file = new_file_node(g_shell_data.simple_cmd->here_doc_path,
 					LessThanOperator);
 			add_lst_file(&g_shell_data.simple_cmd->files, file);
