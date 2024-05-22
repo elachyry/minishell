@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:30:23 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/18 14:15:42 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/22 14:11:51 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	back_to_home(void)
 {
     char	*home;
 
-    update_env_value("OLDPWD", get_env_value("PWD"));
+    update_env_value("OLDPWD", getcwd(NULL, 0));
     home = get_env_value("HOME");
     if (!home)
     {
@@ -52,7 +52,7 @@ int	ft_cd(char *path)
         return (1);
     }
     if (get_env_value("OLDPWD")) // Check if OLDPWD exists before updating it
-        update_env_value("OLDPWD", oldpwd); // Update OLDPWD after changing the directory
+    	update_env_value("OLDPWD", oldpwd); // Update OLDPWD after changing the directory
     cwd = getcwd(NULL, 0);
     if (!cwd)
     {

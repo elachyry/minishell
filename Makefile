@@ -5,7 +5,7 @@ LIBFT_PATH	:= "libraries/libft"
 
 CC = cc
 
-CFLAGS =  -Wall -Wextra -Werror -fsanitize=address -g3 
+CFLAGS =  -Wall -Wextra -Werror#-fsanitize=address -g3 
 
 BUILTINS = srcs/builtins/builtins_utils.c srcs/builtins/cd.c srcs/builtins/echo.c srcs/builtins/env.c srcs/builtins/exit.c srcs/builtins/export.c srcs/builtins/pwd.c srcs/builtins/unset.c
 

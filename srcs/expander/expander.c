@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:42:28 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/21 21:57:09 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/22 12:16:30 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,39 @@ t_token	*expand_quotes(t_token *tokens)
 {
 	t_token	*token;
 	char	*tmp;
+	char	*ident;
+	t_bool	wildcard;
 
 	token = tokens;
 	while (token)
 	{
+		if (token->type == OpeningParenthesis)
+		{
+			while (token && token->type == OpeningParenthesis)
+				token = token->next;
+			while (token && token->type != ClosingParenthesis)
+				token = token->next;
+			while (token && token->type == ClosingParenthesis)
+				token = token->next;
+			continue ;
+		}
 		if (token->type == IDENTIFIER)
 		{
+			ident = token->value;
+			wildcard = false;
+			while (*ident)
+			{
+				if (*ident == '*')
+				{
+					if (token)
+						token = token->next;
+					wildcard = true;
+					break ;
+				}
+				ident++;
+			}
+			if (wildcard)
+				continue ;
 			tmp = remove_all_quotes(token, token->value);
 			free(token->value);
 			token->value = tmp;
@@ -306,32 +333,6 @@ t_token	*expand_env_variable(t_token *tokens)
 	return (tokens);
 }
 
-int match(const char *string, const char *pattern)
-{
-    while (*string)
-    {
-        if (*pattern == '*')
-        {
-            if (match(string, pattern + 1))
-                return 1;
-            string++;
-        }
-        else if (*pattern == *string)
-        {
-            pattern++;
-            string++;
-        }
-        else
-        {
-            return 0;
-        }
-    }
-
-    while (*pattern == '*')
-        pattern++;
-
-    return !*pattern;
-}
 
 // t_token *expand_wildcards(t_token *tokens)
 // {
@@ -375,85 +376,153 @@ int match(const char *string, const char *pattern)
 //     return (tokens);
 // }
 
-t_token *expand_wildcards(t_token *tokens)
+int	match(const char *string, const char *pattern) 
 {
-    t_token *tok;
-    char *tmp;
-    DIR *dir;
-    struct dirent *entry;
-    char *file_list = NULL;
+	const char	*str_backup;
+	const char	*pattern_backup;
 
-    tok = tokens;
-    while (tok)
-    {
-        tmp = tok->value;
-        while (*tmp)
-        {
-            if (*tmp == '*')
-            {
-                dir = opendir(".");
-                if (dir == NULL)
-                {
-                    perror("opendir");
-                    return (tokens);
-                }
-                while ((entry = readdir(dir)) != NULL)
-                {
-                    // Skip hidden files unless the pattern starts with a dot
-                    if (entry->d_name[0] == '.' && tok->value[0] != '.')
-                        continue;
+	str_backup = NULL;
+	pattern_backup = NULL;
+	// printf("string = %s | pattern = %s\n", string, pattern);
+	while (*string)
+	{
+		// printf("*string = %c\n", *string);
+		if (*pattern == '*')
+		{
+			// Skip the '*' and remember the positions
+			pattern_backup = ++pattern;
+			str_backup = string;
+			// printf("str_backup = %s | pattern_backup = %s\n", str_backup, pattern_backup);
+			
+		}
+		else if (*pattern == *string)
+		{
+			// Advance both pointers if characters match or pattern has '?'
+			pattern++;
+			string++;
+		}
+		else if (pattern_backup)
+		{
+			// Backtrack: try the next position in the string
+			pattern = pattern_backup;
+			string = ++str_backup;
+			// printf("2 str_backup = %s | pattern_backup = %s\n", str_backup, pattern_backup);
+		} 
+		else
+		{
+			// No match
+			// printf("nomatch | str_backup = %s | pattern_backup = %s\n", str_backup, pattern_backup);
+			return (0);
+		}
+	}
+	// printf("left pattern = %s\n", pattern);
+	// Check for remaining '*' characters in the pattern
+	while (*pattern == '*')
+		pattern++;
 
-                   	if (match(entry->d_name, tok->value))
-					{
-					    // Concatenate the matching filename to the file list
-					    char *filename_with_space = ft_strjoin(entry->d_name, " ");
-					    char *new_file_list;
-					    if (file_list)
-					    {
-					        new_file_list = ft_strjoin(file_list, filename_with_space);
-					    }
-					    else
-					    {
-					        new_file_list = ft_strjoin("", filename_with_space);
-					    }
-					    free(filename_with_space);
-					    if (file_list)
-					        free(file_list);
-					    file_list = new_file_list;
-					}
-                }
-                closedir(dir);
-                break;
-            }
-            tmp++;
-        }
-        if (file_list)
-        {
-            if (tok)
-            {
-				// tok->value = file_list;
-				char	**tmp = ft_split(file_list, ' ');
-				tok->value = tmp[0];
-				int i = 1;
-				t_token	*node;
-				while (tmp[i])
+	// If pattern is fully matched, return 1
+	return (!*pattern);
+}
+
+t_token	*expand_wildcards(t_token *tokens)
+{
+	struct dirent	*entry;
+	t_token			*tok;
+	DIR				*dir;
+	char			*file_list;
+	char 			*tmp;
+	int 			has_wildcard;
+
+	tok = tokens;
+	file_list = NULL;
+	while (tok)
+	{
+		tmp = tok->value;
+		has_wildcard = 0;
+		if (tok->type == OpeningParenthesis)
+		{
+			while (tok && tok->type == OpeningParenthesis)
+				tok = tok->next;
+			while (tok && tok->type != ClosingParenthesis)
+				tok = tok->next;
+			while (tok && tok->type == ClosingParenthesis)
+				tok = tok->next;
+			continue ;
+		}
+		// Check if the token value contains a wildcard
+		while (*tmp)
+		{
+			if (*tmp == '*')
+			{
+				has_wildcard = 1;
+				break;
+			}
+			tmp++;
+		}
+		if ((tok->value[0] == '\'' || tok->value[0] == '\"') && has_wildcard)
+		{
+			// printf("test\n");
+			tmp = remove_all_quotes(tokens, tok->value);
+			free(tok->value);
+			tok->value = tmp;
+			// printf("remove_all_quotes %s\n", tok->value);
+			if (tok)
+				tok = tok->next;
+			continue ;
+		}
+		if (has_wildcard)
+		{
+			dir = opendir(".");
+			if (dir == NULL)
+			{
+				perror("opendir");
+				return (tokens);
+			}
+			while ((entry = readdir(dir)) != NULL)
+			{
+				// Skip hidden files unless the pattern starts with a dot
+				if (entry->d_name[0] == '.' && tok->value[0] != '.')
+					continue;
+				if (match(entry->d_name, tok->value))
 				{
-					node = create_token_node(tmp[i], IDENTIFIER);
-					add_node_after(tok, node);
-					i++;
-					tok = tok->next;
+					// Concatenate the matching filename to the file list
+					char *filename_with_space = ft_strjoin(entry->d_name, " ");
+					char *new_file_list = file_list ?
+						ft_strjoin(file_list, filename_with_space) :
+						ft_strdup(filename_with_space);
+					free(filename_with_space);
+					if (file_list)
+						free(file_list);
+					file_list = new_file_list;
 				}
-            }
-            else
-            {
-                // Handle the case where tok is null
-                // You might want to return an error or create a new token
-            }
-        }
-        tok = tok->next;
-    }
+			}
+			closedir(dir);
+			if (file_list)
+			{
+				// Split file_list into individual filenames and insert them as tokens
+				char **filenames = ft_split(file_list, ' ');
+				free(file_list);
+				file_list = NULL;
 
-    return (tokens);
+				if (filenames)
+				{
+					tok->value = ft_strdup(filenames[0]);
+					int i = 1;
+					t_token *prev_tok = tok;
+					while (filenames[i])
+					{
+						t_token *new_tok = create_token_node(filenames[i], IDENTIFIER);
+						add_node_after(prev_tok, new_tok);
+						prev_tok = new_tok;
+						i++;
+					}
+					free(filenames);
+				}
+			}
+		}
+		tok = tok->next;
+	}
+	return (tokens);
 }
 
 t_token *expand_tokens(t_token *tokens)
@@ -499,7 +568,7 @@ t_token *expand_tokens(t_token *tokens)
         }
     }
 
-    // tokens = expand_quotes(tokens);
+    tokens = expand_quotes(tokens);
     tokens = expand_wildcards(tokens);
     return (tokens);
 }
