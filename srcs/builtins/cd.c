@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:30:23 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/23 11:31:05 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/23 13:26:57 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	back_to_home(void)
 	char	*home;
 
 	if (get_env_value("OLDPWD"))
-		update_env_value("OLDPWD", get_env_value("PWD"));
+		update_env_value("OLDPWD", getcwd(NULL, 0));
 	home = get_env_value("HOME");
 	if (!home)
 	{
@@ -52,7 +52,8 @@ int	ft_cd(char *path)
 		display_cd_error(path);
 		return (1);
 	}
-	update_env_value("OLDPWD", oldpwd);
+	if (get_env_value("OLDPWD"))
+		update_env_value("OLDPWD", oldpwd);
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
