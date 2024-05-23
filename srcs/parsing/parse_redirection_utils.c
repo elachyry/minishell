@@ -6,22 +6,15 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 22:41:58 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/22 20:25:03 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:09:18 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// static void	help_func(t_token *tmp, char **cmd)
-// {
-// 	*cmd = ft_strjoin(*cmd, tmp->value);
-// 	*cmd = ft_strjoin(*cmd, "\n");
-// }
-
 static void	extrac_cmd_args(t_token **tokens, int *count)
 {
 	t_token	*tmp;
-	// t_token	*to_delete;
 
 	tmp = *tokens;
 	while (tmp && tmp->next)
@@ -107,7 +100,7 @@ t_ast_node	*cmd_before_red(t_token **tokens, t_token *ptr, t_bool is_parenth)
 	return (redirection_node);
 }
 
-static void	extrac_cmd_args_2(t_token *next, int *count)
+static void	count_cmd_args_2(t_token *next, int *count)
 {
 	t_token	*tmp;
 	tmp = next;
@@ -152,7 +145,7 @@ t_ast_node	*cmd_after_red(t_token **tokens, t_token *next, t_token *ptr)
 		count++;
 		tmp = tmp->next;
 	}
-	extrac_cmd_args_2(next, &count);
+	count_cmd_args_2(next, &count);
 	cmd = malloc(sizeof(char *) * (count + 1));
 	if (!cmd)
 		return (NULL);

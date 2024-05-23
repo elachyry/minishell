@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:32:55 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/22 12:16:13 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:57:40 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,27 @@ static char	*concat_cmd(t_ast_node *node)
 	return (line);
 }
 
-void	execute_parenthesis(t_ast_node *node)
+static void	child_process(t_ast_node *node)
 {
 	t_token		*tokens;
 	t_ast_node	*ast;
-	pid_t		pid;
 	char		*line;
+
+	if (!node->args[0])
+		exit(EXIT_SUCCESS);
+	line = concat_cmd(node);
+	tokens = ft_tokenize(line);
+	tokens = expand_tokens(tokens);
+	ast = parse_tokens(&tokens);
+	redirect_files_2();
+	execute_ast(ast);
+	generate_ast_diagram(ast);
+	exit(g_shell_data.status);
+}
+
+void	execute_parenthesis(t_ast_node *node)
+{
+	pid_t		pid;
 	int			status;
 
 	pid = fork();
@@ -69,21 +84,7 @@ void	execute_parenthesis(t_ast_node *node)
 	if (pid == -1)
 		perror_message("fork", EXIT_FAILURE);
 	if (pid == 0)
-	{
-		// dprintf(2, "node %s\n", node->args[0]);
-		if (!node->args[0])
-			exit(EXIT_SUCCESS);
-		line = concat_cmd(node);
-		// dprintf(2, "line  = %s\n", line);
-		tokens = ft_tokenize(line);
-		tokens = expand_tokens(tokens);
-		// display_tokens(tokens);
-		ast = parse_tokens(&tokens);
-		redirect_files_2();
-		execute_ast(ast);
-		generate_ast_diagram(ast);
-		exit(g_shell_data.status);
-	}
+		child_process(node);
 	else
 	{
 		waitpid(pid, &status, WCONTINUED);

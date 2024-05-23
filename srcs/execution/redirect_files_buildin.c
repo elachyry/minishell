@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:06:36 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/23 11:14:27 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:00:18 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,35 @@ static int	double_greater_than_operator_2(t_files *file)
 	return (0);
 }
 
+static int	help_function(t_files *file)
+{
+	if (file->type == LessThanOperator
+		|| file->type == DoubleLessThanOperator)
+	{
+		if (less_than_operator_2(file))
+			return (1);
+	}
+	else if (file->type == GreaterThanOperator)
+	{
+		if (g_shell_data.simple_cmd->is_parenthis > 1)
+		{
+			if (double_greater_than_operator_2(file))
+				return (1);
+		}
+		else
+		{
+			if (greater_than_operator_2(file))
+				return (1);
+		}
+	}
+	else if (file->type == DoubleGreaterThanOperator)
+	{
+		if (double_greater_than_operator_2(file))
+			return (1);
+	}
+	return (0);
+}
+
 int	redirect_files_buildin(void)
 {
 	t_files	*file;
@@ -94,30 +123,8 @@ int	redirect_files_buildin(void)
 	file = g_shell_data.simple_cmd->files;
 	while (file)
 	{
-		if (file->type == LessThanOperator
-			|| file->type == DoubleLessThanOperator)
-		{
-			if (less_than_operator_2(file))
-				return (1);
-		}
-		else if (file->type == GreaterThanOperator)
-		{
-			if (g_shell_data.simple_cmd->is_parenthis > 1)
-			{
-				if (double_greater_than_operator_2(file))
-					return (1);
-			}
-			else
-			{
-				if (greater_than_operator_2(file))
-					return (1);
-			}
-		}
-		else if (file->type == DoubleGreaterThanOperator)
-		{
-			if (double_greater_than_operator_2(file))
-				return (1);
-		}
+		if (help_function(file))
+			return (1);
 		file = file->next;
 	}
 	if (g_shell_data.simple_cmd->is_parenthis)
