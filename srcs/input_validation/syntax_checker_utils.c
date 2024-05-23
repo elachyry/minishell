@@ -6,27 +6,11 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:46:43 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/23 14:47:44 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:45:48 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-char	*handle_non_whitespace(char *result, char **tmp, int *l)
-{
-	if (!(*tmp[0] < 9 || *tmp[0] > 13))
-	{
-		if (!((*tmp[0] == ' ' || *tmp[0] == '\t') && *tmp[1] == '\0'))
-			if (!(*tmp[0] == ' ' || *tmp[0] == '\t'))
-				result = ft_strjoin_2(result, *tmp, 1);
-		while ((*tmp[0] == ' ' || *tmp[0] == '\t') && **tmp != '\0')
-		{
-			(*tmp)++;
-			*l = 1;
-		}
-	}
-	return (result);
-}
 
 char	*epur_str(char *str)
 {
@@ -43,7 +27,17 @@ char	*epur_str(char *str)
 	while (*tmp != '\0')
 	{
 		l = 0;
-		result = handle_non_whitespace(result, &tmp, &l);
+		if (*tmp < 9 || *tmp > 13)
+		{
+			if (!(ft_isspace(*tmp) && *(tmp + 1) == '\0'))
+				if (!ft_isspace(*tmp))
+					result = ft_strjoin_2(result, tmp, 1);
+			while (ft_isspace(*tmp) && *tmp != '\0')
+			{
+				tmp++;
+				l = 1;
+			}
+		}
 		if (l == 0)
 			tmp++;
 	}

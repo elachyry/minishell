@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/23 14:59:50 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:45:54 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,6 @@ t_bool *non_ws_enc, t_bool *after_cp);
 t_bool		handle_after_closing_parenthesis(char **input, t_bool *after_cp);
 
 // syntax_checker_utils.c
-char		*handle_non_whitespace(char *result, char **tmp, int *l);
 char		*epur_str(char *str);
 t_bool		has_invalid_single_ampersand(const char *input);
 t_bool		has_misplaced_operators_2(const char *input);

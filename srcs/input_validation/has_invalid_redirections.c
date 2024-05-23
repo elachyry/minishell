@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:49:24 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 23:22:37 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:46:58 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,18 @@ const char	*skip_spaces(const char *input)
 int	is_invalid_operator(const char **input)
 {
 	const char	*operator_start;
+	int			is_double_less_than;
 
 	operator_start = *input;
+	is_double_less_than = (*operator_start == '<' && *(*input + 1) == '<');
 	(*input)++;
 	if (*operator_start == **input && (**input == '>' || **input == '<'
 			|| **input == '|' || **input == '&'))
 		(*input)++;
 	*input = skip_spaces(*input);
 	if (**input == '\0')
+		return (1);
+	if (**input == '*' && !is_double_less_than)
 		return (1);
 	if (**input == '>' || **input == '<' || **input == '|' || **input == '&')
 	{

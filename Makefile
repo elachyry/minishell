@@ -25,7 +25,7 @@ EXPANDER = srcs/expander/expander.c srcs/expander/expand_env_variable.c srcs/exp
 
 GET_NEXT_LINE = libraries/get_next_line/get_next_line.c libraries/get_next_line/get_next_line_utils.c
 
-SRCS = srcs/initialize_environment_list.c srcs/minishell.c srcs/signal.c $(BUILTINS) $(INPUT_VALIDATION) $(PARSING) $(TOKENIZATION) $(EXECUTION) $(EXPANDER) $(GET_NEXT_LINE)
+SRCS = srcs/initialize_environment_list.c srcs/initialize_environment_utils.c srcs/minishell.c srcs/signal.c $(BUILTINS) $(INPUT_VALIDATION) $(PARSING) $(TOKENIZATION) $(EXECUTION) $(EXPANDER) $(GET_NEXT_LINE)
 
 # SRCS = $(wildcard srcs/*.c) $(wildcard srcs/builtins/*.c) $(wildcard srcs/input_validation/*.c) $(wildcard srcs/tokenization/*.c) $(wildcard srcs/parsing/*.c)
 
