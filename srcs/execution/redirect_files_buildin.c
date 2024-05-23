@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirec_files_buildin.c                            :+:      :+:    :+:   */
+/*   redirect_files_buildin.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:06:36 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 20:42:59 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:14:27 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,11 @@ static int	greater_than_operator_2(t_files *file)
 	out_fd = open(file->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (out_fd == -1)
 	{
-		ft_putstr_fd("minishell: ", 2);
-		perror(file->filename);
+		if (!file->is_opened)
+		{
+			ft_putstr_fd("minishell: ", 2);
+			perror(file->filename);
+		}
 		close(out_fd);
 		return (EXIT_FAILURE);
 	}
@@ -72,8 +75,12 @@ static int	double_greater_than_operator_2(t_files *file)
 	}
 	if (dup2(out_fd, STDOUT_FILENO) == -1)
 	{
-		g_shell_data.simple_cmd->files = NULL;
-		perror("dup2");
+		if (!file->is_opened)
+		{
+			ft_putstr_fd("minishell: ", 2);
+			perror(file->filename);
+		}
+		close(out_fd);
 		return (EXIT_FAILURE);
 	}
 	close(out_fd);

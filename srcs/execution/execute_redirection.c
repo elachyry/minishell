@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:20:20 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 17:51:53 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:14:31 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ void	execute_greater_than(t_ast_node *node)
 	add_lst_file(&g_shell_data.simple_cmd->files, file);
 	g_shell_data.simple_cmd->is_first++;
 	fd = open(node->right->args[0], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		file_not_found(node, fd);
+		return ;
+	}
 	close(fd);
 	execute_ast(node->right->right);
 	execute_ast(node->left);
@@ -83,6 +88,11 @@ void	execute_double_greater_than(t_ast_node *node)
 	file = new_file_node(node->right->args[0], DoubleGreaterThanOperator);
 	add_lst_file(&g_shell_data.simple_cmd->files, file);
 	fd = open(node->right->args[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd == -1)
+	{
+		file_not_found(node, fd);
+		return ;
+	}
 	close(fd);
 	execute_ast(node->right->right);
 	execute_ast(node->left);
