@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/23 11:20:06 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:26:50 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@
 #include  "../libraries/libft/libft.h"
 #include  "../libraries/get_next_line/get_next_line.h"
 # define READLINE_LIBRARY
-# include "/Users/akaddour/readline/include/readline/readline.h"
-# include "/Users/akaddour/readline/include/readline/history.h"
-// # include "/Users/melachyr/readline/readline.h"
-// # include "/Users/melachyr/readline/history.h"
+// # include "/Users/akaddour/readline/include/readline/readline.h"
+// # include "/Users/akaddour/readline/include/readline/history.h"
+# include "/Users/melachyr/readline/readline.h"
+# include "/Users/melachyr/readline/history.h"
 
 typedef struct s_env
 {
@@ -161,7 +161,6 @@ void	sigquit_handler(int sig);
 void	cmd_not_found(char **args, int status);
 void	execve_fail(char **args);
 int		redirect_files_buildin(void);
-void	remove_node(t_token **head, t_token *node);
 void	add_node_after(t_token *target_node, t_token *new_node);
 t_ast_node	*cmd_before_red(t_token **tokens, t_token *ptr, t_bool is_parenth);
 t_ast_node	*cmd_after_red(t_token **tokens, t_token *next, t_token *ptr);
