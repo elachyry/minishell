@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenize_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 04:27:20 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/23 11:26:03 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:19:29 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,16 @@ void	ft_skip_spaces(char **line)
 		(*line)++;
 }
 
-void remove_node(t_token **head, t_token *node)
+void	remove_node(t_token **head, t_token *node)
 {
-	if (!node) return;
-	if (node->prev) node->prev->next = node->next;
-	if (node->next) node->next->prev = node->prev;
-	if (*head == node) *head = node->next;
+	if (!node)
+		return ;
+	if (node->prev)
+		node->prev->next = node->next;
+	if (node->next)
+		node->next->prev = node->prev;
+	if (*head == node)
+		*head = node->next;
 	free(node->value);
 	free(node);
 }
