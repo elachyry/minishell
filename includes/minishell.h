@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/22 00:02:50 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/23 01:09:05 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,15 @@ typedef struct s_shell_data
 
 extern t_shell_data g_shell_data;
 
+// expander_env_variable.c
+typedef struct s_quote_state
+{
+	int	in_single_quotes;
+	int	in_double_quotes;
+	int	nested_quotes;
+}	t_quote_state;
+
+
 const char	*get_token_type_name(t_token_type type);
 
 //initialization
@@ -145,6 +154,17 @@ int 	execute_command(char **args);
 void	execution(void);
 t_bool	check_if_builtin(char *arg);
 int 	execute_builtin(char **args);
+
+// expander
+t_token *expand_tokens(t_token *tokens);
+t_token	*expand_env_variable(t_token *tokens);
+t_token	*expand_quotes(t_token *tokens);
+t_token	*expand_wildcards(t_token *tokens);
+char	*remove_all_quotes(t_token *token, char *str);
+// expander_env_variable_utils.c
+char	*fetch_variable_value(char **value, char *line, t_env *env);
+char	*concatenate_char(char *str, char c);
+char	*retrieve_env_var(char *name, t_env *env);
 
 //signals
 void	handle_signals(void);

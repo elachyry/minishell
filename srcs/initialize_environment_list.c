@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:11:04 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/21 14:52:32 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/23 01:19:41 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,6 @@ void	extract_path(void)
 		g_shell_data.path = ft_split(path, ':');
 	else
 		g_shell_data.path = ft_split("", ':');
-	
-	// printf("path = %s\n", g_shell_data.path[0]);
-	// for (int i = 0; g_shell_data.path[i] != NULL; i++)
-	// {
-	// 	printf("%s\n", g_shell_data.path[i]);
-	// }
-	// free(path);
 }
 
 char	*extract_key(char *env)

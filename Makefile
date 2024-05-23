@@ -20,7 +20,7 @@ EXECUTION = 	srcs/execution/execution.c srcs/execution/check_if_builtin.c srcs/e
 				srcs/execution/execute_pipe.c srcs/execution/execute_logical_operator.c srcs/execution/execute_redirection.c srcs/execution/execute_parenthesis.c srcs/execution/get_cmd_path.c\
 				srcs/execution/here_doc_utils.c
 
-EXPANDER = srcs/expander/expander.c
+EXPANDER = srcs/expander/expander.c srcs/expander/expand_env_variable.c srcs/expander/expand_env_variable_utils.c srcs/expander/expand_quotes.c srcs/expander/expand_quotes_utils.c srcs/expander/expand_wildcards.c 
 
 GET_NEXT_LINE = libraries/get_next_line/get_next_line.c libraries/get_next_line/get_next_line_utils.c
 

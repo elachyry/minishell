@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 00:57:54 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 14:39:57 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/22 22:57:42 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	ft_exit(char **args)
 			return (1);
 		}
 	}
-	ft_putstr_fd("exit\n", 2);
+	if (!g_shell_data.simple_cmd->is_parenthis)
+		ft_putstr_fd("exit\n", 2);
 	exit(status);
 	return (0);
 }
