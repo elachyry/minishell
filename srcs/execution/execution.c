@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 20:05:07 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/22 20:12:31 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	execution(void)
 {
 	t_ast_node	*ast;
 	t_files		*file;
-
+	
 	handle_here_doc();
 	ast = g_shell_data.ast;
 	if (!g_shell_data.status)

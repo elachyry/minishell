@@ -6,25 +6,24 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 22:41:58 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/22 16:04:40 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/22 20:25:03 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	help_func(t_token *tmp, char **cmd)
-{
-	*cmd = ft_strjoin(*cmd, tmp->value);
-	*cmd = ft_strjoin(*cmd, "\n");
-}
+// static void	help_func(t_token *tmp, char **cmd)
+// {
+// 	*cmd = ft_strjoin(*cmd, tmp->value);
+// 	*cmd = ft_strjoin(*cmd, "\n");
+// }
 
-static void	extrac_cmd_args(t_token **tokens, char **cmd)
+static void	extrac_cmd_args(t_token **tokens, int *count)
 {
 	t_token	*tmp;
-	t_token	*to_delete;
+	// t_token	*to_delete;
 
 	tmp = *tokens;
-	*tokens = NULL;
 	while (tmp && tmp->next)
 	{
 		if (tmp && tmp->next->next && tmp->next->next->type == IDENTIFIER
@@ -36,10 +35,9 @@ static void	extrac_cmd_args(t_token **tokens, char **cmd)
 			tmp = tmp->next->next;
 			while (tmp && tmp->type == IDENTIFIER)
 			{
-				help_func(tmp, cmd);
-				to_delete = tmp;
+				(*count)++;
 				tmp = tmp->next;
-				remove_node(tokens, to_delete);
+				
 			}
 			continue ;
 		}
@@ -52,13 +50,44 @@ static void	extrac_cmd_args(t_token **tokens, char **cmd)
 t_ast_node	*cmd_before_red(t_token **tokens, t_token *ptr, t_bool is_parenth)
 {
 	t_ast_node	*redirection_node;
-	char		*cmd;
+	t_token		*tmp;
+	t_token		*to_delete;
+	char		**cmd;
+	int			count;
+	int			i;
 
 	if ((*tokens)->type == DoubleLessThanOperator)
 		g_shell_data.simple_cmd->nbr_here_doc++;
 	redirection_node = new_ast_node((*tokens)->type);
-	cmd = ft_strdup("");
-	extrac_cmd_args(tokens, &cmd);
+	count = 0;
+	extrac_cmd_args(tokens, &count);
+	tmp = *tokens;
+	*tokens = NULL;
+	cmd = malloc(sizeof(char *) * (count + 1));
+	if (!cmd)
+		return (NULL);
+	i = 0;
+	while (tmp && tmp->next)
+	{
+		if (tmp && tmp->next->next && tmp->next->next->type == IDENTIFIER
+			&& (tmp->type == LessThanOperator
+				|| tmp->type == DoubleLessThanOperator
+				|| tmp->type == GreaterThanOperator
+				|| tmp->type == DoubleGreaterThanOperator))
+		{
+			tmp = tmp->next->next;
+			while (tmp && tmp->type == IDENTIFIER)
+			{
+				cmd[i++] = ft_strdup(tmp->value);
+				to_delete = tmp;
+				tmp = tmp->next;
+				remove_node(tokens, to_delete);
+			}
+			continue ;
+		}
+		tmp = tmp->next;
+	}
+	cmd[i] = NULL;
 	if (is_parenth)
 	{
 		redirection_node->left = parse_parenthese(&ptr);
@@ -68,10 +97,10 @@ t_ast_node	*cmd_before_red(t_token **tokens, t_token *ptr, t_bool is_parenth)
 	}
 	else
 	{
-		if (cmd[0] != '\0')
+		if (cmd[0] != NULL)
 		{
 			redirection_node->left = new_ast_node(IDENTIFIER);
-			redirection_node->left->args = ft_split(cmd, '\n');
+			redirection_node->left->args = cmd;
 		}
 		redirection_node->right = parse_command(&ptr->next, false);
 	}
@@ -100,7 +129,6 @@ static void	extrac_cmd_args_2(t_token *next, int *count)
 		}
 		tmp = tmp->next;
 	}
-	// printf("count  %d\n", *count);
 }
 
 //handle if the redirecion comes after cmd

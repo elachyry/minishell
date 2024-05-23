@@ -178,3 +178,9 @@ ls "*"√
 export a=hello && echo $a
 env | grep OLDPWD ==> i'm  unset PWD and cd to home and cd .. and cd .. and go to home with cd and not have oldpwd 
 exit + 3
+
+
+echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"
+echo '> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<'
+cat minishell.h | grep ")"$
+echo <"./test_files/infile" <missing <"./test_files/infile"

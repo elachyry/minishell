@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/05/22 15:16:28 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/22 20:13:03 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int	main(int ac, char **av, char **envp)
 		}
 		tokens = ft_tokenize(g_shell_data.line);
 		// display_tokens(tokens);
+		g_shell_data.simple_cmd->should_expand = true;
 		tokens = expand_tokens(tokens);
 		free(g_shell_data.line);
 		// display_tokens(tokens);
