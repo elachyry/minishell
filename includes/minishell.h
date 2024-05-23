@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 22:42:58 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:20:06 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@
 #include  "../libraries/libft/libft.h"
 #include  "../libraries/get_next_line/get_next_line.h"
 # define READLINE_LIBRARY
-// # include "/Users/akaddour/readline/include/readline/readline.h"
-// # include "/Users/akaddour/readline/include/readline/history.h"
-# include "/Users/melachyr/readline/readline.h"
-# include "/Users/melachyr/readline/history.h"
+# include "/Users/akaddour/readline/include/readline/readline.h"
+# include "/Users/akaddour/readline/include/readline/history.h"
+// # include "/Users/melachyr/readline/readline.h"
+// # include "/Users/melachyr/readline/history.h"
 
 typedef struct s_env
 {
@@ -79,6 +79,15 @@ typedef struct s_shell_data
 
 extern t_shell_data g_shell_data;
 
+// expander_env_variable.c
+typedef struct s_quote_state
+{
+	int	in_single_quotes;
+	int	in_double_quotes;
+	int	nested_quotes;
+}	t_quote_state;
+
+
 const char	*get_token_type_name(t_token_type type);
 
 //initialization
@@ -100,6 +109,8 @@ int		ft_unset(char **args);
 void	update_env_value(char *key, char *value);
 char    *get_env_value(char *key);
 int		is_valid_key(char *key);
+void	sort_env_array(t_env **env_array, int count);
+void	handle_key_value(char *str, char *key , char *value);
 
 //input_validation
 t_bool	has_unclosed_parenthesis(char *input);
@@ -108,6 +119,12 @@ t_bool	has_invalid_redirections(const char *input);
 t_bool	has_misplaced_operators(const char *input);
 t_bool	syntax_checker(char	*input);
 t_bool	syntax_error_checker(char	*input);
+t_bool	check_redirection_operator(const char **input, int *s_q_count, \
+int *d_q_count, t_bool *encountered_and_or);
+void	init_var(int *next_command, int *s_q_count, \
+int *d_q_count, t_bool *enc_and_or);
+t_bool	operator_mispla(const char **input, int *next_command, \
+t_bool *enc_and_or, const char **temp);
 
 int	is_invalid_operator(const char **input);
 const char	*skip_spaces(const char *input);
@@ -148,6 +165,17 @@ void	remove_node(t_token **head, t_token *node);
 void	add_node_after(t_token *target_node, t_token *new_node);
 t_ast_node	*cmd_before_red(t_token **tokens, t_token *ptr, t_bool is_parenth);
 t_ast_node	*cmd_after_red(t_token **tokens, t_token *next, t_token *ptr);
+
+// expander
+t_token *expand_tokens(t_token *tokens);
+t_token	*expand_env_variable(t_token *tokens);
+t_token	*expand_quotes(t_token *tokens);
+t_token	*expand_wildcards(t_token *tokens);
+char	*remove_all_quotes(t_token *token, char *str);
+// expander_env_variable_utils.c
+char	*fetch_variable_value(char **value, char *line, t_env *env);
+char	*concatenate_char(char *str, char c);
+char	*retrieve_env_var(char *name, t_env *env);
 
 //signals
 void	handle_signals(void);

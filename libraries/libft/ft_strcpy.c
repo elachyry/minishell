@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/29 04:02:38 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 14:39:28 by akaddour         ###   ########.fr       */
+/*   Created: 2024/05/21 14:45:08 by akaddour          #+#    #+#             */
+/*   Updated: 2024/05/21 14:45:19 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-int	ft_env(void)
+char	*ft_strcpy(char *dest, char *src)
 {
-	t_env	*env;
+	unsigned int	i;
 
-	env = g_shell_data.environment_list;
-	while (env)
+	i = 0;
+	while (src[i] != '\0')
 	{
-		if (env->value)
-		{
-			ft_putstr_fd(env->key, 1);
-			ft_putstr_fd("=", 1);
-			ft_putstr_fd(env->value, 1);
-			ft_putstr_fd("\n", 1);
-		}
-		env = env->next;
+		dest[i] = src[i];
+		i++;
 	}
-	return (0);
+	dest[i] = '\0';
+	return (dest);
 }

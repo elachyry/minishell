@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 18:12:35 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/14 13:55:43 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:52:53 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,9 @@ char	*ft_strndup(const char *s1, size_t n);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_isnumber(char *str);
 int		ft_isspace(char c);
+char	*ft_strcat(char *dest, char *src);
+char	*ft_strcpy(char *dest, char *src);
+char	*ft_strstr(char *str, char *to_find);
+char	*ft_strncpy(char *dest, char *src, unsigned int n);
 
 #endif

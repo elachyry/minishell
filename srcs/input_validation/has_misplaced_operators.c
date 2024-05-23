@@ -3,53 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   has_misplaced_operators.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:41:36 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/19 12:16:22 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/21 22:37:03 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+void	init_var(int *next_command, int *s_q_count, \
+int *d_q_count, t_bool *enc_and_or)
+{
+	*next_command = 0;
+	*s_q_count = 0;
+	*d_q_count = 0;
+	*enc_and_or = false;
+}
 
+t_bool	operator_mispla(const char **input, int *next_command, \
+t_bool *enc_and_or, const char **temp)
+{
+	if (*(*input + 1) == ')' || *(*input - 1) == '(')
+		return (true);
+	if (!*enc_and_or)
+	{
+		*enc_and_or = true;
+		*temp = *input + 1;
+		if (**temp == **input)
+		{
+			(*temp)++;
+			if (**temp == **input)
+				return (true);
+			(*input)++;
+		}
+		else if (*next_command)
+			return (true);
+		else
+			*next_command = 1;
+	}
+	else if (*next_command)
+		return (true);
+	return (false);
+}
 
-t_bool has_misplaced_operators(const char *input) {
-    int expect_command_next = 0;
-    int s_q_count = 0;
-    int d_q_count = 0;
-    t_bool encountered_and_or = false;
+t_bool	has_misplaced_operators(const char *input)
+{
+	int			next_command;
+	int			s_q;
+	int			d_q;
+	t_bool		enc_and_or;
+	const char	*temp;
 
-    if (*input == '|' || *input == '&')
-        return false;
-    while (*input) {
-        update_quote_counts(*input, &s_q_count, &d_q_count);
-        if (!(s_q_count % 2) && !(d_q_count % 2) && (*input == '|' || *input == '&')){
-			if (*(input + 1) == ')' || *(input - 1) == '(')
+	init_var(&next_command, &s_q, &d_q, &enc_and_or);
+	if (*input == '|' || *input == '&')
+		return (false);
+	while (*input)
+	{
+		update_quote_counts(*input, &s_q, &d_q);
+		if (!(s_q % 2) && !(d_q % 2) && (*input == '|' || *input == '&'))
+		{
+			if (operator_mispla(&input, &next_command, &enc_and_or, &temp))
 				return (false);
-            if (!encountered_and_or) {
-                encountered_and_or = true;
-                const char *temp = input;
-                temp++;
-                if (*temp == *input) {
-                    temp++;
-                    if (*temp == *input) {
-                        return false; // Return false if there are three consecutive | or & characters
-                    }
-                    input++;
-                    continue;
-                }
-            }
-            if (expect_command_next)
-                return false;
-            expect_command_next = 1;
-        } else if (!ft_isspace(*input)) {
-            expect_command_next = 0;
-            encountered_and_or = false;
-        }
-        input++;
-    }
-    if (expect_command_next)
-        return false;
-    return true;
+		}
+		else if (!ft_isspace(*input))
+		{
+			next_command = 0;
+			enc_and_or = false;
+		}
+		input++;
+	}
+	return (!next_command);
 }

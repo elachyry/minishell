@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 05:30:45 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/21 20:05:14 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:20:57 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	sigint_handler(int sig)
 {
 	(void) sig;
 	printf("\n");
-	if(!g_shell_data.ctl)
+	if (!g_shell_data.ctl)
 	{
 		rl_replace_line("", 0);
 		rl_on_new_line();

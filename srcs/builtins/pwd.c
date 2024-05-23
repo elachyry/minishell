@@ -6,15 +6,16 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 02:10:12 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/10 20:22:15 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:41:32 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int ft_pwd(void)
+int	ft_pwd(void)
 {
-	char *cwd;
+	char	*cwd;
+
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{

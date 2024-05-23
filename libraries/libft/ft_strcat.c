@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/29 04:02:38 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 14:39:28 by akaddour         ###   ########.fr       */
+/*   Created: 2024/05/21 14:44:25 by akaddour          #+#    #+#             */
+/*   Updated: 2024/05/21 14:44:40 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-int	ft_env(void)
+char	*ft_strcat(char *dest, char *src)
 {
-	t_env	*env;
+	unsigned int	i;
+	unsigned int	j;
 
-	env = g_shell_data.environment_list;
-	while (env)
+	i = 0;
+	j = 0;
+	while (dest[i] != '\0')
 	{
-		if (env->value)
-		{
-			ft_putstr_fd(env->key, 1);
-			ft_putstr_fd("=", 1);
-			ft_putstr_fd(env->value, 1);
-			ft_putstr_fd("\n", 1);
-		}
-		env = env->next;
+		i++;
 	}
-	return (0);
+	while (src[j] != '\0')
+	{
+		dest[i] = src[j];
+		i++;
+		j++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }
