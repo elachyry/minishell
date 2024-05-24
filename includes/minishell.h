@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/23 16:45:54 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/24 19:11:20 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,15 @@ typedef struct s_parenthesis_data
 	int		d_q_count;
 }	t_parenthesis_data;
 
+typedef struct s_operator_data
+{
+	int			next_command;
+	int			s_q;
+	int			d_q;
+	t_bool		enc_and_or;
+	const char	*temp;
+}	t_operator_data;
+
 const char	*get_token_type_name(t_token_type type);
 
 //initialization
@@ -130,22 +139,20 @@ t_bool		syntax_checker(char	*input);
 t_bool		syntax_error_checker(char	*input);
 t_bool		check_redirection_operator(const char **input, int *s_q_count, \
 int *d_q_count, t_bool *encountered_and_or);
-void		init_var(int *next_command, int *s_q_count, \
-int *d_q_count, t_bool *enc_and_or);
-t_bool		operator_mispla(const char **input, int *next_command, \
-t_bool *enc_and_or, const char **temp);
+void	init_var(t_operator_data *data);
+t_bool is_operator(char c);
+t_bool is_misplaced_operator(const char *input, t_operator_data *data);
+// void update_command_state(const char *input, t_operator_data *data);
 
 // has_unclosed_parenthesis_utils.c
-t_bool		handle_opening_parenthesis(int *open, \
-char *prev_ns, t_bool *non_ws_enc);
-t_bool		handle_close_par(char **input, int *open, \
-t_bool *non_ws_enc, t_bool *after_cp);
+t_bool		h_o_p(int *open, char *prev_ns, t_bool *non_ws_enc);
+t_bool		h_c_p(char **input, int *open, t_bool *non_ws_enc, t_bool *after_cp);
 t_bool		handle_after_closing_parenthesis(char **input, t_bool *after_cp);
 
 // syntax_checker_utils.c
 char		*epur_str(char *str);
 t_bool		has_invalid_single_ampersand(const char *input);
-t_bool		has_misplaced_operators_2(const char *input);
+t_bool 		has_misplaced_operators_2(const char *input);
 t_bool		has_invalid_redirections_2(const char *input);
 
 int			is_invalid_operator(const char **input);

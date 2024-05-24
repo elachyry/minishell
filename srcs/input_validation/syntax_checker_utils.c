@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:46:43 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/23 16:45:48 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/24 19:14:48 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,35 +68,6 @@ t_bool	has_invalid_single_ampersand(const char *input)
 	return (true);
 }
 
-t_bool	has_misplaced_operators_2(const char *input)
-{
-	int			next_command;
-	int			s_q;
-	int			d_q;
-	t_bool		enc_and_or;
-	const char	*temp;
-
-	init_var(&next_command, &s_q, &d_q, &enc_and_or);
-	if (*input == '|' || *input == '&')
-		return (false);
-	while (*input)
-	{
-		update_quote_counts(*input, &s_q, &d_q);
-		if (!(s_q % 2) && !(d_q % 2) && (*input == '|' || *input == '&'))
-		{
-			if (operator_mispla(&input, &next_command, &enc_and_or, &temp))
-				return (false);
-		}
-		else if (!ft_isspace(*input))
-		{
-			next_command = 0;
-			enc_and_or = false;
-		}
-		input++;
-	}
-	return (!next_command);
-}
-
 t_bool	has_invalid_redirections_2(const char *input)
 {
 	int		s_q;
@@ -114,4 +85,32 @@ t_bool	has_invalid_redirections_2(const char *input)
 		input++;
 	}
 	return (true);
+}
+
+t_bool	has_misplaced_operators_2(const char *input)
+{
+	t_operator_data	data;
+
+	init_var(&data);
+	if ((*input == '|' || *input == '&'))
+		return (false);
+	while (*input)
+	{
+		update_quote_counts(*input, &data.s_q, &data.d_q);
+		if (!(data.s_q % 2) && !(data.d_q % 2)
+			&& (*input == '|' || *input == '&'))
+		{
+			if (is_misplaced_operator(input, &data))
+				return (false);
+			if (*(input + 1) == *input)
+				input++;
+		}
+		else if (!isspace(*input))
+		{
+			data.next_command = 0;
+			data.enc_and_or = false;
+		}
+		input++;
+	}
+	return (!data.next_command);
 }
