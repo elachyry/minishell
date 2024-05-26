@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/22 20:12:31 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/26 15:18:46 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,23 @@ static void	handle_command(t_ast_node *node)
 		g_shell_data.status = status;
 }
 
+static void	file_not_found(t_ast_node *node, int fd)
+{
+	t_files	*last;
+
+	last = lst_file_last(g_shell_data.simple_cmd->files);
+	last->is_opened = true;
+	ft_putstr_fd("minishell: ", 2);
+	perror(node->right->args[1]);
+	close(fd);
+	g_shell_data.status = 1;
+}
+
 void	execute_ast(t_ast_node *node)
 {
+	t_files	*file;
+	int		fd;
+
 	if (node == NULL)
 		return ;
 	if (node->type == IDENTIFIER)
@@ -45,6 +60,22 @@ void	execute_ast(t_ast_node *node)
 		execute_double_greater_than(node);
 	else if (node->type == DoubleLessThanOperator)
 	{
+		if (g_shell_data.simple_cmd->is_parenthis)
+		{
+			if (!g_shell_data.simple_cmd->is_parenthis_red_ch)
+				g_shell_data.simple_cmd->files = NULL;
+			g_shell_data.simple_cmd->is_parenthis_red_ch = true;
+		}
+		file = new_file_node(node->right->args[1], LessThanOperator);
+		add_lst_file(&g_shell_data.simple_cmd->files, file);
+		g_shell_data.simple_cmd->is_first++;
+		fd = open(node->right->args[1], O_RDONLY);
+		if (fd == -1)
+		{
+			file_not_found(node, fd);
+			return ;
+		}
+		close(fd);
 		execute_ast(node->right->right);
 		execute_ast(node->left);
 	}
@@ -52,46 +83,66 @@ void	execute_ast(t_ast_node *node)
 		execute_parenthesis(node);
 }
 
+void	extrac_ast_parenth(t_ast_node *node)
+{
+	char	*line;
+	t_token		*tokens;
+
+	if (!node)
+		return ;
+	if (node->type == OpeningParenthesis)
+	{
+		line = concat_cmd(node);
+		tokens = ft_tokenize(line);
+		tokens = expand_tokens(tokens);
+		g_shell_data.ast_parenth = parse_tokens(&tokens);
+		t_ast_node *tmp = g_shell_data.ast_parenth;
+		extrac_ast_parenth(g_shell_data.ast_parenth);
+		g_shell_data.ast_parenth = tmp;
+	}
+	else if (node->type == LessThanOperator
+		|| node->type == GreaterThanOperator
+		|| node->type == DoubleGreaterThanOperator
+		|| node->type == DoubleLessThanOperator
+		|| node->type == PipeSymbol
+		|| node->type == LogicalAnd
+		|| node->type == LogicalOr
+		|| node->type == IDENTIFIER)
+	{
+		extrac_ast_parenth(node->left);
+		extrac_ast_parenth(node->right);
+	}
+}
+
 static void	handle_here_doc(void)
 {
-	char	*name;
 
-	if (g_shell_data.simple_cmd->nbr_here_doc >= 17)
-	{
-		ft_putstr_fd("minishell: maximum here-document count exceeded\n", 2);
-		exit(2);
-	}
 	g_shell_data.status = 0;
-	g_shell_data.simple_cmd->here_doc_path = NULL;
-	if (g_shell_data.simple_cmd->nbr_here_doc > 0)
-	{
-		name = get_here_doc_name();
-		g_shell_data.simple_cmd->here_doc_path = ft_strjoin("/tmp/", name);
-		free(name);
-	}
 	g_shell_data.simple_cmd->files = NULL;
+	if (g_shell_data.simple_cmd->is_parenthis)
+	{
+		t_ast_node *node = g_shell_data.ast;
+		extrac_ast_parenth(node);
+	}
 	execute_here_doc(g_shell_data.ast);
 }
 
 void	execution(void)
 {
 	t_ast_node	*ast;
-	t_files		*file;
 	
+	g_shell_data.simple_cmd->here_index = 0;
 	handle_here_doc();
 	ast = g_shell_data.ast;
 	if (!g_shell_data.status)
 	{
-		if (g_shell_data.simple_cmd->here_doc_path)
-		{
-			file = new_file_node(g_shell_data.simple_cmd->here_doc_path,
-					LessThanOperator);
-			add_lst_file(&g_shell_data.simple_cmd->files, file);
-		}
 		g_shell_data.simple_cmd->is_first = 0;
 		execute_ast(ast);
 	}
 	g_shell_data.simple_cmd->nbr_here_doc = 0;
-	if (g_shell_data.simple_cmd->here_doc_path)
-		unlink(g_shell_data.simple_cmd->here_doc_path);
+	while (*g_shell_data.simple_cmd->here_docs_files)
+	{
+		unlink(*g_shell_data.simple_cmd->here_docs_files);
+		g_shell_data.simple_cmd->here_docs_files++;
+	}
 }

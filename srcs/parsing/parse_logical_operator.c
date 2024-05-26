@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:54:09 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 23:24:18 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/26 15:17:56 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,22 @@ t_ast_node	*parse_logical_operator(t_token **tokens)
 	ptr = *tokens;
 	logical_node = NULL;
 	help_func(tokens);
-	while (*tokens && (*tokens)->next
-		&& (*tokens)->next->type != OpeningParenthesis
-		&& (*tokens)->type != OpeningParenthesis)
+	while (*tokens && (*tokens)->next)
 	{
-		next = (*tokens)->next;
-		if (next->type == LogicalAnd || next->type == LogicalOr)
+		help_func(tokens);
+		if (*tokens && (*tokens)->next)
 		{
-			(*tokens)->next = NULL;
-			logical_node = new_ast_node(next->type);
-			logical_node->left = parse_pipeline(&ptr);
-			logical_node->right = parse_logical_operator(&(next->next));
-			return (logical_node);
+			next = (*tokens)->next;
+			if (next->type == LogicalAnd || next->type == LogicalOr)
+			{
+				(*tokens)->next = NULL;
+				logical_node = new_ast_node(next->type);
+				logical_node->left = parse_pipeline(&ptr);
+				logical_node->right = parse_logical_operator(&(next->next));
+				return (logical_node);
+			}
+			*tokens = next;
 		}
-		*tokens = next;
 	}
 	return (parse_pipeline(&ptr));
 }

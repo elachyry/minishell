@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:20:20 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/23 11:14:31 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/25 19:33:54 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ void	execute_less_than(t_ast_node *node)
 
 	if (g_shell_data.simple_cmd->is_parenthis)
 	{
+		// dprintf(2, "is_parenthis | is_parenthis_red_ch %d\n", g_shell_data.simple_cmd->is_parenthis_red_ch);
 		if (!g_shell_data.simple_cmd->is_parenthis_red_ch)
 			g_shell_data.simple_cmd->files = NULL;
 		g_shell_data.simple_cmd->is_parenthis_red_ch = true;
 	}
+	// dprintf(2, "test file = %s\n", node->right->args[0]);
 	file = new_file_node(node->right->args[0], LessThanOperator);
 	add_lst_file(&g_shell_data.simple_cmd->files, file);
 	g_shell_data.simple_cmd->is_first++;

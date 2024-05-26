@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:06:36 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/23 10:27:28 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/26 15:18:53 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	less_than_operator(t_files *file)
 {
 	int	in_fd;
+
 	in_fd = open(file->filename, O_RDONLY);
 	if (in_fd == -1)
 	{
