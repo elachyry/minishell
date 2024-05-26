@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:36:12 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 10:15:09 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/26 16:55:37 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	get_cmd_path(char *args)
 	char	*cmd;
 
 	if (!args)
-		return (0);
+		return (4);
 	extract_path();
 	cmd = ft_strrchr(args, '/');
 	if (args[0] == '\0')

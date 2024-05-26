@@ -6,62 +6,62 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:07:30 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/23 00:19:58 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/26 18:31:27 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_bool	contains_wildcard(char *ident)
-{
-	while (*ident)
-	{
-		if (*ident == '*')
-			return (true);
-		ident++;
-	}
-	return (false);
-}
+// t_bool	contains_wildcard(char *ident)
+// {
+// 	while (*ident)
+// 	{
+// 		if (*ident == '*')
+// 			return (true);
+// 		ident++;
+// 	}
+// 	return (false);
+// }
 
-t_token	*skip_parentheses(t_token *token)
-{
-	while (token && token->type == OpeningParenthesis)
-		token = token->next;
-	while (token && token->type != ClosingParenthesis)
-		token = token->next;
-	while (token && token->type == ClosingParenthesis)
-		token = token->next;
-	return (token);
-}
+// t_token	*skip_parentheses(t_token *token)
+// {
+// 	while (token && token->type == OpeningParenthesis)
+// 		token = token->next;
+// 	while (token && token->type != ClosingParenthesis)
+// 		token = token->next;
+// 	while (token && token->type == ClosingParenthesis)
+// 		token = token->next;
+// 	return (token);
+// }
 
-t_token	*expand_quotes(t_token *tokens)
-{
-	t_token	*token;
-	char	*tmp;
+// t_token	*expand_quotes(t_token *tokens)
+// {
+// 	t_token	*token;
+// 	char	*tmp;
 
-	token = tokens;
-	while (token)
-	{
-		if (token->type == OpeningParenthesis)
-		{
-			token = skip_parentheses(token);
-			continue ;
-		}
-		if (token->type == IDENTIFIER)
-		{
-			if (contains_wildcard(token->value))
-			{
-				token = token->next;
-				continue ;
-			}
-			tmp = remove_all_quotes(token, token->value);
-			free(token->value);
-			token->value = tmp;
-		}
-		token = token->next;
-	}
-	return (tokens);
-}
+// 	token = tokens;
+// 	while (token)
+// 	{
+// 		if (token->type == OpeningParenthesis)
+// 		{
+// 			token = skip_parentheses(token);
+// 			continue ;
+// 		}
+// 		if (token->type == IDENTIFIER)
+// 		{
+// 			if (contains_wildcard(token->value))
+// 			{
+// 				token = token->next;
+// 				continue ;
+// 			}
+// 			tmp = remove_all_quotes(token, token->value);
+// 			free(token->value);
+// 			token->value = tmp;
+// 		}
+// 		token = token->next;
+// 	}
+// 	return (tokens);
+// }
 
 // char	*remove_all_quotes(t_token *token, char *str)
 // {

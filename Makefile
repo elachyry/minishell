@@ -12,7 +12,7 @@ BUILTINS = srcs/builtins/builtins_utils.c srcs/builtins/cd.c srcs/builtins/echo.
 INPUT_VALIDATION = 	srcs/input_validation/has_invalid_redirections.c srcs/input_validation/has_misplaced_operators.c srcs/input_validation/has_unclosed_parenthesis.c srcs/input_validation/has_unclosed_parenthesis_utils.c srcs/input_validation/has_unclosed_quotes.c \
 					srcs/input_validation/syntax_checker.c srcs/input_validation/syntax_checker_utils.c 
 
-PARSING = 	srcs/parsing/parse_tokens.c srcs/parsing/parse_command.c srcs/parsing/parse_cmd_sep_args.c srcs/parsing/ast_utils.c srcs/parsing/parse_parenthese.c srcs/parsing/print_asp.c\
+PARSING = 	srcs/parsing/parse_tokens.c srcs/parsing/parse_command.c srcs/parsing/parse_cmd_sep_args.c srcs/parsing/ast_utils.c srcs/parsing/parse_parenthese.c \
 			srcs/parsing/parse_pipeline.c srcs/parsing/parse_logical_operator.c srcs/parsing/parse_redirection.c srcs/parsing/parse_redirection_utils.c 
 
 TOKENIZATION = srcs/tokenization/ft_tokenize_handler.c srcs/tokenization/ft_tokenize_utils.c srcs/tokenization/ft_tokenize.c

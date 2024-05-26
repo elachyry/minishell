@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:42:28 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/23 11:31:54 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/26 18:31:24 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ t_token	*remove_empty_tokens(t_token *tokens)
 
 t_token	*expand_tokens(t_token *tokens)
 {
-	tokens = expand_env_variable(tokens);
-	tokens = remove_empty_tokens(tokens);
-	tokens = expand_quotes(tokens);
-	tokens = expand_wildcards(tokens);
+	// tokens = expand_env_variable(tokens);
+	// tokens = remove_empty_tokens(tokens);
+	// tokens = expand_quotes(tokens);
+	// tokens = expand_wildcards(tokens);
 	return (tokens);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_parenthesis.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:32:55 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/23 11:57:40 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/26 17:33:18 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	child_process(t_ast_node *node)
 	ast = parse_tokens(&tokens);
 	redirect_files_2();
 	execute_ast(ast);
-	generate_ast_diagram(ast);
+	// generate_ast_diagram(ast);
 	exit(g_shell_data.status);
 }
 
