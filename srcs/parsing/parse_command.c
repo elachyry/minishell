@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 10:31:45 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 18:22:11 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/26 15:18:08 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ static char	**create_args_table(t_token **ptr)
 	return (cmd);
 }
 
-//this function for parsing the command by Identifires 
-//in double pointer and create a node type IDENTIFIER
-t_ast_node	*parse_command(t_token	**tokens, t_bool is_custom)
+t_ast_node	*parse_command_2(t_token **tokens, t_bool is_custom)
 {
 	char		**cmd;
 	t_ast_node	*node;
@@ -73,6 +71,47 @@ t_ast_node	*parse_command(t_token	**tokens, t_bool is_custom)
 	node->args = cmd;
 	node->type = IDENTIFIER;
 	node->left = NULL;
+	if (!is_custom)
+		node->right = parse_redirection(tokens);
+	else
+		node->right = NULL;
+	return (node);
+}
+
+//this function for parsing the command by Identifires 
+//in double pointer and create a node type IDENTIFIER
+t_ast_node	*parse_command(t_token	**tokens, char is_custom, char *here_name)
+{
+	char		**cmd;
+	t_ast_node	*node;
+
+	if (tokens == NULL || *tokens == NULL)
+		return (NULL);
+	node = malloc(sizeof(t_ast_node));
+	if (!node)
+		return (NULL);
+	node->type = IDENTIFIER;
+	node->left = NULL;
+	if (!here_name)
+	{
+		cmd  = malloc(sizeof(char *) * 2);
+		if (!cmd)
+			return (NULL);
+		cmd[0] = (*tokens)->value;
+		*tokens = (*tokens)->next;
+		cmd[1] = NULL;
+	}
+	else
+	{
+		cmd  = malloc(sizeof(char *) * 3);
+		if (!cmd)
+			return (NULL);
+		cmd[0] = (*tokens)->value;
+		cmd[1] = here_name;
+		*tokens = (*tokens)->next;
+		cmd[2] = NULL;
+	}
+	node->args = cmd;
 	if (!is_custom)
 		node->right = parse_redirection(tokens);
 	else

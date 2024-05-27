@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 22:41:58 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/23 12:09:18 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/26 16:04:24 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,17 @@ t_ast_node	*cmd_before_red(t_token **tokens, t_token *ptr, t_bool is_parenth)
 	t_token		*to_delete;
 	char		**cmd;
 	int			count;
+	char		*here_name;
 	int			i;
 
-	if ((*tokens)->type == DoubleLessThanOperator)
-		g_shell_data.simple_cmd->nbr_here_doc++;
 	redirection_node = new_ast_node((*tokens)->type);
 	count = 0;
+	here_name = NULL;
+	if ((*tokens)->type == DoubleLessThanOperator)
+	{
+		here_name = ft_strjoin("/tmp/.", get_here_doc_name());
+		g_shell_data.simple_cmd->here_docs_files[g_shell_data.simple_cmd->here_index++] = here_name;
+	}
 	extrac_cmd_args(tokens, &count);
 	tmp = *tokens;
 	*tokens = NULL;
@@ -84,7 +89,7 @@ t_ast_node	*cmd_before_red(t_token **tokens, t_token *ptr, t_bool is_parenth)
 	if (is_parenth)
 	{
 		redirection_node->left = parse_parenthese(&ptr);
-		redirection_node->right = new_ast_file_node(ptr->next->next);
+		redirection_node->right = new_ast_file_node(ptr->next->next, here_name);
 		redirection_node->right->right
 			= parse_redirection(&ptr->next->next->next);
 	}
@@ -95,7 +100,7 @@ t_ast_node	*cmd_before_red(t_token **tokens, t_token *ptr, t_bool is_parenth)
 			redirection_node->left = new_ast_node(IDENTIFIER);
 			redirection_node->left->args = cmd;
 		}
-		redirection_node->right = parse_command(&ptr->next, false);
+		redirection_node->right = parse_command(&ptr->next, false, here_name);
 	}
 	return (redirection_node);
 }
@@ -131,13 +136,19 @@ t_ast_node	*cmd_after_red(t_token **tokens, t_token *next, t_token *ptr)
 	t_token		*to_delete;
 	t_token		*tmp;
 	char		**cmd;
+	char		*here_name;
 	int			count;
 	int			i;
 
-	if (next->type == DoubleLessThanOperator)
-		g_shell_data.simple_cmd->nbr_here_doc++;
 	count = 0;
 	redirection_node = new_ast_node(next->type);
+	here_name = NULL;
+	if ((*tokens)->next->type == DoubleLessThanOperator)
+	{
+		here_name = ft_strjoin("/tmp/.", get_here_doc_name());
+		g_shell_data.simple_cmd->here_docs_files[g_shell_data.simple_cmd->here_index++] = here_name;
+
+	}
 	(*tokens)->next = NULL;
 	tmp = ptr;
 	while (tmp && tmp->type == IDENTIFIER)
@@ -184,6 +195,6 @@ t_ast_node	*cmd_after_red(t_token **tokens, t_token *next, t_token *ptr)
 	cmd[i] = NULL;
 	redirection_node->left = new_ast_node(IDENTIFIER);
 	redirection_node->left->args = cmd;
-	redirection_node->right = parse_command(&next->next, false);
+	redirection_node->right = parse_command(&next->next, false, here_name);
 	return (redirection_node);
 }

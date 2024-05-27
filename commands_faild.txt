@@ -183,3 +183,21 @@ echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"
 echo '> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<'
 cat minishell.h | grep ")"$
 echo <"./test_files/infile" <missing <"./test_files/infile"
+
+
+
+//syntax error
+((ls| cat -e) | "||" | (ls))
+((ls| cat -e)  && | (ls))
+("")
+
+
+
+///SEGV
+((((ls))))|(ls)
+ls | ls | (cat && ls || << 2)
+(<<1)
+(ls || <<1 )==>open the fucking heredoc
+
+///stack-overflow
+ls&& |

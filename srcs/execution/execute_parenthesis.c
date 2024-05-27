@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:32:55 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/23 11:57:40 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:48:59 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,48 +30,33 @@ void	redirect_files_2(void)
 	}
 }
 
-static char	*concat_cmd(t_ast_node *node)
+char	*concat_cmd(t_ast_node *node)
 {
 	char	*line;
+	int		i;
 
-	line = *node->args;
+	if (!node || !node->args[0])
+		return (NULL);
+	i = 0;
+	line = node->args[i++];
 	line = ft_strjoin(line, " ");
-	node->args++;
-	while (*node->args)
+	while (node->args[i])
 	{
-		if (*node->args[0] == '\0')
+		if (node->args[i][0] == '\0')
 		{
 			line = ft_strjoin(line, "\"\"");
 			line = ft_strjoin(line, " ");
 		}
 		else
 		{
-			line = ft_strjoin(line, *node->args);
+			line = ft_strjoin(line, node->args[i]);
 			line = ft_strjoin(line, " ");
 		}
-		node->args++;
+		i++;
 	}
 	g_shell_data.simple_cmd->is_parenthis = true;
 	g_shell_data.simple_cmd->is_parenthis_red_ch = false;
 	return (line);
-}
-
-static void	child_process(t_ast_node *node)
-{
-	t_token		*tokens;
-	t_ast_node	*ast;
-	char		*line;
-
-	if (!node->args[0])
-		exit(EXIT_SUCCESS);
-	line = concat_cmd(node);
-	tokens = ft_tokenize(line);
-	tokens = expand_tokens(tokens);
-	ast = parse_tokens(&tokens);
-	redirect_files_2();
-	execute_ast(ast);
-	generate_ast_diagram(ast);
-	exit(g_shell_data.status);
 }
 
 void	execute_parenthesis(t_ast_node *node)
@@ -84,7 +69,16 @@ void	execute_parenthesis(t_ast_node *node)
 	if (pid == -1)
 		perror_message("fork", EXIT_FAILURE);
 	if (pid == 0)
-		child_process(node);
+	{
+		if (!node->args[0])
+			exit(EXIT_SUCCESS);
+		g_shell_data.simple_cmd->is_parenthis = true;
+		g_shell_data.simple_cmd->is_parenthis_red_ch = false;
+		redirect_files_2();
+		execute_ast(g_shell_data.ast_parenth);
+		generate_ast_diagram(g_shell_data.ast_parenth);
+		exit(g_shell_data.status);
+	}
 	else
 	{
 		waitpid(pid, &status, WCONTINUED);

@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/26 15:57:30 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/26 16:01:02 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ typedef struct s_simple_cmd
 {
 	char	**cmd;
 	char	*cmd_path;
-	char	*here_doc_path;
+	char	**here_docs_files;
+	int		here_index;
 	int		nbr_here_doc;
 	int		is_first;
 	int		is_parenthis;
@@ -72,6 +73,7 @@ typedef struct s_shell_data
 	t_bool			ctl;
 	t_token			*tokens;
 	t_ast_node		*ast;
+	t_ast_node		*ast_parenth;
 	t_simple_cmd	*simple_cmd;
 	t_env			*environment_list;
 }	t_shell_data;
@@ -191,6 +193,7 @@ void		cmd_not_found(char **args, int status);
 void		execve_fail(char **args);
 int			redirect_files_buildin(void);
 void		add_node_after(t_token *target_node, t_token *new_node);
+char	*concat_cmd(t_ast_node *node);
 t_ast_node	*cmd_before_red(t_token **tokens, t_token *ptr, t_bool is_parenth);
 t_ast_node	*cmd_after_red(t_token **tokens, t_token *next, t_token *ptr);
 
@@ -213,7 +216,6 @@ int			match(const char *string, const char *pattern);
 void		process_parenthesis(t_token **tok);
 void		remove_quotes_and_advance(t_token **tok);
 int			check_wildcard(t_token *tok, char **tmp);
-
 //signals
 void		handle_signals(void);
 

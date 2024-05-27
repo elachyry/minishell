@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:20:08 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/23 14:52:42 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/26 16:02:42 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,15 @@ void		remove_node(t_token **head, t_token *node);
 
 //parsing
 t_ast_node	*new_ast_node(t_token_type type);
-t_ast_node	*new_ast_file_node(t_token *token);
-t_ast_node	*parse_command(t_token	**tokens, t_bool is_custom);
+t_ast_node	*new_ast_file_node(t_token *token, char *here_name);
+t_ast_node	*parse_command(t_token	**tokens, char is_custom, char *here_name);
 t_ast_node	*parse_cmd_sep_args(t_token *tokens, t_token *args);
 t_ast_node	*parse_parenthese(t_token **tokens);
 t_ast_node	*parse_pipeline(t_token **tokens);
 t_ast_node	*parse_logical_operator(t_token **tokens);
 t_ast_node	*parse_tokens(t_token **tokens);
 t_ast_node	*parse_redirection(t_token **tokens);
-void		generate_ast_diagram(t_ast_node *root);
+void generate_ast_diagram(t_ast_node *root);
+t_ast_node	*parse_command_2(t_token **tokens, t_bool is_custom);
 
 #endif

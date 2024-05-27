@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:20:20 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/23 11:14:31 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/26 17:45:09 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,31 @@ void	execute_greater_than(t_ast_node *node)
 	add_lst_file(&g_shell_data.simple_cmd->files, file);
 	g_shell_data.simple_cmd->is_first++;
 	fd = open(node->right->args[0], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		file_not_found(node, fd);
+		return ;
+	}
+	close(fd);
+	execute_ast(node->right->right);
+	execute_ast(node->left);
+}
+
+void	execute_double_less_than(t_ast_node *node)
+{
+	t_files	*file;
+	int		fd;
+
+	if (g_shell_data.simple_cmd->is_parenthis)
+	{
+		if (!g_shell_data.simple_cmd->is_parenthis_red_ch)
+			g_shell_data.simple_cmd->files = NULL;
+		g_shell_data.simple_cmd->is_parenthis_red_ch = true;
+	}
+	file = new_file_node(node->right->args[1], LessThanOperator);
+	add_lst_file(&g_shell_data.simple_cmd->files, file);
+	g_shell_data.simple_cmd->is_first++;
+	fd = open(node->right->args[1], O_RDONLY);
 	if (fd == -1)
 	{
 		file_not_found(node, fd);
