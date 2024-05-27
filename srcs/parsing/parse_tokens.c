@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:37:53 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/26 15:17:38 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/26 18:00:38 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,11 @@ t_ast_node	*parse_tokens(t_token **tokens)
 		exit(2);
 	}
 	g_shell_data.simple_cmd->here_index = 0;
-	g_shell_data.simple_cmd->here_docs_files = malloc(sizeof(char *) * (g_shell_data.simple_cmd->nbr_here_doc + 1));
+	g_shell_data.simple_cmd->here_docs_files
+		= malloc(sizeof(char *) * (g_shell_data.simple_cmd->nbr_here_doc + 1));
 	if (!g_shell_data.simple_cmd->here_docs_files)
 		return (NULL);
-	g_shell_data.simple_cmd->here_docs_files[g_shell_data.simple_cmd->nbr_here_doc] = NULL;
+	g_shell_data.simple_cmd->here_docs_files
+	[g_shell_data.simple_cmd->nbr_here_doc] = NULL;
 	return (parse_logical_operator(tokens));
 }

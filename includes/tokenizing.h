@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:20:08 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/26 16:02:42 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:27:48 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ typedef enum e_token_type
 	DoubleLessThanOperator,
 	DoubleGreaterThanOperator,
 	PipeSymbol,
-	OpeningParenthesis,
-	ClosingParenthesis,
 	LogicalAnd,
 	LogicalOr,
+	OpeningParenthesis,
+	ClosingParenthesis,
 }	t_token_type;
 
 // double linked list
@@ -73,7 +73,9 @@ t_ast_node	*parse_pipeline(t_token **tokens);
 t_ast_node	*parse_logical_operator(t_token **tokens);
 t_ast_node	*parse_tokens(t_token **tokens);
 t_ast_node	*parse_redirection(t_token **tokens);
-void generate_ast_diagram(t_ast_node *root);
 t_ast_node	*parse_command_2(t_token **tokens, t_bool is_custom);
+t_ast_node	*cmd_before_red(t_token **tokens, t_token *ptr, t_bool is_parenth);
+char		*get_here_doc_path(t_token_type type);
+void generate_ast_diagram(t_ast_node *root);
 
 #endif

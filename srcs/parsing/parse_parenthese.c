@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:15:09 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/26 15:17:48 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:45:41 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ t_ast_node	*extract_bash_cmd(t_token **tokens)
 	t_token		*ptr;
 	t_ast_node	*node;
 
-	g_shell_data.simple_cmd->is_parenthis = 1;
 	count = get_nbr_of_cmd((*tokens)->next);
 	cmd = malloc(sizeof(char *) * (count + 1));
 	if (!cmd)
@@ -71,7 +70,10 @@ t_ast_node	*parse_parenthese(t_token **tokens)
 	{
 		next = *tokens;
 		if (next->type == OpeningParenthesis)
+		{
+			g_shell_data.simple_cmd->is_parenthis = 1;
 			return (extract_bash_cmd(tokens));
+		}
 		*tokens = (*tokens)->next;
 	}
 	return (parse_command_2(&ptr, false));

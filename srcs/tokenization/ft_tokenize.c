@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenize.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:25:38 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/21 15:46:28 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/26 18:52:12 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ t_token	*ft_tokenize(char *input)
 {
 	t_token	*token_list;
 
+	if (!input)
+		return (NULL);
 	token_list = NULL;
 	while (*input)
 	{
