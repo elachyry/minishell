@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 01:07:45 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/24 20:57:05 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:18:05 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,3 @@ t_bool	has_unclosed_parenthesis(char *input)
 	}
 	return (data.open == 0);
 }
-

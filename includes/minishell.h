@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/26 18:31:43 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:14:30 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_simple_cmd
 	int		is_parenthis;
 	int		is_parenthis_red_ch;
 	t_bool	should_expand;
+	t_bool	is_var;
 	t_files	*files;
 }	t_simple_cmd;
 
@@ -196,27 +197,31 @@ t_ast_node	*cmd_after_red(t_token **tokens, t_token *next, t_token *ptr);
 
 // expander
 t_token		*expand_tokens(t_token *tokens);
-t_token		*expand_env_variable(t_token *tokens);
-// t_token		*expand_quotes(t_token *tokens);
-// t_token		*expand_wildcards(t_token *tokens);
-// char		*remove_all_quotes(t_token *token, char *str);
+t_token		*expand_wildcards(t_token *tokens);
+void		expand_env_variable(char **args);
+void		expand_quotes(char **args);
+char		*remove_all_quotes(char *str);
+char		**remove_empty_args(char **args);
 
 char	*shearch_and_replace(char *line);
 
 // expander_env_variable_utils.c
-char		*fetch_variable_value(char **value, char *line, t_env *env);
+char		*fetch_variable_value(char **value, char *line);
 char		*concatenate_char(char *str, char c);
 char		*retrieve_env_var(char *name, t_env *env);
 
 // expand_wildcards_utils.c
-// int			process_pattern(const char **string, const char **pattern, \
-// const char **str_backup, const char **pattern_backup);
-// int			match(const char *string, const char *pattern);
-// void		process_parenthesis(t_token **tok);
-// void		remove_quotes_and_advance(t_token **tok);
-// int			check_wildcard(t_token *tok, char **tmp);
+int			process_pattern(const char **string, const char **pattern, \
+const char **str_backup, const char **pattern_backup);
+int			match(const char *string, const char *pattern);
+void		process_parenthesis(t_token **tok);
+void		remove_quotes_and_advance(t_token **tok);
+int			check_wildcard(t_token *tok, char **tmp);
 
 //signals
 void		handle_signals(void);
+
+
+void generate_ast_diagram(t_ast_node *root);
 
 #endif

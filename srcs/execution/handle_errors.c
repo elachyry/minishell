@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:43:17 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 21:09:30 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/27 18:56:33 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	execve_fail(char **args)
 
 void	cmd_not_found(char **args, int status)
 {
-	if (!status)
+	if (!status || status == 4)
 	{
 		ft_putstr_fd("Minishell: ", 2);
 		ft_putstr_fd(args[0], 2);

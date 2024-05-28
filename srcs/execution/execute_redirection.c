@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redirection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:20:20 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/23 11:14:31 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:59:03 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	execute_less_than(t_ast_node *node)
 			g_shell_data.simple_cmd->files = NULL;
 		g_shell_data.simple_cmd->is_parenthis_red_ch = true;
 	}
+	expand_quotes(node->right->args);
 	file = new_file_node(node->right->args[0], LessThanOperator);
 	add_lst_file(&g_shell_data.simple_cmd->files, file);
 	g_shell_data.simple_cmd->is_first++;
@@ -60,6 +61,7 @@ void	execute_greater_than(t_ast_node *node)
 			g_shell_data.simple_cmd->files = NULL;
 		g_shell_data.simple_cmd->is_parenthis_red_ch = true;
 	}
+	expand_quotes(node->right->args);
 	file = new_file_node(node->right->args[0], GreaterThanOperator);
 	add_lst_file(&g_shell_data.simple_cmd->files, file);
 	g_shell_data.simple_cmd->is_first++;
@@ -85,6 +87,7 @@ void	execute_double_greater_than(t_ast_node *node)
 			g_shell_data.simple_cmd->files = NULL;
 		g_shell_data.simple_cmd->is_parenthis_red_ch = true;
 	}
+	expand_quotes(node->right->args);
 	file = new_file_node(node->right->args[0], DoubleGreaterThanOperator);
 	add_lst_file(&g_shell_data.simple_cmd->files, file);
 	fd = open(node->right->args[0], O_WRONLY | O_CREAT | O_APPEND, 0644);

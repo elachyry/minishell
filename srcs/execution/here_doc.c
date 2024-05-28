@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:28:30 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 18:17:08 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:59:06 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,9 @@ static void	handle_here_doc(t_ast_node *node)
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
+		if (node->right->args[0][0] == '\"' || node->right->args[0][0] == '\'')
+			g_shell_data.simple_cmd->should_expand = false;
+		expand_quotes(node->right->args);
 		here_doc(node->right->args[0]);
 		execute_here_doc(node->right->right);
 		execute_here_doc(node->left);
