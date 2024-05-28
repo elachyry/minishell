@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:07:14 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/28 19:14:50 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/28 21:04:09 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	toggle_quotes(char current_char, t_quote_state *quote_state)
 	}
 }
 
+
 char	*handle_variable_expansion(char *line, char **ret, \
 t_quote_state *quote_state)
 {
@@ -38,7 +39,8 @@ t_quote_state *quote_state)
 	if (*line == '$' && (!quote_state->in_single_quotes
 			|| (quote_state->in_double_quotes && !quote_state->nested_quotes)))
 	{
-		line = fetch_variable_value(&value, line + 1);
+		line = fetch_variable_value(&value, line + 1, \
+		g_shell_data.environment_list);
 		*ret = ft_strjoin(*ret, value);
 		return (line);
 	}
