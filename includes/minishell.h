@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/28 20:58:23 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/29 11:22:20 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@
 # include "../libraries/libft/libft.h"
 # include "../libraries/get_next_line/get_next_line.h"
 # define READLINE_LIBRARY
-# include "/Users/akaddour/readline/include/readline/readline.h"
-# include "/Users/akaddour/readline/include/readline/history.h"
-// # include "/Users/melachyr/readline/readline.h"
-// # include "/Users/melachyr/readline/history.h"
+// # include "/Users/akaddour/readline/include/readline/readline.h"
+// # include "/Users/akaddour/readline/include/readline/history.h"
+# include "/Users/melachyr/readline/readline.h"
+# include "/Users/melachyr/readline/history.h"
 
 typedef struct s_env
 {
