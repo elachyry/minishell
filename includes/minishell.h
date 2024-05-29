@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/29 11:22:20 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:11:57 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,10 @@ typedef struct s_simple_cmd
 {
 	char	**cmd;
 	char	*cmd_path;
-	char	*here_doc_path;
+	char	*here_name;
+	char	**here_docs_files;
+	int		here_index;
 	int		nbr_here_doc;
-	int		is_first;
 	int		is_parenthis;
 	int		is_parenthis_red_ch;
 	t_bool	should_expand;
@@ -73,6 +74,7 @@ typedef struct s_shell_data
 	t_bool			ctl;
 	t_token			*tokens;
 	t_ast_node		*ast;
+	t_ast_node		*ast_parenth;
 	t_simple_cmd	*simple_cmd;
 	t_env			*environment_list;
 }	t_shell_data;
@@ -192,8 +194,9 @@ void		cmd_not_found(char **args, int status);
 void		execve_fail(char **args);
 int			redirect_files_buildin(void);
 void		add_node_after(t_token *target_node, t_token *new_node);
-t_ast_node	*cmd_before_red(t_token **tokens, t_token *ptr, t_bool is_parenth);
 t_ast_node	*cmd_after_red(t_token **tokens, t_token *next, t_token *ptr);
+void		execute_double_less_than(t_ast_node *node);
+char		*concat_cmd(t_ast_node *node);
 
 // expander
 t_token		*expand_tokens(t_token *tokens);

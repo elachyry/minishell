@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:06:36 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/23 11:58:16 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:21:43 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	less_than_operator(t_files *file)
 	{
 		if (!file->is_opened)
 		{
+				dprintf(2, "hii\n");
 			ft_putstr_fd("minishell: ", 2);
 			perror(file->filename);
 		}

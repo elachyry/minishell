@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/28 14:32:43 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:09:04 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,50 +44,63 @@ void	execute_ast(t_ast_node *node)
 	else if (node->type == DoubleGreaterThanOperator)
 		execute_double_greater_than(node);
 	else if (node->type == DoubleLessThanOperator)
-	{
-		execute_ast(node->right->right);
-		execute_ast(node->left);
-	}
+		execute_double_less_than(node);
 	else if (node->type == OpeningParenthesis)
 		execute_parenthesis(node);
 }
 
+void	extrac_ast_parenth(t_ast_node *node)
+{
+	char		*line;
+	t_token		*tokens;
+	t_ast_node	*tmp;
+
+	if (!node)
+		return ;
+	if (node->type == OpeningParenthesis)
+	{
+		line = concat_cmd(node);
+		tokens = ft_tokenize(line);
+		tokens = expand_tokens(tokens);
+		g_shell_data.ast_parenth = parse_tokens(&tokens);
+		tmp = g_shell_data.ast_parenth;
+		extrac_ast_parenth(g_shell_data.ast_parenth);
+		g_shell_data.ast_parenth = tmp;
+	}
+	else if (node->type >= 0 && node->type <= 7)
+	{
+		extrac_ast_parenth(node->left);
+		extrac_ast_parenth(node->right);
+	}
+}
+
 static void	handle_here_doc(void)
 {
-	char	*name;
+	t_ast_node	*node;
 
-	if (g_shell_data.simple_cmd->nbr_here_doc >= 17)
-	{
-		ft_putstr_fd("minishell: maximum here-document count exceeded\n", 2);
-		exit(2);
-	}
-	g_shell_data.simple_cmd->here_doc_path = NULL;
-	if (g_shell_data.simple_cmd->nbr_here_doc > 0)
-	{
-		name = get_here_doc_name();
-		g_shell_data.simple_cmd->here_doc_path = ft_strjoin("/tmp/", name);
-		free(name);
-	}
 	g_shell_data.simple_cmd->files = NULL;
+	if (g_shell_data.simple_cmd->is_parenthis)
+	{
+		node = g_shell_data.ast;
+		extrac_ast_parenth(node);
+		generate_ast_diagram(g_shell_data.ast_parenth);
+	}
 	execute_here_doc(g_shell_data.ast);
 }
 
 void	execution(void)
 {
 	t_ast_node	*ast;
-	t_files		*file;
 
+	g_shell_data.simple_cmd->here_index = 0;
 	handle_here_doc();
 	ast = g_shell_data.ast;
-	if (g_shell_data.simple_cmd->here_doc_path)
-	{
-		file = new_file_node(g_shell_data.simple_cmd->here_doc_path,
-				LessThanOperator);
-		add_lst_file(&g_shell_data.simple_cmd->files, file);
-	}
-	g_shell_data.simple_cmd->is_first = 0;
+	if ((!g_shell_data.status || (g_shell_data.status && !g_shell_data.simple_cmd->nbr_here_doc)))
 		execute_ast(ast);
 	g_shell_data.simple_cmd->nbr_here_doc = 0;
-	if (g_shell_data.simple_cmd->here_doc_path)
-		unlink(g_shell_data.simple_cmd->here_doc_path);
+	while (*g_shell_data.simple_cmd->here_docs_files)
+	{
+		unlink(*g_shell_data.simple_cmd->here_docs_files);
+		g_shell_data.simple_cmd->here_docs_files++;
+	}
 }

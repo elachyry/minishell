@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/05/28 18:44:58 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:12:01 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,18 @@ void	initialize_shell(char **envp)
 	g_shell_data.environment = envp;
 	g_shell_data.path = NULL;
 	g_shell_data.tokens = NULL;
+	g_shell_data.ast_parenth = NULL;
 	g_shell_data.ast = NULL;
 	g_shell_data.status = 0;
 	g_shell_data.sig_exit = 0;
 	g_shell_data.ctl = false;
 	g_shell_data.simple_cmd = malloc(sizeof(t_simple_cmd));
 	g_shell_data.simple_cmd->should_expand = true;
+	g_shell_data.simple_cmd->here_docs_files = NULL;
+	g_shell_data.simple_cmd->here_name = NULL;
 	g_shell_data.simple_cmd->is_parenthis = false;
 	g_shell_data.simple_cmd->nbr_here_doc = 0;
+	g_shell_data.simple_cmd->here_index = 0;
 	if (!g_shell_data.simple_cmd)
 		return ;
 	g_shell_data.environment_list = initialize_environment_list(envp);
@@ -114,7 +118,7 @@ int	main(int ac, char **av, char **envp)
 		// display_tokens(tokens);
 		ast = parse_tokens(&tokens);
 		g_shell_data.ast = ast;
-		// generate_ast_diagram(ast);
+		generate_ast_diagram(ast);
 		g_shell_data.ctl = true;
 		execution();
 		g_shell_data.sig_exit = 0;
