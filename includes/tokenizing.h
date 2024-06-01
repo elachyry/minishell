@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:20:08 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/29 11:41:47 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/05/29 21:11:16 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ typedef enum e_token_type
 	DoubleLessThanOperator,
 	DoubleGreaterThanOperator,
 	PipeSymbol,
-	OpeningParenthesis,
-	ClosingParenthesis,
 	LogicalAnd,
 	LogicalOr,
+	OpeningParenthesis,
+	ClosingParenthesis,
 }	t_token_type;
 
 // double linked list

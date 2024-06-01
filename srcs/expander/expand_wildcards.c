@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:07:48 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/28 18:44:25 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:45:17 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,25 @@ void	process_file_list(char **file_list, t_token **tok)
 	}
 }
 
-void	handle_wildcard(t_token **tok, char **file_list)
+t_bool	process_token(t_token **tok, char **tmp)
 {
-	process_wildcard(tok, file_list);
-	if (*file_list)
-		process_file_list(file_list, tok);
+	if ((*tok)->type == OpeningParenthesis)
+	{
+		process_parenthesis(tok);
+		return (true);
+	}
+	if (((*tok)->value[0] == '\'' || (*tok)->value[0] == '\"') \
+		&& check_wildcard(*tok, tmp))
+	{
+		*tok = (*tok)->next;
+		return (true);
+	}
+	if ((*tok)->prev && (*tok)->prev->type == DoubleLessThanOperator)
+	{
+		*tok = (*tok)->next;
+		return (true);
+	}
+	return (false);
 }
 
 t_token	*expand_wildcards(t_token *tokens)
@@ -95,24 +109,14 @@ t_token	*expand_wildcards(t_token *tokens)
 	file_list = NULL;
 	while (tok)
 	{
-		if (tok->type == OpeningParenthesis)
-		{
-			process_parenthesis(&tok);
+		if (process_token(&tok, &tmp))
 			continue ;
-		}
-		if ((tok->value[0] == '\'' || tok->value[0] == '\"')
-			&& check_wildcard(tok, &tmp))
-		{
-			tok = tok->next;
-			continue ;
-		}
-		if (tok->prev && tok->prev->type == DoubleLessThanOperator)
-		{
-			tok = tok->next;
-			continue ;
-		}
 		if (check_wildcard(tok, &tmp))
-			handle_wildcard(&tok, &file_list);
+		{
+			process_wildcard(&tok, &file_list);
+			if (file_list)
+				process_file_list(&file_list, &tok);
+		}
 		tok = tok->next;
 	}
 	return (tokens);
