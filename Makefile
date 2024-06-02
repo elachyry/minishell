@@ -19,7 +19,7 @@ TOKENIZATION = srcs/tokenization/ft_tokenize_handler.c srcs/tokenization/ft_toke
 
 EXECUTION = 	srcs/execution/execution.c srcs/execution/check_if_builtin.c srcs/execution/here_doc.c srcs/execution/execution_utils.c srcs/execution/execute_command.c srcs/execution/redirect_files.c\
 				srcs/execution/execute_pipe.c srcs/execution/execute_logical_operator.c srcs/execution/execute_redirection.c srcs/execution/execute_parenthesis.c srcs/execution/get_cmd_path.c\
-				srcs/execution/here_doc_utils.c srcs/execution/handle_errors.c srcs/execution/redirect_files_buildin.c
+				srcs/execution/here_doc_utils.c srcs/execution/handle_errors.c srcs/execution/redirect_files_buildin.c 
 
 EXPANDER = srcs/expander/expander.c srcs/expander/expand_env_variable.c srcs/expander/expand_env_variable_utils.c srcs/expander/expand_quotes.c srcs/expander/expand_quotes_utils.c srcs/expander/expand_wildcards.c srcs/expander/expand_wildcards_utils.c
 
@@ -35,7 +35,7 @@ all: $(NAME)
 
 $(NAME):  $(OBJS) 
 #@make -C $(LIBFT_PATH)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -L /Users/akaddour/readline/lib -lreadline -lncurses
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -lreadline
 #$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -L /Users/melachyr/readline/lib -lreadline -lncurses
 
 

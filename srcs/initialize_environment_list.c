@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:11:04 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/23 16:21:50 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:24:28 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_env	*add_env_var(t_env *env_list, char *key, char *value)
 {
 	t_env	*new_env;
 
-	new_env = malloc(sizeof(t_env));
+	new_env = gc_malloc(sizeof(t_env));
 	if (!new_env)
 		return (NULL);
 	new_env->key = strdup(key);
@@ -49,7 +49,7 @@ t_env	*initialize_environment_list(char **env)
 	{
 		while (env[i])
 		{
-			new_env = malloc(sizeof(t_env));
+			new_env = gc_malloc(sizeof(t_env));
 			if (!new_env)
 				return (NULL);
 			new_env->key = extract_key(env[i]);

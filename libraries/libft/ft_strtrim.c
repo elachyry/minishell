@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:53:01 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/21 15:37:03 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:24:42 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 		end--;
 	if (end <= start)
 		return (ft_strdup(""));
-	str = (char *)malloc(sizeof(char) * (end - start + 1));
+	str = (char *)gc_malloc(sizeof(char) * (end - start + 1));
 	if (str == NULL)
 		return (NULL);
 	ft_strlcpy(str, &s1[start], (end - start + 1));

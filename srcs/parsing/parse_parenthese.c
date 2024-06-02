@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_parenthese.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:15:09 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/29 11:38:38 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:22:26 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_ast_node	*extract_bash_cmd(t_token **tokens)
 	t_ast_node	*node;
 
 	count = get_nbr_of_cmd((*tokens)->next);
-	cmd = malloc(sizeof(char *) * (count + 1));
+	cmd = gc_malloc(sizeof(char *) * (count + 1));
 	if (!cmd)
 		return (NULL);
 	ptr = (*tokens)->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/05/29 15:12:01 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/02 18:33:26 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	initialize_shell(char **envp)
 	g_shell_data.status = 0;
 	g_shell_data.sig_exit = 0;
 	g_shell_data.ctl = false;
-	g_shell_data.simple_cmd = malloc(sizeof(t_simple_cmd));
+	g_shell_data.simple_cmd = gc_malloc(sizeof(t_simple_cmd));
 	g_shell_data.simple_cmd->should_expand = true;
 	g_shell_data.simple_cmd->here_docs_files = NULL;
 	g_shell_data.simple_cmd->here_name = NULL;
@@ -114,7 +114,7 @@ int	main(int ac, char **av, char **envp)
 		// display_tokens(tokens);
 		g_shell_data.simple_cmd->should_expand = true;
 		tokens = expand_tokens(tokens);
-		free(g_shell_data.line);
+		// free(g_shell_data.line);
 		// display_tokens(tokens);
 		ast = parse_tokens(&tokens);
 		g_shell_data.ast = ast;
@@ -123,6 +123,7 @@ int	main(int ac, char **av, char **envp)
 		execution();
 		g_shell_data.sig_exit = 0;
 		g_shell_data.ctl= false;
+		gc_cleanup();
 	}
 	return (0);
 }

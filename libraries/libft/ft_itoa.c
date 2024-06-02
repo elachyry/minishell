@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 11:41:58 by akaddour          #+#    #+#             */
-/*   Updated: 2023/11/14 11:56:29 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:25:18 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_itoa(int n)
 	int				len;
 
 	len = ft_n_length(n);
-	str = (char *)malloc(sizeof(char) * (len + 1));
+	str = (char *)gc_malloc(sizeof(char) * (len + 1));
 	if (str == NULL)
 		return (NULL);
 	if (n < 0)

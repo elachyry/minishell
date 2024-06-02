@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:42:28 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/28 19:12:18 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/02 18:34:58 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	**remove_empty_args(char **args)
 	size_t	j;
 
 	num_non_empty = count_non_empty_args(args);
-	new_args = malloc((num_non_empty + 1) * sizeof(char *));
+	new_args = gc_malloc((num_non_empty + 1) * sizeof(char *));
 	if (!new_args)
 		return (NULL);
 	j = 0;
@@ -49,10 +49,10 @@ char	**remove_empty_args(char **args)
 		{
 			new_args[j++] = args[i];
 		}
-		else
-		{
-			free(args[i]);
-		}
+		// else
+		// {
+		// 	free(args[i]);
+		// }
 		i++;
 	}
 	new_args[j] = NULL;

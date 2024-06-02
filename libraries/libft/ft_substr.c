@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 21:29:15 by akaddour          #+#    #+#             */
-/*   Updated: 2023/11/13 21:33:45 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:24:40 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	length = size - start;
 	if (length < len)
 		len = length;
-	str = (char *)malloc(sizeof(char) * (len + 1));
+	str = (char *)gc_malloc(sizeof(char) * (len + 1));
 	if (str == NULL)
 		return (NULL);
 	i = 0;

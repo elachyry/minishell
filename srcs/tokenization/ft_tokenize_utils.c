@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 04:27:20 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/23 14:19:29 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/02 18:35:09 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	remove_node(t_token **head, t_token *node)
 		node->next->prev = node->prev;
 	if (*head == node)
 		*head = node->next;
-	free(node->value);
-	free(node);
+	// free(node->value);
+	// free(node);
 }
 
 void	add_node_after(t_token *target_node, t_token *new_node)
@@ -47,7 +47,7 @@ t_token	*create_token_node(const char *value, int type)
 {
 	t_token	*new_token;
 
-	new_token = (t_token *)malloc(sizeof(t_token));
+	new_token = (t_token *)gc_malloc(sizeof(t_token));
 	if (!new_token)
 	{
 		printf("Error: malloc failed\n");

@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:28:59 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/21 15:30:52 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/02 18:33:41 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	handle_key_value(char *str, char *key, char *value)
 	if (ft_strstr(str, "+=") && get_env_value(key))
 	{
 		old_value = get_env_value(key);
-		new_value = malloc(ft_strlen(old_value) + ft_strlen(value) + 1);
+		new_value = gc_malloc(ft_strlen(old_value) + ft_strlen(value) + 1);
 		ft_strcpy(new_value, old_value);
 		ft_strcat(new_value, value);
 		update_env_value(key, new_value);
-		free(new_value);
+		// free(new_value);
 	}
 	else if (value || !get_env_value(key))
 		update_env_value(key, value);

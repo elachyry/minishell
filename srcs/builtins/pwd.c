@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 02:10:12 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/21 14:41:32 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/02 18:34:03 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ int	ft_pwd(void)
 		return (1);
 	}
 	printf("%s\n", cwd);
-	free(cwd);
+	// free(cwd);
 	return (0);
 }

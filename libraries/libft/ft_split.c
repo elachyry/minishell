@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 11:22:12 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/06 16:02:57 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:25:08 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	**ft_split(char const *s, char c)
 	if (s == NULL)
 		return (NULL);
 	size = word_count(s, c);
-	res = (char **)malloc(sizeof(char *) * (size + 1));
+	res = (char **)gc_malloc(sizeof(char *) * (size + 1));
 	if (res == NULL)
 		return (NULL);
 	res = ft_allocate(res, s, c);

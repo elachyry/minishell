@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 01:01:50 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/28 20:57:23 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:23:38 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ char	*concatenate_char(char *str, char c)
 
 	if (!str)
 	{
-		tmp = malloc(2);
+		tmp = gc_malloc(2);
 		tmp[0] = c;
 		tmp[1] = 0;
 		return (tmp);
 	}
 	len = ft_strlen(str);
-	tmp = malloc(len + 2);
+	tmp = gc_malloc(len + 2);
 	ft_strlcpy(tmp, str, len + 1);
 	tmp[len] = c;
 	tmp[len + 1] = 0;

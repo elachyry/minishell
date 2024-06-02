@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:36:16 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 17:49:11 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/02 18:34:10 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_files	*new_file_node(char *filename, t_token_type type)
 {
 	t_files	*node;
 
-	node = malloc(sizeof(t_files));
+	node = gc_malloc(sizeof(t_files));
 	if (!node)
 		return (NULL);
 	node->filename = filename;
@@ -59,13 +59,13 @@ char	*get_here_doc_name(void)
 	int		fd;
 	int		c;
 
-	name = malloc(sizeof(char) * 12);
+	name = gc_malloc(sizeof(char) * 12);
 	if (name == NULL)
 		return (NULL);
 	fd = open("/dev/random", O_RDONLY);
 	if (fd == -1)
 	{
-		free(name);
+		// free(name);
 		return (NULL);
 	}
 	c = 0;

@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:17:48 by akaddour          #+#    #+#             */
-/*   Updated: 2023/11/14 12:22:37 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:24:53 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	if (s == NULL || f == NULL)
 		return (NULL);
 	i = 0;
-	str = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	str = (char *)gc_malloc(sizeof(char) * (ft_strlen(s) + 1));
 	if (str == NULL)
 		return (NULL);
 	while (s[i] != '\0')

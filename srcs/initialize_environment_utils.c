@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:21:34 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/23 16:24:23 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:24:22 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*extract_key(char *env)
 	i = 0;
 	while (env[i] && env[i] != '=' && !(env[i] == '+' && env[i + 1] == '='))
 		i++;
-	key = malloc(i + 1);
+	key = gc_malloc(i + 1);
 	if (!key)
 		return (NULL);
 	ft_strncpy(key, env, i);
@@ -55,7 +55,7 @@ char	*copy_value(char *env, int start)
 
 	i = 0;
 	j = 0;
-	value = malloc(strlen(env) - start + 1);
+	value = gc_malloc(strlen(env) - start + 1);
 	if (!value)
 		return (NULL);
 	while (env[start])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:36:12 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/29 13:34:44 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/02 18:34:13 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	search_for_cmd_path(char *args)
 			g_shell_data.simple_cmd->cmd_path = path;
 			return (1);
 		}
-		free(path);
+		// free(path);
 	}
 	p = ft_strjoin("./", cmd);
 	if (access(p, X_OK) != -1 && g_shell_data.path[0] == NULL)

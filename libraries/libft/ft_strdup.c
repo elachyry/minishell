@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:03:32 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/07 15:30:40 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:25:05 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strdup(const char *s1)
 	i = 0;
 	if (!s1)
 		return (NULL);
-	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	str = (char *)gc_malloc(sizeof(char) * (ft_strlen(s1) + 1));
 	if (str == NULL)
 		return (NULL);
 	while (s1[i] != '\0')

@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 00:39:02 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/21 14:55:02 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/02 18:34:06 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	delete_env_value(char *key)
 				prev->next = env->next;
 			else
 				g_shell_data.environment_list = env->next;
-			free(env->key);
-			free(env->value);
-			free(env);
+			// free(env->key);
+			// free(env->value);
+			// free(env);
 			return ;
 		}
 		prev = env;

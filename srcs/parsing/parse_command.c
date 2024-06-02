@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 10:31:45 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/29 11:38:52 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:22:40 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char	**create_args_table(t_token **ptr)
 	int		i;
 	int		j;
 
-	cmd = malloc(sizeof(char *) * (get_nbr_of_args(*ptr) + 1));
+	cmd = gc_malloc(sizeof(char *) * (get_nbr_of_args(*ptr) + 1));
 	if (!cmd)
 		return (NULL);
 	i = 0;
@@ -65,7 +65,7 @@ t_ast_node	*parse_command_2(t_token **tokens, t_bool is_custom)
 	if (tokens == NULL || *tokens == NULL)
 		return (NULL);
 	cmd = create_args_table(tokens);
-	node = malloc(sizeof(t_ast_node));
+	node = gc_malloc(sizeof(t_ast_node));
 	if (!node)
 		return (NULL);
 	node->args = cmd;
@@ -84,7 +84,7 @@ static char	**help_function(char *here_name, t_token **tokens)
 
 	if (!here_name)
 	{
-		cmd = malloc(sizeof(char *) * 2);
+		cmd = gc_malloc(sizeof(char *) * 2);
 		if (!cmd)
 			return (NULL);
 		cmd[0] = (*tokens)->value;
@@ -93,7 +93,7 @@ static char	**help_function(char *here_name, t_token **tokens)
 	}
 	else
 	{
-		cmd = malloc(sizeof(char *) * 3);
+		cmd = gc_malloc(sizeof(char *) * 3);
 		if (!cmd)
 			return (NULL);
 		cmd[0] = (*tokens)->value;
@@ -113,7 +113,7 @@ t_ast_node	*parse_command(t_token	**tokens, char is_custom, char *here_name)
 
 	if (tokens == NULL || *tokens == NULL)
 		return (NULL);
-	node = malloc(sizeof(t_ast_node));
+	node = gc_malloc(sizeof(t_ast_node));
 	if (!node)
 		return (NULL);
 	node->type = IDENTIFIER;

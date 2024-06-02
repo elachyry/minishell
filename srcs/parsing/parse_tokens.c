@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:37:53 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/29 11:37:34 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:22:13 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_ast_node	*parse_tokens(t_token **tokens)
 	}
 	g_shell_data.simple_cmd->here_index = 0;
 	g_shell_data.simple_cmd->here_docs_files
-		= malloc(sizeof(char *) * (g_shell_data.simple_cmd->nbr_here_doc + 1));
+		= gc_malloc(sizeof(char *) * (g_shell_data.simple_cmd->nbr_here_doc + 1));
 	if (!g_shell_data.simple_cmd->here_docs_files)
 		return (NULL);
 	g_shell_data.simple_cmd->here_docs_files

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:28:30 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/29 16:03:56 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/02 18:34:24 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	write_in_file(char *str, char *delimiter, \
 	if (ft_strcmp(delimiter, str) == 0)
 	{
 		*content = ft_strdup(*buff);
-		free(str);
+		// free(str);
 		return (1);
 	}
 	write(1, "> ", 2);
@@ -52,7 +52,7 @@ static void	here_doc(char **cmd, char **content)
 		else
 		{
 			*content = ft_strdup(buff);
-			free(str);
+			// free(str);
 			break ;
 		}
 	}
@@ -79,7 +79,7 @@ static void	handle_here_doc(t_ast_node *node)
 	expand_quotes(node->right->args);
 	here_doc(node->right->args, &content);
 	write_content_to_file(content, node->right->args[1]);
-	free(content);
+	// free(content);
 	help_function(node->right->right);
 }
 

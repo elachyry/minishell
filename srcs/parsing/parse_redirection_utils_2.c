@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirection_utils_2.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 22:41:58 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/27 10:46:40 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:22:21 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ t_ast_node	*cmd_before_red(t_token **tokens, t_token *ptr, t_bool is_parenth)
 	counts[0] = count_cmd_args(tokens);
 	tmp = *tokens;
 	*tokens = NULL;
-	cmd = malloc(sizeof(char *) * (counts[0] + 1));
+	cmd = gc_malloc(sizeof(char *) * (counts[0] + 1));
 	if (!cmd)
 		return (NULL);
 	counts[1] = 0;

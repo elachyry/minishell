@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 18:12:35 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/21 14:52:53 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:50:43 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
 
 typedef struct s_list
 {
@@ -73,5 +74,11 @@ char	*ft_strcat(char *dest, char *src);
 char	*ft_strcpy(char *dest, char *src);
 char	*ft_strstr(char *str, char *to_find);
 char	*ft_strncpy(char *dest, char *src, unsigned int n);
+void* gc_malloc(size_t size);
+void gc_free(void *ptr);
+void gc_cleanup();
+
+extern t_list *head;
+
 
 #endif

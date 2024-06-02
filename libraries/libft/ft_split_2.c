@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:57:15 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/06 20:15:14 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:25:12 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	**ft_split_2(char const *s)
 	if (s == NULL)
 		return (NULL);
 	count = sub_strs_count(s);
-	result = (char **)malloc(sizeof(char *) * (count + 1));
+	result = (char **)gc_malloc(sizeof(char *) * (count + 1));
 	if (result == NULL)
 		return (NULL);
 	result = get_sub_strs(result, s);

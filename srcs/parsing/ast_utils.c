@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 11:50:21 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/29 11:39:04 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:22:54 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_ast_node	*new_ast_node(t_token_type type)
 {
 	t_ast_node	*node;
 
-	node = malloc(sizeof(t_ast_node));
+	node = gc_malloc(sizeof(t_ast_node));
 	if (!node)
 		return (NULL);
 	node->type = type;
@@ -30,7 +30,7 @@ static void	help_function(t_ast_node **node, t_token *token, char *here_name)
 {
 	if (!here_name)
 	{
-		(*node)->args = malloc(sizeof(char *) * 2);
+		(*node)->args = gc_malloc(sizeof(char *) * 2);
 		if (!(*node)->args)
 			return ;
 		(*node)->args[0] = token->value;
@@ -38,7 +38,7 @@ static void	help_function(t_ast_node **node, t_token *token, char *here_name)
 	}
 	else
 	{
-		(*node)->args = malloc(sizeof(char *) * 3);
+		(*node)->args = gc_malloc(sizeof(char *) * 3);
 		if (!(*node)->args)
 			return ;
 		(*node)->args[0] = token->value;
@@ -53,7 +53,7 @@ t_ast_node	*new_ast_file_node(t_token *token, char *here_name)
 
 	if (token == NULL)
 		return (NULL);
-	node = malloc(sizeof(t_ast_node));
+	node = gc_malloc(sizeof(t_ast_node));
 	if (!node)
 		return (NULL);
 	node->type = token->type;

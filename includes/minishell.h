@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/29 20:33:03 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:28:20 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@
 # include "tokenizing.h"
 # include "../libraries/libft/libft.h"
 # include "../libraries/get_next_line/get_next_line.h"
-# define READLINE_LIBRARY
-# include "/Users/akaddour/readline/include/readline/readline.h"
-# include "/Users/akaddour/readline/include/readline/history.h"
+#include <readline/readline.h>
+#include <readline/history.h>
+// # define READLINE_LIBRARY
+// # include "/Users/akaddour/readline/include/readline/readline.h"
+// # include "/Users/akaddour/readline/include/readline/history.h"
 // # include "/Users/melachyr/readline/readline.h"
 // # include "/Users/melachyr/readline/history.h"
 
@@ -223,6 +225,7 @@ int			check_wildcard(t_token *tok, char **tmp);
 
 //signals
 void		handle_signals(void);
+
 
 
 void generate_ast_diagram(t_ast_node *root);

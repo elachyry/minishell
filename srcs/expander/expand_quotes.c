@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:07:30 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/28 19:13:33 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/02 18:34:29 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char	*allocate_new_str(int length)
 {
 	char	*new_str;
 
-	new_str = malloc(length + 1);
+	new_str = gc_malloc(length + 1);
 	if (!new_str)
 		return (NULL);
 	return (new_str);
@@ -80,7 +80,7 @@ void	expand_quotes(char **args)
 	while (args[i] != NULL)
 	{
 		new_str = remove_all_quotes(args[i]);
-		free(args[i]);
+		// free(args[i]);
 		args[i] = new_str;
 		i++;
 	}

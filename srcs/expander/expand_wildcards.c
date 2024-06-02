@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:07:48 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/01 16:45:17 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/02 18:34:52 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	update_file_list(char **file_list, const char *entry_name)
 		new_file_list = ft_strjoin(*file_list, filename_with_space);
 	else
 		new_file_list = ft_strdup(filename_with_space);
-	free(filename_with_space);
-	if (*file_list)
-		free(*file_list);
+	// free(filename_with_space);
+	// if (*file_list)
+	// 	free(*file_list);
 	*file_list = new_file_list;
 }
 
@@ -60,7 +60,7 @@ void	process_file_list(char **file_list, t_token **tok)
 	int		i;
 
 	filenames = ft_split(*file_list, ' ');
-	free(*file_list);
+	// free(*file_list);
 	*file_list = NULL;
 	if (filenames)
 	{
@@ -74,7 +74,7 @@ void	process_file_list(char **file_list, t_token **tok)
 			prev_tok = new_tok;
 			i++;
 		}
-		free(filenames);
+		// free(filenames);
 	}
 }
 
