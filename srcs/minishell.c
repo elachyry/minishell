@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/06/02 18:33:26 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:26:21 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,13 +117,15 @@ int	main(int ac, char **av, char **envp)
 		// free(g_shell_data.line);
 		// display_tokens(tokens);
 		ast = parse_tokens(&tokens);
+		if (!ast)
+			continue ;
 		g_shell_data.ast = ast;
 		generate_ast_diagram(ast);
 		g_shell_data.ctl = true;
 		execution();
 		g_shell_data.sig_exit = 0;
 		g_shell_data.ctl= false;
-		gc_cleanup();
 	}
+	gc_cleanup();
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:49:24 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/23 16:46:58 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:55:37 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,13 @@ int	is_invalid_operator(const char **input)
 			|| !(**input == '<' || **input == '>'))
 			return (1);
 	}
+	 if ((**input == '\"' || **input == '\'') && *(*input + 1) == **input)
+    {
+        (*input) += 2; // Skip the empty quotes
+        *input = skip_spaces(*input);
+        if (**input == '>' || **input == '<' || **input == '|' || **input == '&')
+            return (1);
+    }
 	return (0);
 }
 

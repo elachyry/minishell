@@ -1,7 +1,7 @@
 digraph AST {
-"0x6030000019f0" [label="|"];
-"0x6030000019f0" -> "0x603000001a20" [label="L"];
-"0x603000001a20" [label="CMD: ls"];
-"0x6030000019f0" -> "0x603000001a50" [label="R"];
-"0x603000001a50" [label="CMD: cat"];
+"0x16c4ce0" [label="REDIR: "];
+"0x16c4ce0" -> "0x16c4e30" [label="L"];
+"0x16c4e30" [label="CMD: cat"];
+"0x16c4ce0" -> "0x16c4e80" [label="R"];
+"0x16c4e80" [label="CMD: \"\" /tmp/.rthZHtqIbBY"];
 }
