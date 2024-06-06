@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:58:24 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/29 11:38:10 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/05 21:29:12 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_ast_node	*help_function(t_token **tokens, t_token *ptr)
 			*tokens = (*tokens)->next;
 		*tokens = (*tokens)->next;
 	}
-	if (*tokens && ((*tokens)->type == LessThanOperator
+	if (*tokens && (*tokens)->next && ((*tokens)->type == LessThanOperator
 			|| (*tokens)->type == DoubleLessThanOperator
 			|| (*tokens)->type == GreaterThanOperator
 			|| (*tokens)->type == DoubleGreaterThanOperator)

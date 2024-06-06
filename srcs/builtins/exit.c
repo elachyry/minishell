@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 00:57:54 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/23 11:53:52 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/05 23:02:40 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ int	ft_exit(char **args)
 	}
 	if (!g_shell_data.simple_cmd->is_parenthis)
 		ft_putstr_fd("exit\n", 1);
-	return (exit(status), 0);
+	return (gc_cleanup(), exit(status), 0);
 }

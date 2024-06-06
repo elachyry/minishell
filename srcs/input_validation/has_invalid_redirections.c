@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:49:24 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/05 19:55:37 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/06 00:39:03 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,33 +29,27 @@ const char	*skip_spaces(const char *input)
 
 int	is_invalid_operator(const char **input)
 {
-	const char	*operator_start;
-	int			is_double_less_than;
+	const char *operator_start;
+	int is_double_less_than;
+	const char *temp_input = *input;
 
-	operator_start = *input;
-	is_double_less_than = (*operator_start == '<' && *(*input + 1) == '<');
-	(*input)++;
-	if (*operator_start == **input && (**input == '>' || **input == '<'
-			|| **input == '|' || **input == '&'))
-		(*input)++;
-	*input = skip_spaces(*input);
-	if (**input == '\0')
+	operator_start = temp_input;
+	is_double_less_than = (*operator_start == '<' && *(temp_input + 1) == '<');
+	temp_input++;
+	if (*operator_start == *temp_input && (*temp_input == '>' || *temp_input == '<'
+			|| *temp_input == '|' || *temp_input == '&'))
+		temp_input++;
+	temp_input = skip_spaces(temp_input);
+	if (*temp_input == '\0')
 		return (1);
-	if (**input == '*' && !is_double_less_than)
+	if (*temp_input == '*' && !is_double_less_than)
 		return (1);
-	if (**input == '>' || **input == '<' || **input == '|' || **input == '&')
+	if (*temp_input == '>' || *temp_input == '<' || *temp_input == '|' || *temp_input == '&')
 	{
 		if (!(*operator_start == '|' || *operator_start == '&')
-			|| !(**input == '<' || **input == '>'))
+			|| !(*temp_input == '<' || *temp_input == '>'))
 			return (1);
 	}
-	 if ((**input == '\"' || **input == '\'') && *(*input + 1) == **input)
-    {
-        (*input) += 2; // Skip the empty quotes
-        *input = skip_spaces(*input);
-        if (**input == '>' || **input == '<' || **input == '|' || **input == '&')
-            return (1);
-    }
 	return (0);
 }
 

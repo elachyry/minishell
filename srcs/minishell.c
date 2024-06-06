@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/06/05 19:26:21 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/05 23:00:27 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	display_prompt(char **line)
 	if (!*line)
 	{
 		printf("exit\n");
+		gc_cleanup();
 		exit(1);
 	}
 	if (*line[0])
