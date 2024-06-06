@@ -22,14 +22,14 @@ void	sigint_handler(int sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	g_shell_data.status = 1;
+	g_shell_data.status = 130;
 	g_shell_data.sig_exit = 1;
 }
 
 void	sigquit_handler(int sig)
 {
 	(void) sig;
-	printf("Quit: 3\n");
+	printf("Quit (core dumped)\n");
 	if (!g_shell_data.ctl)
 	{
 		rl_replace_line("", 0);

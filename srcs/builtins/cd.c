@@ -39,17 +39,22 @@ static void	display_cd_error(char *path)
 	ft_putstr_fd("': No such file or directory\n", 2);
 }
 
-int	ft_cd(char *path)
+int	ft_cd(char **path)
 {
 	char	*cwd;
 	char	*oldpwd;
 
-	oldpwd = getcwd(NULL, 0);
-	if (!path || (ft_strlen(path) == 0 && get_env_value(path) == NULL))
-		return (back_to_home());
-	if (chdir(path) != 0)
+	if (path[2])
 	{
-		display_cd_error(path);
+		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
+		return (1);
+	}
+	oldpwd = getcwd(NULL, 0);
+	if (!path[1] || (ft_strlen(path[1]) == 0 && get_env_value(path[1]) == NULL))
+		return (back_to_home());
+	if (chdir(path[1]) != 0)
+	{
+		display_cd_error(path[1]);
 		return (1);
 	}
 	if (get_env_value("OLDPWD"))

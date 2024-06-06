@@ -36,7 +36,7 @@ void	execve_fail(char **args)
 	{
 		ft_putstr_fd("Minishell: ", 2);
 		ft_putstr_fd(args[0], 2);
-		ft_putstr_fd(": is a directory", 2);
+		ft_putstr_fd(": Is a directory", 2);
 		ft_putstr_fd("\n", 2);
 		exit(126);
 	}

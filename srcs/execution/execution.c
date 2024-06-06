@@ -83,7 +83,7 @@ static void	handle_here_doc(void)
 	{
 		node = g_shell_data.ast;
 		extrac_ast_parenth(node);
-		generate_ast_diagram(g_shell_data.ast_parenth);
+		// generate_ast_diagram(g_shell_data.ast_parenth);
 	}
 	execute_here_doc(g_shell_data.ast);
 }

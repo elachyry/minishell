@@ -1,7 +1,3 @@
 digraph AST {
-"0x2044040" [label="REDIR: "];
-"0x2044040" -> "0x2044150" [label="L"];
-"0x2044150" [label="CMD: \"\" ?"];
-"0x2044040" -> "0x20441a0" [label="R"];
-"0x20441a0" [label="CMD: \"\" /tmp/.QrEPRozAdai"];
+"0x8d4fc0" [label="CMD: cd $PWD hi"];
 }

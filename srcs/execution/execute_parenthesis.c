@@ -76,12 +76,12 @@ void	execute_parenthesis(t_ast_node *node)
 		g_shell_data.simple_cmd->is_parenthis_red_ch = false;
 		redirect_files_2();
 		execute_ast(g_shell_data.ast_parenth);
-		generate_ast_diagram(g_shell_data.ast_parenth);
+		// generate_ast_diagram(g_shell_data.ast_parenth);
 		exit(g_shell_data.status);
 	}
 	else
 	{
-		waitpid(pid, &status, WCONTINUED);
+		waitpid(pid, &status, 0);
 		g_shell_data.status = WEXITSTATUS(status);
 	}
 }

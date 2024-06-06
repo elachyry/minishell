@@ -120,7 +120,7 @@ char		*extract_value(char *env);
 void		extract_path(void);
 
 //builtins
-int			ft_cd(char *path);
+int			ft_cd(char **path);
 int			ft_echo(char **args);
 int			ft_env(void);
 int			ft_exit(char **args);
@@ -228,6 +228,5 @@ void		handle_signals(void);
 
 
 
-void generate_ast_diagram(t_ast_node *root);
 
 #endif

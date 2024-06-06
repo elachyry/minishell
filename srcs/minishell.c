@@ -58,7 +58,7 @@ void	display_prompt(char **line)
 	{
 		printf("exit\n");
 		gc_cleanup();
-		exit(1);
+		exit(0);
 	}
 	if (*line[0])
 		add_history(*line);
@@ -66,7 +66,6 @@ void	display_prompt(char **line)
 
 void	initialize_shell(char **envp)
 {
-	// printf("envp = %s\n", envp[0]);
 	g_shell_data.line = NULL;
 	g_shell_data.environment = envp;
 	g_shell_data.path = NULL;
@@ -108,7 +107,7 @@ int	main(int ac, char **av, char **envp)
 		display_prompt(&g_shell_data.line);
 		if (!syntax_error_checker(g_shell_data.line))
 		{
-			g_shell_data.status = 258;
+			g_shell_data.status = 2;
 			continue ;
 		}
 		tokens = ft_tokenize(g_shell_data.line);

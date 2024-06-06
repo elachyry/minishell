@@ -35,7 +35,7 @@ int	execute_builtin(char **args)
 	if (!ft_strcmp(result, "echo"))
 		return (ft_echo(args));
 	if (!ft_strcmp(result, "cd"))
-		return (ft_cd(args[1]));
+		return (ft_cd(args));
 	if (!ft_strcmp(result, "pwd"))
 		return (ft_pwd());
 	if (!ft_strcmp(result, "export"))
