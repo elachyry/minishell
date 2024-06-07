@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 00:39:02 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/02 18:34:06 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:47:06 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ void	delete_env_value(char *key)
 	}
 }
 
-static void	display_unset_error(char *key)
-{
-	ft_putstr_fd("minishell: unset: `", 2);
-	ft_putstr_fd(key, 2);
-	ft_putstr_fd("': not a valid identifier\n", 2);
-}
+// static void	display_unset_error(char *key)
+// {
+// 	ft_putstr_fd("minishell: unset: `", 2);
+// 	ft_putstr_fd(key, 2);
+// 	ft_putstr_fd("': not a valid identifier\n", 2);
+// }
 
 int	ft_unset(char **args)
 {
@@ -53,8 +53,8 @@ int	ft_unset(char **args)
 	{
 		if (!is_valid_key(args[i]))
 		{
-			display_unset_error(args[i]);
-			return (1);
+			// display_unset_error(args[i]);
+			return (0);
 		}
 		delete_env_value(args[i]);
 		i++;

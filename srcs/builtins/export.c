@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:38:47 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/02 18:33:58 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:23:26 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,11 @@ static void	display_export_error(char *key)
 int	ft_export(char **args)
 {
 	int		i;
+	int		flag;
 	char	*key;
 	char	*value;
 
+	flag = 0;
 	if (!args[1])
 		return (ft_export_print(), 0);
 	i = 1;
@@ -90,7 +92,7 @@ int	ft_export(char **args)
 		{
 			display_export_error(args[i]);
 			// free(key);
-			return (1);
+			flag = 1;
 		}
 		value = extract_value(args[i]);
 		handle_key_value(args[i], key, value);
@@ -99,5 +101,5 @@ int	ft_export(char **args)
 			// free(value);
 		i++;
 	}
-	return (0);
+	return (flag);
 }

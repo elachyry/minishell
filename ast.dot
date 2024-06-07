@@ -1,7 +1,3 @@
 digraph AST {
-"0x4b68730" [label="&&"];
-"0x4b68730" -> "0x4b68880" [label="L"];
-"0x4b68880" [label="CMD: ls"];
-"0x4b68730" -> "0x4b689d0" [label="R"];
-"0x4b689d0" [label="CMD: l"];
+"0x161c5e0" [label="CMD: export"];
 }
