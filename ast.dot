@@ -1,3 +1,7 @@
 digraph AST {
-"0x8d4fc0" [label="CMD: cd $PWD hi"];
+"0x4b68730" [label="&&"];
+"0x4b68730" -> "0x4b68880" [label="L"];
+"0x4b68880" [label="CMD: ls"];
+"0x4b68730" -> "0x4b689d0" [label="R"];
+"0x4b689d0" [label="CMD: l"];
 }

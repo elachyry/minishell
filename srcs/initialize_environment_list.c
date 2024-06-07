@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:11:04 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/02 17:24:28 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/07 00:49:41 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ t_env	*add_env_var(t_env *env_list, char *key, char *value)
 	new_env = gc_malloc(sizeof(t_env));
 	if (!new_env)
 		return (NULL);
-	new_env->key = strdup(key);
-	new_env->value = strdup(value);
+	new_env->key = ft_strdup(key);
+	new_env->value = ft_strdup(value);
 	new_env->next = env_list;
 	return (new_env);
 }

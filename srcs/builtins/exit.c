@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 00:57:54 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/05 23:02:40 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/07 00:58:32 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	ft_exit(char **args)
 	{
 		if (!ft_isnumber(args[1]))
 		{
-			ft_putstr_fd("exit\n", 1);
-			ft_putstr_fd("minishell: exit: ", 2);
+			ft_putstr_fd("exit\nminishell: exit: ", 2);
 			ft_putstr_fd(args[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
+			gc_cleanup();
 			exit(2);
 		}
 		status = ft_atoi(args[1]);

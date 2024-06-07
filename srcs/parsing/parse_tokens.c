@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:37:53 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/02 17:22:13 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/07 00:59:02 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_ast_node	*parse_tokens(t_token **tokens)
 	if (g_shell_data.simple_cmd->nbr_here_doc >= 17)
 	{
 		ft_putstr_fd("minishell: maximum here-document count exceeded\n", 2);
+		gc_cleanup();
 		exit(2);
 	}
 	g_shell_data.simple_cmd->here_index = 0;

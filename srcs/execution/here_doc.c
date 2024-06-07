@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:28:30 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/02 18:34:24 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/07 00:58:50 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	execute_here_doc(t_ast_node *node)
 		if (!node)
 			return ;
 		help_function(node);
+		gc_cleanup();
 		exit(EXIT_SUCCESS);
 	}
 	else

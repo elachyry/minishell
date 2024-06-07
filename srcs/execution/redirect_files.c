@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:06:36 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/05 22:43:29 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/07 00:58:59 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	greater_than_operator(t_files *file)
 			perror(file->filename);
 		}
 		close(out_fd);
+		gc_cleanup();
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(out_fd, STDOUT_FILENO) == -1)
@@ -73,6 +74,7 @@ void	double_greater_than_operator(t_files *file)
 			perror(file->filename);
 		}
 		close(out_fd);
+		gc_cleanup();
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(out_fd, STDOUT_FILENO) == -1)

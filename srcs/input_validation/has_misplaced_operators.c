@@ -6,13 +6,13 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:41:36 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/24 19:22:02 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:10:29 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// void	init_var(int *next_command, int *s_q_count, \
+/*// void	init_var(int *next_command, int *s_q_count, \
 // int *d_q_count, t_bool *enc_and_or)
 // {
 // 	*next_command = 0;
@@ -129,7 +129,7 @@
 // 	return (!data.next_command);
 // }
 
-////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////// */
 void	init_var(t_operator_data *data)
 {
 	data->next_command = 0;

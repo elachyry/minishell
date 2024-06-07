@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:20:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/21 17:28:28 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/07 00:58:42 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	execute_left_child(t_ast_node *node, int pipefd[2])
 		perror_message("dup2", EXIT_FAILURE);
 	close(pipefd[1]);
 	execute_ast(node->left);
+	gc_cleanup();
 	exit(g_shell_data.status);
 }
 
@@ -29,6 +30,7 @@ static void	execute_right_child(t_ast_node *node, int pipefd[2])
 		perror_message("dup2", EXIT_FAILURE);
 	close(pipefd[0]);
 	execute_ast(node->right);
+	gc_cleanup();
 	exit(g_shell_data.status);
 }
 

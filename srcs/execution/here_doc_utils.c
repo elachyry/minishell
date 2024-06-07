@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:00:16 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/02 17:23:42 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:11:56 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ static char	*replace_with_val(char *str, char **buff)
 
 char	*expand_here_doc(char *str)
 {
-	int		i;
 	char	*buff;
 
 	buff = ft_strdup("");
@@ -79,7 +78,6 @@ char	*expand_here_doc(char *str)
 	{
 		if (*str == '$')
 		{
-			i = 0;
 			if (*(str + 1) == '$')
 			{
 				buff = ft_strjoin_2(buff, str, 2);

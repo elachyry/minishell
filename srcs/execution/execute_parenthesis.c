@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_parenthesis.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:32:55 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/29 13:56:52 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/07 00:58:36 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	execute_parenthesis(t_ast_node *node)
 		g_shell_data.simple_cmd->is_parenthis_red_ch = false;
 		redirect_files_2();
 		execute_ast(g_shell_data.ast_parenth);
-		// generate_ast_diagram(g_shell_data.ast_parenth);
+		gc_cleanup();
 		exit(g_shell_data.status);
 	}
 	else

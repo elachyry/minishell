@@ -6,12 +6,12 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 00:19:45 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/28 18:51:34 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:12:23 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
+/*
 // int	handle_d_q(char current_char, int in_single_quotes, \
 // int in_double_quotes, t_token *token)
 // {
@@ -74,3 +74,4 @@
 // 	new_str[j] = '\0';
 // 	return (new_str);
 // }
+*/

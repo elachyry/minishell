@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 10:31:45 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/02 17:22:40 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:11:19 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 static int	get_nbr_of_args(t_token *ptr)
 {
-	char	**tmp;
 	int		count;
 
 	count = 0;
-	tmp = NULL;
 	while (ptr && ptr->type == IDENTIFIER)
 	{
 		count++;
@@ -31,17 +29,13 @@ static int	get_nbr_of_args(t_token *ptr)
 
 static char	**create_args_table(t_token **ptr)
 {
-	char	**tmp;
 	char	**cmd;
-	int		i;
 	int		j;
 
 	cmd = gc_malloc(sizeof(char *) * (get_nbr_of_args(*ptr) + 1));
 	if (!cmd)
 		return (NULL);
-	i = 0;
 	j = 0;
-	tmp = NULL;
 	while (*ptr && (*ptr)->type == IDENTIFIER)
 	{
 		cmd[j] = (*ptr)->value;
