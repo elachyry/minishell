@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 00:39:02 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/07 15:47:06 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:23:40 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ void	delete_env_value(char *key)
 	prev = NULL;
 	while (env)
 	{
-		if (!strcmp(env->key, key))
+		if (!ft_strcmp(env->key, key))
 		{
 			if (prev)
 				prev->next = env->next;
 			else
 				g_shell_data.environment_list = env->next;
-			// free(env->key);
-			// free(env->value);
-			// free(env);
+			free(env->key);
+			free(env->value);
+			free(env);
 			return ;
 		}
 		prev = env;
@@ -51,11 +51,11 @@ int	ft_unset(char **args)
 	i = 1;
 	while (args[i])
 	{
-		if (!is_valid_key(args[i]))
-		{
-			// display_unset_error(args[i]);
-			return (0);
-		}
+		// if (!is_valid_key(args[i]))
+		// {
+		// 	// display_unset_error(args[i]);
+		// 	return (0);
+		// }
 		delete_env_value(args[i]);
 		i++;
 	}
