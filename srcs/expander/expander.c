@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:42:28 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/02 18:34:58 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:14:13 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,6 @@ char	**remove_empty_args(char **args)
 		{
 			new_args[j++] = args[i];
 		}
-		// else
-		// {
-		// 	free(args[i]);
-		// }
 		i++;
 	}
 	new_args[j] = NULL;
@@ -64,31 +60,3 @@ t_token	*expand_tokens(t_token *tokens)
 	tokens = expand_wildcards(tokens);
 	return (tokens);
 }
-
-// t_token	*remove_empty_tokens(t_token *tokens)
-// {
-// 	t_token	*tok;
-// 	t_token	*next_tok;
-// 	t_token	*prev_tok;
-
-// 	tok = tokens;
-// 	while (tok)
-// 	{
-// 		if (*(tok->value) == '\0')
-// 		{
-// 			next_tok = tok->next;
-// 			prev_tok = tok->prev;
-// 			if (prev_tok)
-// 				prev_tok->next = next_tok;
-// 			else
-// 				tokens = next_tok;
-// 			if (next_tok)
-// 				next_tok->prev = prev_tok;
-// 			free(tok);
-// 			tok = next_tok;
-// 		}
-// 		else
-// 			tok = tok->next;
-// 	}
-// 	return (tokens);
-// }

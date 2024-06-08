@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:07:14 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/01 16:34:25 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/08 15:26:05 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	expand_env_variable(char **args)
 	if (!args)
 		return ;
 	i = 0;
+	is_var = false;
 	while (args[i])
 	{
 		in_single_quotes = 0;
@@ -118,84 +119,3 @@ void	expand_env_variable(char **args)
 			g_shell_data.simple_cmd->is_var = true;
 	}
 }
-
-// void	expand_env_variable(char **args)
-// {
-// 	int		i;
-// 	int		in_single_quotes;
-// 	int		in_double_quotes;
-// 	char	*tmp;
-// 	t_bool	is_var;
-
-// 	i = -1;
-// 	if (!args)
-// 		return ;
-// 	while (args[++i])
-// 	{
-// 		in_single_quotes = 0;
-// 		in_double_quotes = 0;
-// 		tmp = args[i];
-// 		while (*tmp)
-// 		{
-// 			if (*tmp == '\'')
-// 				in_single_quotes = !in_single_quotes;
-// 			else if (*tmp == '\"')
-// 				in_double_quotes = !in_double_quotes;
-// 			else if (*tmp == '$' && (!in_single_quotes || in_double_quotes))
-// 			{
-// 				is_var = true;
-// 				args[i] = shearch_and_replace(args[i]);
-// 				break ;
-// 			}
-// 			tmp++;
-// 		}
-// 	}
-// 	i = -1;
-// 	while (args[++i] && is_var)
-// 	{
-// 		if (args[i][0] == '\0')
-// 			g_shell_data.simple_cmd->is_var = true;
-// 	}
-// }
-
-// void	handle_token_value(t_token *tok)
-// {
-// 	int		in_single_quotes;
-// 	int		in_double_quotes;
-// 	char	*tmp;
-
-// 	in_single_quotes = 0;
-// 	in_double_quotes = 0;
-// 	tmp = tok->value;
-// 	while (*tmp)
-// 	{
-// 		if (*tmp == '\'')
-// 			in_single_quotes = !in_single_quotes;
-// 		else if (*tmp == '\"')
-// 			in_double_quotes = !in_double_quotes;
-// 		else if (*tmp == '$' && (!in_single_quotes || in_double_quotes))
-// 		{
-// 			tok->value = shearch_and_replace(tok->value);
-// 			break ;
-// 		}
-// 		tmp++;
-// 	}
-// }
-
-// t_token	*expand_env_variable(t_token *tokens)
-// {
-// 	t_token	*tok;
-
-// 	tok = tokens;
-// 	while (tok)
-// 	{
-// 		if (tok->prev && tok->prev->type == DoubleLessThanOperator)
-// 		{
-// 			tok = tok->next;
-// 			continue ;
-// 		}
-// 		handle_token_value(tok);
-// 		tok = tok->next;
-// 	}
-// 	return (tokens);
-// }

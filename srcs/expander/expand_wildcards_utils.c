@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:07:19 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/02 18:34:34 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:14:24 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	remove_quotes_and_advance(t_token **tok)
 	char	*tmp;
 
 	tmp = remove_all_quotes((*tok)->value);
-	// free((*tok)->value);
 	(*tok)->value = tmp;
 	if (*tok)
 		*tok = (*tok)->next;

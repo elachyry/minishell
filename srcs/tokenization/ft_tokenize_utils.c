@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 04:27:20 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/02 18:35:09 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/08 15:22:21 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void	remove_node(t_token **head, t_token *node)
 		node->next->prev = node->prev;
 	if (*head == node)
 		*head = node->next;
-	// free(node->value);
-	// free(node);
 }
 
 void	add_node_after(t_token *target_node, t_token *new_node)

@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/05 23:51:01 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/08 23:36:09 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@
 # include <fcntl.h>
 # include "tokenizing.h"
 # include "../libraries/libft/libft.h"
-# include "../libraries/get_next_line/get_next_line.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 // # define READLINE_LIBRARY
 // # include "/Users/akaddour/readline/include/readline/readline.h"
 // # include "/Users/akaddour/readline/include/readline/history.h"
@@ -79,6 +78,7 @@ typedef struct s_shell_data
 	t_ast_node		*ast_parenth;
 	t_simple_cmd	*simple_cmd;
 	t_env			*environment_list;
+	t_list			*trash;
 }	t_shell_data;
 
 extern t_shell_data	g_shell_data;
@@ -140,24 +140,22 @@ t_bool		has_unclosed_parenthesis(char *input);
 t_bool		has_unclosed_quotes(char *input);
 t_bool		has_invalid_redirections(const char *input);
 t_bool		has_misplaced_operators(const char *input);
-t_bool		syntax_checker(char	*input);
 t_bool		syntax_error_checker(char	*input);
 t_bool		check_redirection_operator(const char **input, int *s_q_count, \
 int *d_q_count, t_bool *encountered_and_or);
-void	init_var(t_operator_data *data);
-t_bool is_operator(char c);
-t_bool is_misplaced_operator(const char *input, t_operator_data *data);
-// void update_command_state(const char *input, t_operator_data *data);
+void		init_var(t_operator_data *data);
+t_bool		is_misplaced_operator(const char *input, t_operator_data *data);
 
 // has_unclosed_parenthesis_utils.c
 t_bool		h_o_p(int *open, char *prev_ns, t_bool *non_ws_enc);
-t_bool		h_c_p(char **input, int *open, t_bool *non_ws_enc, t_bool *after_cp);
+t_bool		h_c_p(char **input, int *open, t_bool *non_ws_enc, \
+t_bool *after_cp);
 t_bool		handle_after_closing_parenthesis(char **input, t_bool *after_cp);
 
 // syntax_checker_utils.c
 char		*epur_str(char *str);
 t_bool		has_invalid_single_ampersand(const char *input);
-t_bool 		has_misplaced_operators_2(const char *input);
+t_bool		has_misplaced_operators_2(const char *input);
 t_bool		has_invalid_redirections_2(const char *input);
 
 int			is_invalid_operator(const char **input);
@@ -208,7 +206,7 @@ void		expand_quotes(char **args);
 char		*remove_all_quotes(char *str);
 char		**remove_empty_args(char **args);
 
-char	*shearch_and_replace(char *line);
+char		*shearch_and_replace(char *line);
 
 // expander_env_variable_utils.c
 char		*fetch_variable_value(char **value, char *line, t_env *env);
@@ -225,8 +223,5 @@ int			check_wildcard(t_token *tok, char **tmp);
 
 //signals
 void		handle_signals(void);
-
-
-
 
 #endif

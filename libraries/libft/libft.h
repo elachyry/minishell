@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 18:12:35 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/02 17:50:43 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/08 23:15:55 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,7 @@ char	*ft_strcat(char *dest, char *src);
 char	*ft_strcpy(char *dest, char *src);
 char	*ft_strstr(char *str, char *to_find);
 char	*ft_strncpy(char *dest, char *src, unsigned int n);
-void* gc_malloc(size_t size);
-void gc_free(void *ptr);
-void gc_cleanup();
-
-extern t_list *head;
-
+void	*gc_malloc(size_t size);
+void	gc_cleanup(void);
 
 #endif

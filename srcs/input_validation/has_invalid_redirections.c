@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:49:24 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/06 00:39:03 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:12:54 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,27 @@ const char	*skip_spaces(const char *input)
 
 int	is_invalid_operator(const char **input)
 {
-	const char *operator_start;
-	int is_double_less_than;
-	const char *temp_input = *input;
+	const char	*operator_start;
+	int			is_double_less_than;
+	const char	*t_input;
 
-	operator_start = temp_input;
-	is_double_less_than = (*operator_start == '<' && *(temp_input + 1) == '<');
-	temp_input++;
-	if (*operator_start == *temp_input && (*temp_input == '>' || *temp_input == '<'
-			|| *temp_input == '|' || *temp_input == '&'))
-		temp_input++;
-	temp_input = skip_spaces(temp_input);
-	if (*temp_input == '\0')
+	t_input = *input;
+	operator_start = t_input;
+	is_double_less_than = (*operator_start == '<' && *(t_input + 1) == '<');
+	t_input++;
+	if (*operator_start == *t_input && (*t_input == '>' || *t_input == '<'
+			|| *t_input == '|' || *t_input == '&'))
+		t_input++;
+	t_input = skip_spaces(t_input);
+	if (*t_input == '\0')
 		return (1);
-	if (*temp_input == '*' && !is_double_less_than)
+	if (*t_input == '*' && !is_double_less_than)
 		return (1);
-	if (*temp_input == '>' || *temp_input == '<' || *temp_input == '|' || *temp_input == '&')
+	if (*t_input == '>' || *t_input == '<'
+		|| *t_input == '|' || *t_input == '&')
 	{
 		if (!(*operator_start == '|' || *operator_start == '&')
-			|| !(*temp_input == '<' || *temp_input == '>'))
+			|| !(*t_input == '<' || *t_input == '>'))
 			return (1);
 	}
 	return (0);

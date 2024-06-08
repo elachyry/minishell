@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:20:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/07 00:58:42 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/08 21:12:40 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	execute_pipe(t_ast_node *node)
 		execute_right_child(node, pipefd);
 	close(pipefd[0]);
 	close(pipefd[1]);
-	waitpid(right_pid, &right_status, WCONTINUED);
-	waitpid(left_pid, NULL, WCONTINUED);
+	waitpid(right_pid, &right_status, 0);
+	waitpid(left_pid, NULL, 0);
 	if (WIFEXITED(right_status))
 		g_shell_data.status = WEXITSTATUS(right_status);
 	else

@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/06/07 00:49:24 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/08 23:44:37 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	display_prompt(char **line)
 void	initialize_shell(char **envp)
 {
 	g_shell_data.line = NULL;
+	g_shell_data.trash = NULL;
 	g_shell_data.environment = envp;
 	g_shell_data.path = NULL;
 	g_shell_data.tokens = NULL;
@@ -111,16 +112,13 @@ int	main(int ac, char **av, char **envp)
 			continue ;
 		}
 		tokens = ft_tokenize(g_shell_data.line);
-		// display_tokens(tokens);
 		g_shell_data.simple_cmd->should_expand = true;
 		tokens = expand_tokens(tokens);
-		// free(g_shell_data.line);
-		// display_tokens(tokens);
+		free(g_shell_data.line);
 		ast = parse_tokens(&tokens);
 		if (!ast)
 			continue ;
 		g_shell_data.ast = ast;
-		generate_ast_diagram(ast);
 		g_shell_data.ctl = true;
 		execution();
 		g_shell_data.sig_exit = 0;

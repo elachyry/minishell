@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:38:47 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/07 18:23:26 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/08 21:41:01 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static void	ft_export_print(void)
 	fill_env_array(env_array, env);
 	sort_env_array(env_array, count);
 	print_env_array(env_array, count);
-	// free(env_array);
 }
 
 static void	display_export_error(char *key)
@@ -84,22 +83,21 @@ int	ft_export(char **args)
 	flag = 0;
 	if (!args[1])
 		return (ft_export_print(), 0);
-	i = 1;
-	while (args[i])
+	i = 0;
+	while (args[++i])
 	{
 		key = extract_key(args[i]);
 		if (!key || !is_valid_key(key))
 		{
 			display_export_error(args[i]);
-			// free(key);
+			++i;
 			flag = 1;
 		}
+		if (!args[i])
+			break ;
+		key = extract_key(args[i]);
 		value = extract_value(args[i]);
 		handle_key_value(args[i], key, value);
-		// free(key);
-		// if (value)
-			// free(value);
-		i++;
 	}
 	return (flag);
 }

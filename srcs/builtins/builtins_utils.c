@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 06:00:18 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/02 18:33:37 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/08 15:20:43 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	update_env_value(char *key, char *value)
 	{
 		if (!ft_strcmp(env->key, key))
 		{
-			// free(env->value);
 			if (value)
 				env->value = ft_strdup(value);
 			else

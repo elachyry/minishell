@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:20:08 by akaddour          #+#    #+#             */
-/*   Updated: 2024/05/29 21:11:16 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/08 23:33:15 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,6 @@ t_ast_node	*parse_redirection(t_token **tokens);
 t_ast_node	*parse_command_2(t_token **tokens, t_bool is_custom);
 t_ast_node	*cmd_before_red(t_token **tokens, t_token *ptr, t_bool is_parenth);
 char		*get_here_doc_path(t_token_type type);
-void generate_ast_diagram(t_ast_node *root);
+void		generate_ast_diagram(t_ast_node *root);
 
 #endif

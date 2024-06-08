@@ -1,7 +1,0 @@
-digraph AST {
-"0x5b7690" [label="|"];
-"0x5b7690" -> "0x5b7720" [label="L"];
-"0x5b7720" [label="CMD: env"];
-"0x5b7690" -> "0x5b77b0" [label="R"];
-"0x5b77b0" [label="CMD: grep LESS"];
-}

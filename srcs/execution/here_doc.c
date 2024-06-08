@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:28:30 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/07 00:58:50 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/08 15:30:04 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static int	write_in_file(char *str, char *delimiter, \
 		// free(str);
 		return (1);
 	}
-	write(1, "> ", 2);
 	if (g_shell_data.simple_cmd->should_expand)
 		*buff = ft_strjoin(*buff, expand_here_doc(str));
 	else
@@ -38,12 +37,11 @@ static void	here_doc(char **cmd, char **content)
 	char	*delimiter;
 
 	str = NULL;
-	delimiter = ft_strjoin(cmd[0], "\n");
+	delimiter = cmd[0];
 	buff = ft_strdup("");
-	write(1, "> ", 2);
 	while (1)
 	{
-		str = get_next_line(0);
+		str = readline("> ");
 		if (str)
 		{
 			if (write_in_file(str, delimiter, &buff, content))

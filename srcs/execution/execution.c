@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/29 15:09:04 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/08 15:41:30 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,12 @@ void	execution(void)
 	if ((!g_shell_data.status || (g_shell_data.status && !g_shell_data.simple_cmd->nbr_here_doc)))
 		execute_ast(ast);
 	g_shell_data.simple_cmd->nbr_here_doc = 0;
-	while (*g_shell_data.simple_cmd->here_docs_files)
+	if (g_shell_data.simple_cmd->here_docs_files)
 	{
-		unlink(*g_shell_data.simple_cmd->here_docs_files);
-		g_shell_data.simple_cmd->here_docs_files++;
+		while (*g_shell_data.simple_cmd->here_docs_files)
+		{
+			unlink(*g_shell_data.simple_cmd->here_docs_files);
+			g_shell_data.simple_cmd->here_docs_files++;
+		}
 	}
 }
