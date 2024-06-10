@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 01:01:50 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/02 17:23:38 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/10 06:38:37 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,11 @@
 char	*retrieve_env_var(char *name, t_env *env)
 {
 	t_env	*var;
-	int		max;
 
 	var = env;
 	while (var)
 	{
-		max = ft_strlen(var->key);
-		if ((int) ft_strlen(name) > max)
-			max = ft_strlen(name);
-		if (!ft_strncmp(var->key, name, max) && var->value)
+		if (!ft_strcmp(var->key, name) && var->value)
 			return (var->value);
 		var = var->next;
 	}
@@ -60,14 +56,12 @@ char	*fetch_variable_value(char **value, char *line, t_env *env)
 		*value = ft_itoa(g_shell_data.status);
 		return (line);
 	}
-	if (!ft_isalnum(*line) && *line != '_')
+	if (!ft_isalpha(*line) && *line != '_')
 	{
 		*value = "$";
-		if (*line != -1)
-			return (line - 1);
-		return (line);
+		return (line - 1);
 	}
-	while (*line == '_' || ft_isalnum(*line))
+	while (*line == '_' || ft_isalpha(*line))
 	{
 		name = concatenate_char(name, *line);
 		line++;

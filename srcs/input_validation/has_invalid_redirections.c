@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:49:24 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/08 16:12:54 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/10 06:40:29 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	is_invalid_operator(const char **input)
 }
 
 t_bool	check_redirection_operator(const char **input, int *s_q_count, \
-int *d_q_count, t_bool *encountered_and_or)
+int *d_q_count)
 {
 	const char	*temp;
 
@@ -75,7 +75,6 @@ int *d_q_count, t_bool *encountered_and_or)
 			temp++;
 			if (*temp == **input)
 			{
-				*encountered_and_or = true;
 				*input += 2;
 				return (true);
 			}
@@ -96,7 +95,7 @@ t_bool	has_invalid_redirections(const char *input)
 	while (*input)
 	{
 		update_quote_counts(*input, &s_q, &d_q);
-		if (!check_redirection_operator(&input, &s_q, &d_q, &enc_and_or))
+		if (!check_redirection_operator(&input, &s_q, &d_q))
 			return (false);
 		input++;
 	}

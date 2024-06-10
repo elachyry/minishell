@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:46:43 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/05 23:50:53 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/10 06:33:11 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_bool	has_invalid_redirections_2(const char *input)
 	while (*input)
 	{
 		update_quote_counts(*input, &s_q, &d_q);
-		if (!check_redirection_operator(&input, &s_q, &d_q, &enc_and_or))
+		if (!check_redirection_operator(&input, &s_q, &d_q))
 			return (false);
 		input++;
 	}
