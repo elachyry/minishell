@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:30:23 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/07 18:16:47 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/11 00:36:29 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 static int	back_to_home(void)
 {
 	char	*home;
+	char	*cwd;
 
+	cwd = getcwd(NULL, 0);
 	if (get_env_value("OLDPWD"))
-		update_env_value("OLDPWD", getcwd(NULL, 0));
+		update_env_value("OLDPWD", cwd);
 	home = get_env_value("HOME");
 	if (!home)
 	{
@@ -27,8 +29,10 @@ static int	back_to_home(void)
 	if (chdir(home) == 1)
 	{
 		update_env_value("PWD", home);
+		free(cwd);
 		return (0);
 	}
+	free(cwd);
 	return (0);
 }
 
@@ -44,15 +48,16 @@ int	ft_cd(char **path)
 	char	*cwd;
 	char	*oldpwd;
 
-	if (path[2])
+	if (tablen(path) > 2 && path[2])
 		return (ft_putstr_fd("minishell: cd: too many arguments\n", 2), 1);
 	oldpwd = getcwd(NULL, 0);
 	if (!path[1] || (ft_strlen(path[1]) == 0 && get_env_value(path[1]) == NULL))
-		return (back_to_home());
+		return (free(oldpwd), back_to_home());
 	if (chdir(path[1]) != 0)
-		return (display_cd_error(path[1]), 1);
+		return (free(oldpwd), display_cd_error(path[1]), 1);
 	if (get_env_value("OLDPWD"))
 		update_env_value("OLDPWD", oldpwd);
+	free(oldpwd);
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
@@ -63,5 +68,5 @@ int	ft_cd(char **path)
 	}
 	if (get_env_value("PWD"))
 		update_env_value("PWD", cwd);
-	return (0);
+	return (free(cwd), 0);
 }

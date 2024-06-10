@@ -44,6 +44,8 @@ fclean:
 	@make -C $(LIBFT_PATH) fclean
 	rm -f $(NAME) $(OBJS)
 
-re : fclean all clean
+re : fclean all
 
 .PHONY: all clean fclean re
+
+.SECONDARY: $(OBJS)

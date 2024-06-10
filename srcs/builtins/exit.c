@@ -6,27 +6,33 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 00:57:54 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/07 19:41:00 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/11 00:32:25 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+static void	num_required(char *args)
+{
+	ft_putstr_fd("exit\n", 1);
+	ft_putstr_fd("minishell: exit: ", 2);
+	ft_putstr_fd(args, 2);
+	ft_putstr_fd(": numeric argument required\n", 2);
+	(gc_cleanup(), exit(2));
+}
+
 int	ft_exit(char **args)
 {
 	int		status;
+	int		flag;
 
 	status = 0;
+	flag = 0;
 	if (args[1])
 	{
-		if (!ft_isnumber(args[1]))
-		{
-			ft_putstr_fd("exit\n", 1);
-			ft_putstr_fd("minishell: exit: ", 2);
-			ft_putstr_fd(args[1], 2);
-			ft_putstr_fd(": numeric argument required\n", 2);
-			(gc_cleanup(), exit(2));
-		}
+		ft_atol(args[1], &flag);
+		if (!ft_isnumber(args[1]) || flag == 1)
+			num_required(args[1]);
 		status = ft_atoi(args[1]);
 		if (args[2])
 		{

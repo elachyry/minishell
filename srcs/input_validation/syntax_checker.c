@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 14:50:49 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/10 06:38:11 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:23:05 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_bool	syntax_error_checker(char	*input)
 
 	g_shell_data.line = ft_strtrim(input, " \t\n\v\f\r");
 	str = epur_str(g_shell_data.line);
-	printf("str = %s\n", str);
 	if (ft_strncmp(g_shell_data.line, "", 1) == 0)
 		return (true);
 	if (!has_misplaced_operators(str)

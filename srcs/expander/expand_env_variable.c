@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:07:14 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/10 01:43:43 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/10 23:35:07 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,14 @@ char	*shearch_and_replace(char *line)
 	return (ret);
 }
 
-char	*process_arg(char *arg, int *in_single_quotes, \
-int *in_double_quotes, t_bool *is_var)
+char	*process_arg(char *arg, t_bool *is_var)
 {
 	char	*tmp;
 
 	tmp = arg;
 	while (*tmp)
 	{
-		if (*tmp == '\'')
-			*in_single_quotes = !(*in_single_quotes);
-		else if (*tmp == '\"')
-			*in_double_quotes = !(*in_double_quotes);
-		else if (*tmp == '$' && (!(*in_single_quotes) || *in_double_quotes))
+		if (*tmp == '$')
 		{
 			*is_var = true;
 			arg = shearch_and_replace(arg);
@@ -96,8 +91,6 @@ int *in_double_quotes, t_bool *is_var)
 void	expand_env_variable(char **args)
 {
 	int		i;
-	int		in_single_quotes;
-	int		in_double_quotes;
 	t_bool	is_var;
 
 	if (!args)
@@ -106,10 +99,7 @@ void	expand_env_variable(char **args)
 	is_var = false;
 	while (args[i])
 	{
-		in_single_quotes = 0;
-		in_double_quotes = 0;
-		args[i] = process_arg(args[i], &in_single_quotes, \
-		&in_double_quotes, &is_var);
+		args[i] = process_arg(args[i], &is_var);
 		i++;
 	}
 	i = -1;
