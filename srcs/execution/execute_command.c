@@ -58,6 +58,16 @@ static void	process_cmd(char **args)
 	execve_fail(args);
 }
 
+static int	tablen(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
+}
+
 static int	help_function(char	**new_args)
 {
 	int		status;
@@ -90,10 +100,12 @@ int	execute_command(char **args)
 {
 	char	**new_args;
 
-	new_args = args;
 	g_shell_data.simple_cmd->is_var = false;
 	expand_env_variable(args);
+	if (tablen(args) == 1)
+		args = ft_split_2(args[0]);
 	expand_quotes(args);
+	new_args = args;
 	if (g_shell_data.simple_cmd->is_var)
 		new_args = remove_empty_args(args);
 	if (new_args[0] == NULL)

@@ -38,5 +38,5 @@ int	ft_exit(char **args)
 	}
 	if (!g_shell_data.simple_cmd->is_parenthis)
 		ft_putstr_fd("exit\n", 1);
-	return (gc_cleanup(), exit(status), 0);
+	return (gc_cleanup(), exit(g_shell_data.status), 0);
 }
