@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 00:57:54 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/11 00:32:25 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/11 00:46:50 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_exit(char **args)
 	int		status;
 	int		flag;
 
-	status = 0;
+	status = g_shell_data.status;
 	flag = 0;
 	if (args[1])
 	{
@@ -44,5 +44,5 @@ int	ft_exit(char **args)
 	}
 	if (!g_shell_data.simple_cmd->is_parenthis)
 		ft_putstr_fd("exit\n", 1);
-	return (gc_cleanup(), exit(g_shell_data.status), 0);
+	return (gc_cleanup(), exit(status), 0);
 }

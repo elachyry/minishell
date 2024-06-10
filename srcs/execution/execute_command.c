@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:42:54 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/10 23:16:16 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/11 00:44:12 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,6 @@ static void	process_cmd(char **args)
 	execve(g_shell_data.simple_cmd->cmd_path,
 		args, g_shell_data.environment);
 	execve_fail(args);
-}
-
-static int	tablen(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-		i++;
-	return (i);
 }
 
 static int	help_function(char	**new_args)
