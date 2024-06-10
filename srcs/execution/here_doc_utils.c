@@ -106,5 +106,6 @@ int	write_in_file(char *str, char *delimiter, \
 		*buff = ft_strjoin(*buff, expand_here_doc(str));
 	else
 		*buff = ft_strjoin(*buff, str);
+	*buff = ft_strjoin(*buff, "\n");
 	return (0);
 }
