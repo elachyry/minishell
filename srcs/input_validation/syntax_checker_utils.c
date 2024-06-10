@@ -12,36 +12,41 @@
 
 #include "../../includes/minishell.h"
 
+static char	*help_function(char *str)
+{
+	char	*result;
+	int		check;
+
+	result = ft_strdup("");
+	while (*str != '\0')
+	{
+		check = 0;
+		if (*str < 9 || *str > 13)
+		{
+			if (!(ft_isspace(*str) && *(str + 1) == '\0'))
+				if (!ft_isspace(*str))
+					result = ft_strjoin_2(result, str, 1);
+			while (ft_isspace(*str) && *str != '\0')
+			{
+				str++;
+				check = 1;
+			}
+		}
+		if (check == 0)
+			str++;
+	}
+	return (result);
+}
+
 char	*epur_str(char *str)
 {
 	int		i;
-	int		l;
-	char	*tmp;
-	char	*result;
 
-	i = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
-		i++;
-	tmp = str + i;
-	result = ft_strdup("");
-	while (*tmp != '\0')
-	{
-		l = 0;
-		if (*tmp < 9 || *tmp > 13)
-		{
-			if (!(ft_isspace(*tmp) && *(tmp + 1) == '\0'))
-				if (!ft_isspace(*tmp))
-					result = ft_strjoin_2(result, tmp, 1);
-			while (ft_isspace(*tmp) && *tmp != '\0')
-			{
-				tmp++;
-				l = 1;
-			}
-		}
-		if (l == 0)
-			tmp++;
-	}
-	return (result);
+	i = -1;
+	while ((str[++i] >= 9 && str[i] <= 13) || str[i] == 32)
+		;
+	str = str + i;
+	return (help_function(str));
 }
 
 t_bool	has_invalid_single_ampersand(const char *input)
@@ -105,7 +110,7 @@ t_bool	has_misplaced_operators_2(const char *input)
 			if (*(input + 1) == *input)
 				input++;
 		}
-		else if (!isspace(*input))
+		else if (!ft_isspace(*input))
 		{
 			data.next_command = 0;
 			data.enc_and_or = false;

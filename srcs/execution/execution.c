@@ -83,7 +83,6 @@ static void	handle_here_doc(void)
 	{
 		node = g_shell_data.ast;
 		extrac_ast_parenth(node);
-		// generate_ast_diagram(g_shell_data.ast_parenth);
 	}
 	execute_here_doc(g_shell_data.ast);
 }
@@ -95,7 +94,8 @@ void	execution(void)
 	g_shell_data.simple_cmd->here_index = 0;
 	handle_here_doc();
 	ast = g_shell_data.ast;
-	if ((!g_shell_data.status || (g_shell_data.status && !g_shell_data.simple_cmd->nbr_here_doc)))
+	if ((!g_shell_data.status
+			|| (g_shell_data.status && !g_shell_data.simple_cmd->nbr_here_doc)))
 		execute_ast(ast);
 	g_shell_data.simple_cmd->nbr_here_doc = 0;
 	if (g_shell_data.simple_cmd->here_docs_files)

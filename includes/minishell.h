@@ -16,24 +16,14 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <string.h>
 # include <signal.h>
 # include <dirent.h>
-# include <dirent.h>
-# include <errno.h>
-# include <termios.h>
 # include <sys/wait.h>
-# include <sys/ioctl.h>
 # include <fcntl.h>
-# include "tokenizing.h"
-# include "../libraries/libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-// # define READLINE_LIBRARY
-// # include "/Users/akaddour/readline/include/readline/readline.h"
-// # include "/Users/akaddour/readline/include/readline/history.h"
-// # include "/Users/melachyr/readline/readline.h"
-// # include "/Users/melachyr/readline/history.h"
+# include "tokenizing.h"
+# include "../libraries/libft/libft.h"
 
 typedef struct s_env
 {
@@ -164,7 +154,20 @@ void		update_quote_counts(char c, int *s_q_count, int *d_q_count);
 
 //execution
 t_ast_node	*extract_bash_cmd(t_token **tokens);
+t_ast_node	*cmd_after_red(t_token **tokens, t_token *next, t_token *ptr);
+t_files		*new_file_node(char *filename, t_token_type type);
+t_files		*lst_file_last(t_files *head);
+t_bool		check_if_builtin(char *arg);
+char		*expand_here_doc(char *str);
 char		*ft_strjoin_2(char const *s1, char const *s2, size_t len);
+char		*concat_cmd(t_ast_node *node);
+char		*get_here_doc_name(void);
+int			get_cmd_path(char *args);
+int			execute_command(char **args);
+int			execute_builtin(char **args);
+int			redirect_files_buildin(void);
+int			write_in_file(char *str, char *delimiter, \
+char **buff, char **content);
 void		execute_ast(t_ast_node *node);
 void		execute_pipe(t_ast_node *node);
 void		execute_logical_and(t_ast_node *node);
@@ -173,30 +176,19 @@ void		execute_less_than(t_ast_node *node);
 void		execute_greater_than(t_ast_node *node);
 void		execute_parenthesis(t_ast_node *ast);
 void		execute_double_greater_than(t_ast_node *node);
-char		*expand_here_doc(char *str);
-t_files		*new_file_node(char *filename, t_token_type type);
 void		add_lst_file(t_files **head, t_files *node);
-t_files		*lst_file_last(t_files *head);
 void		execute_here_doc(t_ast_node *node);
 void		perror_message(char *file, int status);
-int			get_cmd_path(char *args);
-char		*get_here_doc_name(void);
 void		redirect_files(void);
-int			execute_command(char **args);
 void		execution(void);
-t_bool		check_if_builtin(char *arg);
-int			execute_builtin(char **args);
 void		less_than_operator(t_files *file);
 void		greater_than_operator(t_files *file);
 void		double_greater_than_operator(t_files *file);
 void		sigquit_handler(int sig);
 void		cmd_not_found(char **args, int status);
 void		execve_fail(char **args);
-int			redirect_files_buildin(void);
 void		add_node_after(t_token *target_node, t_token *new_node);
-t_ast_node	*cmd_after_red(t_token **tokens, t_token *next, t_token *ptr);
 void		execute_double_less_than(t_ast_node *node);
-char		*concat_cmd(t_ast_node *node);
 
 // expander
 t_token		*expand_tokens(t_token *tokens);

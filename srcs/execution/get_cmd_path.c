@@ -44,7 +44,6 @@ static int	search_for_cmd_path(char *args)
 			g_shell_data.simple_cmd->cmd_path = path;
 			return (1);
 		}
-		// free(path);
 	}
 	p = ft_strjoin("./", cmd);
 	if (access(p, X_OK) != -1 && g_shell_data.path[0] == NULL)

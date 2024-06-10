@@ -65,7 +65,6 @@ char	*get_here_doc_name(void)
 	fd = open("/dev/random", O_RDONLY);
 	if (fd == -1)
 	{
-		// free(name);
 		return (NULL);
 	}
 	c = 0;

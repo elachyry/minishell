@@ -24,7 +24,6 @@ void	less_than_operator(t_files *file)
 			ft_putstr_fd("minishell: ", 2);
 			perror(file->filename);
 		}
-		
 		close(in_fd);
 		gc_cleanup();
 		exit(EXIT_FAILURE);

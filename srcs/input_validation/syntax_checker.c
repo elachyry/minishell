@@ -18,6 +18,7 @@ t_bool	syntax_error_checker(char	*input)
 
 	g_shell_data.line = ft_strtrim(input, " \t\n\v\f\r");
 	str = epur_str(g_shell_data.line);
+	printf("str = %s\n", str);
 	if (ft_strncmp(g_shell_data.line, "", 1) == 0)
 		return (true);
 	if (!has_misplaced_operators(str)

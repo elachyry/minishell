@@ -93,3 +93,18 @@ char	*expand_here_doc(char *str)
 	}
 	return (buff);
 }
+
+int	write_in_file(char *str, char *delimiter, \
+	char **buff, char **content)
+{
+	if (ft_strcmp(delimiter, str) == 0)
+	{
+		*content = ft_strdup(*buff);
+		return (1);
+	}
+	if (g_shell_data.simple_cmd->should_expand)
+		*buff = ft_strjoin(*buff, expand_here_doc(str));
+	else
+		*buff = ft_strjoin(*buff, str);
+	return (0);
+}

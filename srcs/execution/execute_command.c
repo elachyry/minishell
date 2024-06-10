@@ -58,22 +58,12 @@ static void	process_cmd(char **args)
 	execve_fail(args);
 }
 
-int	execute_command(char **args)
+static int	help_function(char	**new_args)
 {
 	int		status;
 	pid_t	pid;
-	char	**new_args;
 
-	new_args = args;
-	g_shell_data.simple_cmd->is_var = false;
-	expand_env_variable(args);
-	expand_quotes(args);
-	if (g_shell_data.simple_cmd->is_var)
-		new_args = remove_empty_args(args);
-	if (new_args[0] == NULL)
-		return (0);
 	status = 0;
-	signal(SIGQUIT, sigquit_handler);
 	if (check_if_builtin(new_args[0]))
 		return (manage_builtins(new_args));
 	else
@@ -94,4 +84,20 @@ int	execute_command(char **args)
 			wait_for_cmd(pid, &status);
 		return (WEXITSTATUS(status));
 	}
+}
+
+int	execute_command(char **args)
+{
+	char	**new_args;
+
+	new_args = args;
+	g_shell_data.simple_cmd->is_var = false;
+	expand_env_variable(args);
+	expand_quotes(args);
+	if (g_shell_data.simple_cmd->is_var)
+		new_args = remove_empty_args(args);
+	if (new_args[0] == NULL)
+		return (0);
+	signal(SIGQUIT, sigquit_handler);
+	return (help_function(new_args));
 }

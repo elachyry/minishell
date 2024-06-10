@@ -52,19 +52,11 @@ void	initialize_shell(char **envp)
 	extract_path();
 }
 
-int	main(int ac, char **av, char **envp)
+static void	help_function(void)
 {
 	t_token		*tokens;
 	t_ast_node	*ast;
 
-	(void)av;
-	(void)ac;
-	if (ac != 1)
-	{
-		printf("This program does not accept arguments\n");
-		exit(0);
-	}
-	initialize_shell(envp);
 	while (1)
 	{
 		handle_signals();
@@ -86,6 +78,19 @@ int	main(int ac, char **av, char **envp)
 		g_shell_data.sig_exit = 0;
 		g_shell_data.ctl = false;
 	}
+}
+
+int	main(int ac, char **av, char **envp)
+{
+	(void)av;
+	(void)ac;
+	if (ac != 1)
+	{
+		printf("This program does not accept arguments\n");
+		exit(0);
+	}
+	initialize_shell(envp);
+	help_function();
 	gc_cleanup();
 	return (0);
 }

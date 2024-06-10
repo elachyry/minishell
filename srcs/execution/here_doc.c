@@ -14,22 +14,6 @@
 
 void	help_function(t_ast_node *node);
 
-static int	write_in_file(char *str, char *delimiter, \
-	char **buff, char **content)
-{
-	if (ft_strcmp(delimiter, str) == 0)
-	{
-		*content = ft_strdup(*buff);
-		// free(str);
-		return (1);
-	}
-	if (g_shell_data.simple_cmd->should_expand)
-		*buff = ft_strjoin(*buff, expand_here_doc(str));
-	else
-		*buff = ft_strjoin(*buff, str);
-	return (0);
-}
-
 static void	here_doc(char **cmd, char **content)
 {
 	char	*str;
@@ -50,7 +34,6 @@ static void	here_doc(char **cmd, char **content)
 		else
 		{
 			*content = ft_strdup(buff);
-			// free(str);
 			break ;
 		}
 	}
@@ -77,7 +60,6 @@ static void	handle_here_doc(t_ast_node *node)
 	expand_quotes(node->right->args);
 	here_doc(node->right->args, &content);
 	write_content_to_file(content, node->right->args[1]);
-	// free(content);
 	help_function(node->right->right);
 }
 

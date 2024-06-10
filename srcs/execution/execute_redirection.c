@@ -89,10 +89,7 @@ void	execute_double_less_than(t_ast_node *node)
 	add_lst_file(&g_shell_data.simple_cmd->files, file);
 	fd = open(node->right->args[1], O_RDONLY);
 	if (fd == -1)
-	{
-		// file_not_found(node->right->args[1], fd);
 		return ;
-	}
 	close(fd);
 	execute_ast(node->right->right);
 	execute_ast(node->left);

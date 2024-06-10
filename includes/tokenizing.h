@@ -19,7 +19,7 @@ typedef enum e_bool
 	false = 0,
 }	t_bool;
 
-// tokes types
+// token types
 typedef enum e_token_type
 {
 	IDENTIFIER,
@@ -34,7 +34,7 @@ typedef enum e_token_type
 	ClosingParenthesis,
 }	t_token_type;
 
-// double linked list
+// tokens linked list
 typedef struct s_token
 {
 	t_token_type	type;
@@ -43,6 +43,7 @@ typedef struct s_token
 	struct s_token	*prev;
 }	t_token;
 
+// ast linked list
 typedef struct s_ast_node
 {
 	t_token_type		type;
@@ -51,16 +52,16 @@ typedef struct s_ast_node
 	struct s_ast_node	*right;
 }	t_ast_node;
 
-void		display_tokens(t_token *tokens);
 t_token		*ft_tokenize(char *input);
-void		ft_skip_spaces(char **line);
 t_token		*add_token(t_token *token_list, t_token_type type, char *value);
 t_token		*handle_less_than(char **input, t_token *token_list);
 t_token		*handle_greater_than(char **input, t_token *token_list);
 t_token		*handle_parenthesis(char **input, t_token *token_list);
 t_token		*handle_pipe(char **input, t_token *token_list);
 t_token		*create_token_node(const char *value, int type);
+void		ft_skip_spaces(char **line);
 void		add_node_after(t_token *target_node, t_token *new_node);
+void		display_tokens(t_token *tokens);
 void		remove_node(t_token **head, t_token *node);
 
 //parsing
@@ -76,6 +77,5 @@ t_ast_node	*parse_redirection(t_token **tokens);
 t_ast_node	*parse_command_2(t_token **tokens, t_bool is_custom);
 t_ast_node	*cmd_before_red(t_token **tokens, t_token *ptr, t_bool is_parenth);
 char		*get_here_doc_path(t_token_type type);
-void		generate_ast_diagram(t_ast_node *root);
 
 #endif
