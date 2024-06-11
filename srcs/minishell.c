@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/06/10 06:42:35 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/11 01:47:23 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ static void	help_function(void)
 int	main(int ac, char **av, char **envp)
 {
 	(void)av;
-	(void)ac;
 	if (ac != 1)
 	{
 		printf("This program does not accept arguments\n");

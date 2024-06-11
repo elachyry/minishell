@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/10 06:42:51 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/11 05:36:41 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,8 +210,7 @@ int			process_pattern(const char **string, const char **pattern, \
 const char **str_backup, const char **pattern_backup);
 int			match(const char *string, const char *pattern);
 void		process_parenthesis(t_token **tok);
-void		remove_quotes_and_advance(t_token **tok);
-int			check_wildcard(t_token *tok, char **tmp);
+int			check_wildcard(t_token *tok);
 
 //signals
 void		handle_signals(void);

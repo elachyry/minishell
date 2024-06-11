@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:07:19 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/08 16:14:24 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/11 05:37:38 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,30 +62,21 @@ void	process_parenthesis(t_token **tok)
 		*tok = (*tok)->next;
 }
 
-void	remove_quotes_and_advance(t_token **tok)
+int	check_wildcard(t_token *tok)
 {
+	int		has_wildcard;
 	char	*tmp;
 
-	tmp = remove_all_quotes((*tok)->value);
-	(*tok)->value = tmp;
-	if (*tok)
-		*tok = (*tok)->next;
-}
-
-int	check_wildcard(t_token *tok, char **tmp)
-{
-	int	has_wildcard;
-
 	has_wildcard = 0;
-	*tmp = tok->value;
-	while (**tmp)
+	tmp = tok->value;
+	while (*tmp)
 	{
-		if (**tmp == '*')
+		if (*tmp == '*')
 		{
 			has_wildcard = 1;
 			break ;
 		}
-		(*tmp)++;
+		tmp++;
 	}
 	return (has_wildcard);
 }

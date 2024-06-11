@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:07:48 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/08 16:14:03 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/11 05:37:48 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,20 +73,20 @@ void	process_file_list(char **file_list, t_token **tok)
 	}
 }
 
-t_bool	process_token(t_token **tok, char **tmp)
+t_bool	process_token(t_token **tok)
 {
+	if ((*tok)->prev && (*tok)->prev->type == DoubleLessThanOperator)
+	{
+		*tok = (*tok)->next;
+		return (true);
+	}
 	if ((*tok)->type == OpeningParenthesis)
 	{
 		process_parenthesis(tok);
 		return (true);
 	}
 	if (((*tok)->value[0] == '\'' || (*tok)->value[0] == '\"') \
-		&& check_wildcard(*tok, tmp))
-	{
-		*tok = (*tok)->next;
-		return (true);
-	}
-	if ((*tok)->prev && (*tok)->prev->type == DoubleLessThanOperator)
+		&& check_wildcard(*tok))
 	{
 		*tok = (*tok)->next;
 		return (true);
@@ -98,15 +98,14 @@ t_token	*expand_wildcards(t_token *tokens)
 {
 	t_token			*tok;
 	char			*file_list;
-	char			*tmp;
 
 	tok = tokens;
 	file_list = NULL;
 	while (tok)
 	{
-		if (process_token(&tok, &tmp))
+		if (process_token(&tok))
 			continue ;
-		if (check_wildcard(tok, &tmp))
+		if (check_wildcard(tok))
 		{
 			process_wildcard(&tok, &file_list);
 			if (file_list)
