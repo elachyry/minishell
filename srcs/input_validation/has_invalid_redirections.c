@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   has_invalid_redirections.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:49:24 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/11 02:22:08 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:31:11 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

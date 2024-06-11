@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env_variable_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 01:01:50 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/10 23:09:01 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/11 23:29:09 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ char	*fetch_variable_value(char **value, char *line, t_env *env)
 		*value = ft_itoa(g_shell_data.status);
 		return (line);
 	}
-	if (!ft_isalpha(*line) && *line != '_')
+	if (!ft_isalnum(*line) && *line != '_')
 	{
 		*value = "$";
 		return (line - 1);
 	}
-	while (*line == '_' || ft_isalpha(*line))
+	while (*line == '_' || ft_isalnum(*line))
 	{
 		name = concatenate_char(name, *line);
 		line++;

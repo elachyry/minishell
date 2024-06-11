@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_logical_operator.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:16:44 by melachyr          #+#    #+#             */
-/*   Updated: 2024/05/26 18:38:45 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/11 23:33:08 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
