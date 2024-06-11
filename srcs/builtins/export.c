@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:38:47 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/08 21:41:01 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/11 22:45:24 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@ static void	print_env_array(t_env **env_array, int count)
 	j = 0;
 	while (j < count)
 	{
-		if (env_array[j]->value)
-			printf("declare -x %s=\"%s\"\n", env_array[j]->key,
-				env_array[j]->value);
-		else
-			printf("declare -x %s\n", env_array[j]->key);
+		if (env_array[j]->key[0] != '_')
+		{
+			if (env_array[j]->value)
+				printf("declare -x %s=\"%s\"\n", env_array[j]->key,
+					env_array[j]->value);
+			else
+				printf("declare -x %s\n", env_array[j]->key);
+		}
 		j++;
 	}
 }

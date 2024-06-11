@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:07:14 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/10 23:35:07 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/11 23:37:41 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,22 @@ char	*handle_variable_expansion(char *line, char **ret, \
 t_quote_state *quote_state)
 {
 	char	*value;
+	char	quote_char;
 
 	if (*line == '$' && (!quote_state->in_single_quotes
 			|| (quote_state->in_double_quotes && !quote_state->nested_quotes)))
 	{
+		if (*(line + 1) == '\"' || *(line + 1) == '\'')
+		{
+			quote_char = *(line + 1);
+			line += 2;
+			while (*line != quote_char && *line != '\0')
+			{
+				*ret = concatenate_char(*ret, *line);
+				line++;
+			}
+			return (line);
+		}
 		line = fetch_variable_value(&value, line + 1, \
 		g_shell_data.environment_list);
 		*ret = ft_strjoin(*ret, value);

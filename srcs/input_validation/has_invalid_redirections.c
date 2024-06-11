@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:49:24 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/11 18:31:11 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/12 00:08:08 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,26 @@ int	is_invalid_operator(const char **input)
 {
 	const char	*operator_start;
 	int			is_double_less_than;
-	const char	*t_input;
+	const char	*tmp;
 
-	t_input = *input;
-	operator_start = t_input;
-	is_double_less_than = (*operator_start == '<' && *(t_input + 1) == '<');
-	t_input++;
-	if (*operator_start == *t_input && (*t_input == '>' || *t_input == '<'
-			|| *t_input == '|' || *t_input == '&'))
-		t_input++;
-	t_input = skip_spaces(t_input);
-	if (*t_input == '\0')
+	tmp = *input;
+	operator_start = tmp;
+	is_double_less_than = (*operator_start == '<' && *(tmp + 1) == '<');
+	if (is_double_less_than)
+		(*input)++;
+	tmp++;
+	if (*operator_start == *tmp && (*tmp == '>' || *tmp == '<'
+			|| *tmp == '|' || *tmp == '&'))
+		tmp++;
+	tmp = skip_spaces(tmp);
+	if (*tmp == '\0')
 		return (1);
-	if (*t_input == '*' && !is_double_less_than)
+	if (*tmp == '*' && !is_double_less_than)
 		return (1);
-	if (*t_input == '>' || *t_input == '<'
-		|| *t_input == '|' || *t_input == '&')
+	if (*tmp == '>' || *tmp == '<' || *tmp == '|' || *tmp == '&')
 	{
 		if (!(*operator_start == '|' || *operator_start == '&')
-			|| !(*t_input == '<' || *t_input == '>'))
+			|| !(*tmp == '<' || *tmp == '>'))
 			return (1);
 	}
 	return (0);

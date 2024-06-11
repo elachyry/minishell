@@ -35,7 +35,6 @@ $(NAME):  $(OBJS)
 #@make -C $(LIBFT_PATH)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -lreadline
 
-
 clean:
 #@make -C $(LIBFT_PATH) clean
 	rm -f $(OBJS)
