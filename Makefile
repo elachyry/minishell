@@ -32,16 +32,15 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME):  $(OBJS) 
-	@make -C $(LIBFT_PATH)
+#@make -C $(LIBFT_PATH)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/$(LIBFT) -o $(NAME) -lreadline
 
-
 clean:
-	@make -C $(LIBFT_PATH) clean
+#@make -C $(LIBFT_PATH) clean
 	rm -f $(OBJS)
 
 fclean:
-	@make -C $(LIBFT_PATH) fclean
+#@make -C $(LIBFT_PATH) fclean
 	rm -f $(NAME) $(OBJS)
 
 re : fclean all

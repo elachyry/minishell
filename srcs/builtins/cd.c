@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:30:23 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/11 00:36:29 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/11 22:40:24 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,18 @@ static int	back_to_home(void)
 	if (!home)
 	{
 		ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+		free(cwd);
 		return (1);
 	}
-	if (chdir(home) == 1)
+	if (chdir(home) != 0)
 	{
-		update_env_value("PWD", home);
+		ft_putstr_fd("minishell: cd: ", 2);
+		ft_putstr_fd(home, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		free(cwd);
 		return (0);
 	}
+	update_env_value("PWD", home);
 	free(cwd);
 	return (0);
 }
@@ -50,11 +54,11 @@ int	ft_cd(char **path)
 
 	if (tablen(path) > 2 && path[2])
 		return (ft_putstr_fd("minishell: cd: too many arguments\n", 2), 1);
-	oldpwd = getcwd(NULL, 0);
 	if (!path[1] || (ft_strlen(path[1]) == 0 && get_env_value(path[1]) == NULL))
-		return (free(oldpwd), back_to_home());
+		return (back_to_home());
 	if (chdir(path[1]) != 0)
-		return (free(oldpwd), display_cd_error(path[1]), 1);
+		return (display_cd_error(path[1]), 1);
+	oldpwd = getcwd(NULL, 0);
 	if (get_env_value("OLDPWD"))
 		update_env_value("OLDPWD", oldpwd);
 	free(oldpwd);
