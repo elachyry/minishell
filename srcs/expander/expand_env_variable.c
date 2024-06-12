@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:07:14 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/11 23:37:41 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/12 01:16:27 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,11 @@ t_quote_state *quote_state)
 				*ret = concatenate_char(*ret, *line);
 				line++;
 			}
+			if (*line == '\0')
+				*ret = concatenate_char(*ret, '$');
 			return (line);
 		}
-		line = fetch_variable_value(&value, line + 1, \
-		g_shell_data.environment_list);
+		line = fetch_value(&value, line + 1, g_shell_data.environment_list);
 		*ret = ft_strjoin(*ret, value);
 		return (line);
 	}

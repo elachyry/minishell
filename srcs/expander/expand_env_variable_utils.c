@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 01:01:50 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/12 00:28:24 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/12 01:16:55 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*concatenate_name(char *name, char **line)
 	return (name);
 }
 
-char	*fetch_variable_value(char **value, char *line, t_env *env)
+char	*fetch_value(char **value, char *line, t_env *env)
 {
 	char	*name;
 

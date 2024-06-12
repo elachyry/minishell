@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/11 05:36:41 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/12 01:17:01 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ char		**remove_empty_args(char **args);
 char		*shearch_and_replace(char *line);
 
 // expander_env_variable_utils.c
-char		*fetch_variable_value(char **value, char *line, t_env *env);
+char		*fetch_value(char **value, char *line, t_env *env);
 char		*concatenate_char(char *str, char c);
 char		*retrieve_env_var(char *name, t_env *env);
 
