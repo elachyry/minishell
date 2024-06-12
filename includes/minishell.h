@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/12 01:17:01 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/12 01:23:03 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_simple_cmd
 	char	*here_name;
 	char	**here_docs_files;
 	int		here_index;
+	int		parenth_index;
 	int		nbr_here_doc;
 	int		is_parenthis;
 	int		is_parenthis_red_ch;
@@ -62,10 +63,11 @@ typedef struct s_shell_data
 	char			**path;
 	int				status;
 	int				sig_exit;
+	int				parenth_count;
 	t_bool			ctl;
 	t_token			*tokens;
 	t_ast_node		*ast;
-	t_ast_node		*ast_parenth;
+	t_ast_node		**ast_parenth;
 	t_simple_cmd	*simple_cmd;
 	t_env			*environment_list;
 	t_list			*trash;
@@ -189,6 +191,7 @@ void		cmd_not_found(char **args, int status);
 void		execve_fail(char **args);
 void		add_node_after(t_token *target_node, t_token *new_node);
 void		execute_double_less_than(t_ast_node *node);
+void		extrac_ast_parenth(t_ast_node *node);
 
 // expander
 t_token		*expand_tokens(t_token *tokens);

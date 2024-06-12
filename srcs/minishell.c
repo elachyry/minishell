@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/06/11 01:47:23 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/11 23:28:08 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	initialize_shell(char **envp)
 	g_shell_data.sig_exit = 0;
 	g_shell_data.ctl = false;
 	g_shell_data.simple_cmd = gc_malloc(sizeof(t_simple_cmd));
+	g_shell_data.simple_cmd->parenth_index = 0;
 	g_shell_data.simple_cmd->should_expand = true;
 	g_shell_data.simple_cmd->here_docs_files = NULL;
 	g_shell_data.simple_cmd->here_name = NULL;
@@ -59,6 +60,7 @@ static void	help_function(void)
 
 	while (1)
 	{
+		g_shell_data.parenth_count = 0;
 		handle_signals();
 		display_prompt(&g_shell_data.line);
 		if (!syntax_error_checker(g_shell_data.line))

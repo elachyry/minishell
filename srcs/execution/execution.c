@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/08 15:41:30 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/12 00:05:20 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,41 +49,14 @@ void	execute_ast(t_ast_node *node)
 		execute_parenthesis(node);
 }
 
-void	extrac_ast_parenth(t_ast_node *node)
-{
-	char		*line;
-	t_token		*tokens;
-	t_ast_node	*tmp;
-
-	if (!node)
-		return ;
-	if (node->type == OpeningParenthesis)
-	{
-		line = concat_cmd(node);
-		tokens = ft_tokenize(line);
-		tokens = expand_tokens(tokens);
-		g_shell_data.ast_parenth = parse_tokens(&tokens);
-		tmp = g_shell_data.ast_parenth;
-		extrac_ast_parenth(g_shell_data.ast_parenth);
-		g_shell_data.ast_parenth = tmp;
-	}
-	else if (node->type >= 0 && node->type <= 7)
-	{
-		extrac_ast_parenth(node->left);
-		extrac_ast_parenth(node->right);
-	}
-}
-
 static void	handle_here_doc(void)
 {
-	t_ast_node	*node;
-
 	g_shell_data.simple_cmd->files = NULL;
-	if (g_shell_data.simple_cmd->is_parenthis)
-	{
-		node = g_shell_data.ast;
-		extrac_ast_parenth(node);
-	}
+	g_shell_data.ast_parenth = malloc(sizeof(t_ast_node) * g_shell_data.parenth_count);
+	if (!g_shell_data.ast_parenth)
+		return ;
+	extrac_ast_parenth(g_shell_data.ast);
+	g_shell_data.simple_cmd->parenth_index = 0;
 	execute_here_doc(g_shell_data.ast);
 }
 
