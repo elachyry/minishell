@@ -6,7 +6,7 @@
 /*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 01:01:50 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/11 23:24:01 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/12 00:28:24 by akaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,16 @@ char	*concatenate_char(char *str, char c)
 	return (tmp);
 }
 
+char	*concatenate_name(char *name, char **line)
+{
+	while (**line == '_' || ft_isalnum(**line))
+	{
+		name = concatenate_char(name, **line);
+		(*line)++;
+	}
+	return (name);
+}
+
 char	*fetch_variable_value(char **value, char *line, t_env *env)
 {
 	char	*name;
@@ -58,14 +68,16 @@ char	*fetch_variable_value(char **value, char *line, t_env *env)
 	}
 	if (!ft_isalpha(*line) && *line != '_')
 	{
+		if (ft_isdigit(*line))
+		{
+			line++;
+			*value = "";
+			return (line - 1);
+		}
 		*value = "$";
 		return (line - 1);
 	}
-	while (*line == '_' || ft_isalnum(*line))
-	{
-		name = concatenate_char(name, *line);
-		line++;
-	}
+	name = concatenate_name(name, &line);
 	if (!name)
 		name = "";
 	*value = retrieve_env_var(name, env);
