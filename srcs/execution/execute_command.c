@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:42:54 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/12 00:08:14 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:57:00 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,9 @@ int	execute_command(char **args)
 	char	**new_args;
 
 	g_shell_data.simple_cmd->is_var = false;
-	expand_env_variable(args);
-	if (tablen(args) == 1)
+	g_shell_data.simple_cmd->should_split = false;
+	args = expand_env_variable(args);
+	if (tablen(args) == 1 && g_shell_data.simple_cmd->should_split)
 		args = ft_split_2(args[0]);
 	expand_quotes(args);
 	new_args = args;

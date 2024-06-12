@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/11 23:30:26 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/12 22:03:25 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_simple_cmd
 	int		is_parenthis_red_ch;
 	t_bool	should_expand;
 	t_bool	is_var;
+	t_bool	should_split;
 	t_files	*files;
 }	t_simple_cmd;
 
@@ -192,11 +193,12 @@ void		execve_fail(char **args);
 void		add_node_after(t_token *target_node, t_token *new_node);
 void		execute_double_less_than(t_ast_node *node);
 void		extrac_ast_parenth(t_ast_node *node);
+void		write_content_to_file(char *content, char *filename);
 
 // expander
 t_token		*expand_tokens(t_token *tokens);
 t_token		*expand_wildcards(t_token *tokens);
-void		expand_env_variable(char **args);
+char		**expand_env_variable(char **args);
 void		expand_quotes(char **args);
 char		*remove_all_quotes(char *str);
 char		**remove_empty_args(char **args);
@@ -204,9 +206,12 @@ char		**remove_empty_args(char **args);
 char		*shearch_and_replace(char *line);
 
 // expander_env_variable_utils.c
-char		*fetch_variable_value(char **value, char *line, t_env *env);
+char		*fetch_value(char **value, char *line, t_env *env);
 char		*concatenate_char(char *str, char c);
 char		*retrieve_env_var(char *name, t_env *env);
+void		toggle_quotes(char current_char, t_quote_state *quote_state);
+char		*handle_variable_expansion(char *line, char **ret, \
+t_quote_state *quote_state);
 
 // expand_wildcards_utils.c
 int			process_pattern(const char **string, const char **pattern, \

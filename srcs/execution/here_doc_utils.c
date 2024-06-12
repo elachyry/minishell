@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:00:16 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/06 17:11:56 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/12 22:03:05 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,4 +108,15 @@ int	write_in_file(char *str, char *delimiter, \
 		*buff = ft_strjoin(*buff, str);
 	*buff = ft_strjoin(*buff, "\n");
 	return (0);
+}
+
+void	write_content_to_file(char *content, char *filename)
+{
+	int	fd;
+
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+		return ;
+	write(fd, content, ft_strlen(content));
+	close(fd);
 }

@@ -21,7 +21,7 @@ EXECUTION = 	srcs/execution/execution.c srcs/execution/check_if_builtin.c srcs/e
 				srcs/execution/execute_pipe.c srcs/execution/execute_logical_operator.c srcs/execution/execute_redirection.c srcs/execution/execute_parenthesis.c srcs/execution/get_cmd_path.c\
 				srcs/execution/here_doc_utils.c srcs/execution/handle_errors.c srcs/execution/redirect_files_buildin.c 
 
-EXPANDER = srcs/expander/expander.c srcs/expander/expand_env_variable.c srcs/expander/expand_env_variable_utils.c srcs/expander/expand_quotes.c srcs/expander/expand_wildcards.c srcs/expander/expand_wildcards_utils.c
+EXPANDER = srcs/expander/expander.c srcs/expander/expand_env_variable.c srcs/expander/expand_env_variable_utils.c srcs/expander/expand_env_variable_utils_2.c srcs/expander/expand_quotes.c srcs/expander/expand_wildcards.c srcs/expander/expand_wildcards_utils.c
 
 
 SRCS = srcs/initialize_environment_list.c srcs/initialize_environment_utils.c srcs/minishell.c srcs/signal.c $(BUILTINS) $(INPUT_VALIDATION) $(PARSING) $(TOKENIZATION) $(EXECUTION) $(EXPANDER)

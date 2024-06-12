@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:29:34 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/12 00:05:20 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/12 22:00:44 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	execute_ast(t_ast_node *node)
 static void	handle_here_doc(void)
 {
 	g_shell_data.simple_cmd->files = NULL;
-	g_shell_data.ast_parenth = malloc(sizeof(t_ast_node) * g_shell_data.parenth_count);
+	g_shell_data.ast_parenth
+		= malloc(sizeof(t_ast_node) * g_shell_data.parenth_count);
 	if (!g_shell_data.ast_parenth)
 		return ;
 	extrac_ast_parenth(g_shell_data.ast);

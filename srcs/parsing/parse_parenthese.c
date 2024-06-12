@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:15:09 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/11 23:28:23 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/12 22:01:53 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ t_ast_node	*extract_bash_cmd(t_token **tokens)
 	node = new_ast_node(OpeningParenthesis);
 	if (node)
 		node->args = cmd;
-	g_shell_data.parenth_count++;
 	return (node);
 }
 
@@ -73,6 +72,7 @@ t_ast_node	*parse_parenthese(t_token **tokens)
 		if (next->type == OpeningParenthesis)
 		{
 			g_shell_data.simple_cmd->is_parenthis = 1;
+			g_shell_data.parenth_count++;
 			return (extract_bash_cmd(tokens));
 		}
 		*tokens = (*tokens)->next;
