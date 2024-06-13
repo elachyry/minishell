@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_wildcards_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:07:19 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/11 23:44:49 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:26:53 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,6 @@ int	match(const char *string, const char *pattern)
 	while (*pattern == '*')
 		pattern++;
 	return (!*pattern);
-}
-
-void	process_parenthesis(t_token **tok)
-{
-	while (*tok && (*tok)->type == OpeningParenthesis)
-		*tok = (*tok)->next;
-	while (*tok && (*tok)->type != ClosingParenthesis)
-		*tok = (*tok)->next;
-	while (*tok && (*tok)->type == ClosingParenthesis)
-		*tok = (*tok)->next;
 }
 
 int	check_wildcard(t_token *tok)

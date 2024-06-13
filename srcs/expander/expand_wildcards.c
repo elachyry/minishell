@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_wildcards.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 17:07:48 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/11 23:48:34 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:26:47 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,6 @@ t_bool	process_token(t_token **tok)
 	if ((*tok)->prev && (*tok)->prev->type == DoubleLessThanOperator)
 	{
 		*tok = (*tok)->next;
-		return (true);
-	}
-	if ((*tok)->type == OpeningParenthesis)
-	{
-		process_parenthesis(tok);
 		return (true);
 	}
 	if ((*tok)->value[0] == '$' && (*tok)->value[1] == '*')

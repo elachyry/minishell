@@ -6,13 +6,13 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:20:20 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/11 23:33:46 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:12:21 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	file_not_found(char *filename, int fd)
+static void	file_not_found(char *filename)
 {
 	t_files	*last;
 
@@ -20,7 +20,6 @@ static void	file_not_found(char *filename, int fd)
 	last->is_opened = true;
 	ft_putstr_fd("minishell: ", 2);
 	perror(filename);
-	close(fd);
 	g_shell_data.status = 1;
 }
 
@@ -41,7 +40,7 @@ void	execute_less_than(t_ast_node *node)
 	fd = open(node->right->args[0], O_RDONLY);
 	if (fd == -1)
 	{
-		file_not_found(node->right->args[0], fd);
+		file_not_found(node->right->args[0]);
 		return ;
 	}
 	close(fd);
@@ -66,7 +65,7 @@ void	execute_greater_than(t_ast_node *node)
 	fd = open(node->right->args[0], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
-		file_not_found(node->right->args[0], fd);
+		file_not_found(node->right->args[0]);
 		return ;
 	}
 	close(fd);
@@ -112,7 +111,7 @@ void	execute_double_greater_than(t_ast_node *node)
 	fd = open(node->right->args[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
-		file_not_found(node->right->args[0], fd);
+		file_not_found(node->right->args[0]);
 		return ;
 	}
 	close(fd);

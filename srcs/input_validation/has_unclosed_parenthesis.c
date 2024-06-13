@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   has_unclosed_parenthesis.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 01:07:45 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/10 06:37:05 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:27:38 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ t_bool	has_unclosed_parenthesis(char *input)
 	{
 		update_quote_counts(*input, &data.s_q, &data.d_q);
 		if (!(data.d_q % 2 || data.s_q % 2) \
-			 && *input == '(')
+			&& *input == '(')
 		{
 			if (!h_o_p(&data.open, &data.prev_ns, &data.non_ws_enc))
 				return (false);
 		}
 		else if (!(data.d_q % 2 || data.s_q % 2) \
-			 && *input == ')')
+			&& *input == ')')
 		{
 			if (!h_c_p(&input, &data.open, &data.non_ws_enc, &data.after_cp))
 				return (false);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_files_buildin.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:06:36 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/07 00:58:53 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:10:10 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static int	less_than_operator_2(t_files *file)
 			ft_putstr_fd("minishell: ", 2);
 			perror(file->filename);
 		}
-		close(in_fd);
 		return (EXIT_FAILURE);
 	}
 	if (dup2(in_fd, STDIN_FILENO) == -1)
@@ -49,7 +48,6 @@ static int	greater_than_operator_2(t_files *file)
 			ft_putstr_fd("minishell: ", 2);
 			perror(file->filename);
 		}
-		close(out_fd);
 		return (EXIT_FAILURE);
 	}
 	if (dup2(out_fd, STDOUT_FILENO) == -1)
@@ -81,7 +79,6 @@ static int	double_greater_than_operator_2(t_files *file)
 			ft_putstr_fd("minishell: ", 2);
 			perror(file->filename);
 		}
-		close(out_fd);
 		return (EXIT_FAILURE);
 	}
 	close(out_fd);
