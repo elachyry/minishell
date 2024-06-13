@@ -85,6 +85,11 @@ t_bool	process_token(t_token **tok)
 		process_parenthesis(tok);
 		return (true);
 	}
+	if ((*tok)->value[0] == '$' && (*tok)->value[1] == '*')
+	{
+		++((*tok)->value);
+		return (false);
+	}
 	if (((*tok)->value[0] == '\'' || (*tok)->value[0] == '\"') \
 		&& check_wildcard(*tok))
 	{

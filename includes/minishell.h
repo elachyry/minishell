@@ -91,8 +91,8 @@ typedef struct s_parenthesis_data
 	char	prev_ns;
 	t_bool	non_ws_enc;
 	t_bool	after_cp;
-	int		s_q_count;
-	int		d_q_count;
+	int		s_q;
+	int		d_q;
 }	t_parenthesis_data;
 
 typedef struct s_operator_data
@@ -222,5 +222,6 @@ int			check_wildcard(t_token *tok);
 
 //signals
 void		handle_signals(void);
+void		sigint_herdoc_handler(int sig);
 
 #endif

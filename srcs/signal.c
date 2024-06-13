@@ -26,6 +26,13 @@ void	sigint_handler(int sig)
 	g_shell_data.sig_exit = 1;
 }
 
+void	sigint_herdoc_handler(int sig)
+{
+	(void) sig;
+	gc_cleanup();
+	exit(130);
+}
+
 void	sigquit_handler(int sig)
 {
 	(void) sig;

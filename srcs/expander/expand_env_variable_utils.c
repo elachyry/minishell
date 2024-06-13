@@ -86,7 +86,7 @@ char	*fetch_value(char **value, char *line, t_env *env)
 	}
 	if (!ft_isalpha(*line) && *line != '_')
 	{
-		if (ft_isdigit(*line))
+		if (ft_isdigit(*line) || *line == '*')
 		{
 			line++;
 			*value = "";

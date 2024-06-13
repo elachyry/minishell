@@ -49,14 +49,14 @@ static void	help_function(t_bool *is_var, t_list **head, char *arg)
 		tokens = ft_split_2(expanded);
 		while (*tokens)
 		{
-			new_node = ft_lstnew(*tokens);
+			new_node = ft_lstnew_2(*tokens);
 			ft_lstadd_back(head, new_node);
 			tokens++;
 		}
 	}
 	else
 	{
-		new_node = ft_lstnew(arg);
+		new_node = ft_lstnew_2(arg);
 		ft_lstadd_back(head, new_node);
 	}
 }
@@ -78,7 +78,7 @@ char	*process_arg(char *arg, t_list **head, t_bool *is_var)
 	}
 	if (!*is_var)
 	{
-		new_node = ft_lstnew(arg);
+		new_node = ft_lstnew_2(arg);
 		ft_lstadd_back(head, new_node);
 	}
 	return (arg);
@@ -98,6 +98,7 @@ static char	**help_function_2(t_list *head)
 		new_args[i++] = ft_strdup((char *)head->content);
 		head = head->next;
 	}
+	new_args[i] = NULL;
 	return (new_args);
 }
 

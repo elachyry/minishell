@@ -31,6 +31,7 @@ t_ast_node	*parse_tokens(t_token **tokens)
 	ptr = *tokens;
 	g_shell_data.simple_cmd->here_docs_files = NULL;
 	g_shell_data.simple_cmd->nbr_here_doc = 0;
+	g_shell_data.parenth_count = 0;
 	while (ptr)
 	{
 		if (ptr->type == DoubleLessThanOperator)

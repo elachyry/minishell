@@ -109,7 +109,7 @@ void	execute_here_doc(t_ast_node *node)
 		perror_message("fork", EXIT_FAILURE);
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, sigint_herdoc_handler);
 		if (!node)
 			return ;
 		help_function(node);

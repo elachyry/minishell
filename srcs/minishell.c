@@ -60,7 +60,6 @@ static void	help_function(void)
 
 	while (1)
 	{
-		g_shell_data.parenth_count = 0;
 		handle_signals();
 		display_prompt(&g_shell_data.line);
 		if (!syntax_error_checker(g_shell_data.line))

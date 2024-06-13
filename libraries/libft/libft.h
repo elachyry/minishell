@@ -78,5 +78,6 @@ void	*gc_malloc(size_t size);
 void	gc_cleanup(void);
 void	ft_atol(const char *str, int *overflow);
 int		tablen(char **tab);
+t_list	*ft_lstnew_2(void *content);
 
 #endif
