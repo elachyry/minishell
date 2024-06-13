@@ -36,14 +36,14 @@ t_bool	has_unclosed_parenthesis(char *input)
 	while (*input)
 	{
 		update_quote_counts(*input, &data.s_q, &data.d_q);
-		if ((!(data.d_q % 2 || data.s_q % 2) \
-			&& (data.d_q % 2 == 0 && data.s_q % 2)) && *input == '(')
+		if (!(data.d_q % 2 || data.s_q % 2) \
+			 && *input == '(')
 		{
 			if (!h_o_p(&data.open, &data.prev_ns, &data.non_ws_enc))
 				return (false);
 		}
-		else if ((!(data.d_q % 2 || data.s_q % 2) \
-			&& (data.d_q % 2 == 0 && data.s_q % 2)) && *input == ')')
+		else if (!(data.d_q % 2 || data.s_q % 2) \
+			 && *input == ')')
 		{
 			if (!h_c_p(&input, &data.open, &data.non_ws_enc, &data.after_cp))
 				return (false);

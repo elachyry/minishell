@@ -52,7 +52,6 @@ void	execute_ast(t_ast_node *node)
 static void	handle_here_doc(void)
 {
 	g_shell_data.simple_cmd->files = NULL;
-	dprintf(2, "handle_here_doc\n");
 	g_shell_data.simple_cmd->parenth_index = 0;
 	g_shell_data.ast_parenth
 		= gc_malloc(sizeof(t_ast_node) * g_shell_data.parenth_count);
