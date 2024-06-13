@@ -35,7 +35,7 @@ t_bool	h_c_p(char **input, int *open, t_bool *non_ws_enc, t_bool *after_cp)
 	temp = (*input) - 1;
 	while (ft_isspace(*temp))
 		temp--;
-	if (*temp == '>' || *temp == '<')
+	if (*temp == '>' || *temp == '<' || *temp == '&' || *temp == '|')
 		return (false);
 	(*after_cp) = true;
 	return (true);
