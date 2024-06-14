@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 06:00:18 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/14 02:11:27 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/14 20:23:27 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	is_valid_key(char *key)
 	return (1);
 }
 
-void	update_env()
+void	update_env(void)
 {
 	t_env	*env;
 	int		i;

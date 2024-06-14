@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/06/14 01:59:40 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/14 20:24:26 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	initialize_shell(char **envp)
 	if (!g_shell_data.simple_cmd)
 		return ;
 	g_shell_data.environment_list = initialize_environment_list(envp);
+	update_env_value("SHLVL", ft_itoa(ft_atoi(get_env_value("SHLVL")) + 1));
 	extract_path();
 }
 

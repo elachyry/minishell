@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize_environment_list.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 23:11:04 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/08 15:58:45 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/14 20:22:59 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

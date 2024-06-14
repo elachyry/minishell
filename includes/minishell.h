@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:57:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/14 02:11:50 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/14 20:23:38 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ char		*get_env_value(char *key);
 int			is_valid_key(char *key);
 void		sort_env_array(t_env **env_array, int count);
 void		handle_key_value(char *str, char *key, char *value);
-void		update_env();
+void		update_env(void);
 
 //input_validation
 t_bool		has_unclosed_parenthesis(char *input);

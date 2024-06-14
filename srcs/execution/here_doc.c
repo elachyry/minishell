@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:28:30 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/14 02:02:10 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/14 20:24:48 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static void	handle_here_doc(t_ast_node *node)
 	char	*content;
 
 	help_function(node->left);
-	if (ft_strchr(node->right->args[0], '\'') || ft_strchr(node->right->args[0], '\"'))
+	if (ft_strchr(node->right->args[0], '\'')
+		|| ft_strchr(node->right->args[0], '\"'))
 		g_shell_data.simple_cmd->should_expand = false;
 	expand_quotes(node->right->args);
 	here_doc(node->right->args, &content);
