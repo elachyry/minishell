@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:42:54 by melachyr          #+#    #+#             */
-/*   Updated: 2024/06/12 21:57:00 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/14 02:26:32 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,15 @@ static int	manage_builtins(char **args)
 	{
 		dup2(old_stdin, STDIN_FILENO);
 		dup2(old_stdout, STDOUT_FILENO);
+		close(old_stdin);
+		close(old_stdout);
 		return (1);
 	}
 	status = execute_builtin(args);
 	dup2(old_stdin, STDIN_FILENO);
 	dup2(old_stdout, STDOUT_FILENO);
+	close(old_stdin);
+	close(old_stdout);
 	return (status);
 }
 
@@ -52,6 +56,7 @@ static void	process_cmd(char **args)
 	status = get_cmd_path(args[0]);
 	if (status == 4)
 		return ;
+	update_env();
 	cmd_not_found(args, status);
 	execve(g_shell_data.simple_cmd->cmd_path,
 		args, g_shell_data.environment);

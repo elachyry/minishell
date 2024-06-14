@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:18:25 by kaddouri          #+#    #+#             */
-/*   Updated: 2024/06/11 23:28:08 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/06/14 01:59:40 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	display_prompt(char **line)
 	{
 		printf("exit\n");
 		gc_cleanup();
-		exit(0);
+		exit(g_shell_data.status);
 	}
 	if (*line[0])
 		add_history(*line);

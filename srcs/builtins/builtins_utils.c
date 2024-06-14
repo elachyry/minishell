@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaddour <akaddour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 06:00:18 by akaddour          #+#    #+#             */
-/*   Updated: 2024/06/08 15:20:43 by akaddour         ###   ########.fr       */
+/*   Updated: 2024/06/14 02:11:27 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,33 @@ int	is_valid_key(char *key)
 		key++;
 	}
 	return (1);
+}
+
+void	update_env()
+{
+	t_env	*env;
+	int		i;
+	char	**new_env;
+
+	env = g_shell_data.environment_list;
+	i = 0;
+	while (env)
+	{
+		i++;
+		env = env->next;
+	}
+	new_env = gc_malloc(sizeof(char *) * (i + 1));
+	if (!new_env)
+		perror_message("malloc", EXIT_FAILURE);
+	i = 0;
+	env = g_shell_data.environment_list;
+	while (env)
+	{
+		new_env[i] = ft_strjoin(env->key, "=");
+		new_env[i] = ft_strjoin(new_env[i], env->value);
+		i++;
+		env = env->next;
+	}
+	new_env[i] = NULL;
+	g_shell_data.environment = new_env;
 }
